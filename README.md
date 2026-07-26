@@ -67,13 +67,13 @@ Con `WEB_ROOT=..`, sito e API sono disponibili su `http://localhost:8080`. Datab
 
    ```bash
    fly auth login
-   fly apps create paradiso-bookings-api
+   fly apps create faithful-violet-707
    ```
 
 2. Creare un volume persistente da 1 GB nella regione di Francoforte:
 
    ```bash
-   fly volumes create paradiso_data --region fra --size 1 -a paradiso-bookings-api
+   fly volumes create paradiso_data --region fra --size 1 -a faithful-violet-707
    ```
 
    Il volume costa circa 0,15 USD/mese; la Machine è configurata per fermarsi quando inattiva.
@@ -85,7 +85,7 @@ Con `WEB_ROOT=..`, sito e API sono disponibili su `http://localhost:8080`. Datab
      JWT_SECRET="<ALMENO_32_CARATTERI_CASUALI>" \
      ADMIN_EMAIL="admin@tuodominio.it" \
      ADMIN_PASSWORD="<PASSWORD_FORTE_DI_ALMENO_12_CARATTERI>" \
-     -a paradiso-bookings-api
+     -a faithful-violet-707
    ```
 
 4. Distribuire sito e API insieme:
@@ -94,7 +94,7 @@ Con `WEB_ROOT=..`, sito e API sono disponibili su `http://localhost:8080`. Datab
    fly deploy --config backend/fly.toml --dockerfile backend/Dockerfile
    ```
 
-Il sito sarà su `https://paradiso-bookings-api.fly.dev/` e l'admin su `/admin.html`.
+Il sito sarà su `https://faithful-violet-707.fly.dev/` e l'admin su `/admin.html`.
 
 Se il nome Fly viene cambiato, aggiornare:
 
@@ -113,7 +113,7 @@ Se il nome Fly viene cambiato, aggiornare:
    fly secrets set \
      FIREBASE_PROJECT_ID="<PROJECT_ID>" \
      FIREBASE_CREDENTIALS_JSON="$(tr -d '\n' < service-account.json)" \
-     -a paradiso-bookings-api
+     -a faithful-violet-707
    ```
 
 5. Per abilitare FCM anche nelle build GitHub Actions, salvare il contenuto base64 di `google-services.json` nel secret repository facoltativo `GOOGLE_SERVICES_JSON_BASE64`.
