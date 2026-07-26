@@ -38,14 +38,21 @@ jobs:
       - name: Configure release signing
         env:
           ANDROID_SIGNING_KEY_BASE64: ${{ secrets.ANDROID_SIGNING_KEY_BASE64 }}
+          ANDROID_SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
         run: |
           test -n "$ANDROID_SIGNING_KEY_BASE64"
           echo "$ANDROID_SIGNING_KEY_BASE64" | base64 --decode > "$RUNNER_TEMP/paradiso-release.p12"
+          key_alias="$(LC_ALL=C keytool -list -v \
+            -keystore "$RUNNER_TEMP/paradiso-release.p12" \
+            -storetype PKCS12 \
+            -storepass "$ANDROID_SIGNING_STORE_PASSWORD" |
+            sed -n 's/^Alias name: //p' | head -n 1)"
+          test -n "$key_alias"
+          echo "ANDROID_SIGNING_KEY_ALIAS=$key_alias" >> "$GITHUB_ENV"
       - name: Build signed installable APK
         env:
           ANDROID_SIGNING_KEY_PATH: ${{ runner.temp }}/paradiso-release.p12
           ANDROID_SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
-          ANDROID_SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
           ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
         run: gradle --no-daemon testDebugUnitTest assembleRelease
       - name: Rename APK
