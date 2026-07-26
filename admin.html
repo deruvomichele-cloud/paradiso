@@ -7,9 +7,11 @@
     <title>Gestione prenotazioni e contabilità | Paradiso</title>
     <link rel="preconnect" href="https://unpkg.com" />
     <link rel="stylesheet" href="styles.css?v=20260724-9" />
-    <link rel="stylesheet" href="admin.css?v=20260726-1" />
+    <link rel="stylesheet" href="admin.css?v=20260727-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="admin.js?v=20260726-1" defer></script>
+    <script src="assets/vendor/qrcode-generator.js?v=2.0.4" defer></script>
+    <script src="assets/vendor/qrcode-generator-utf8.js?v=2.0.4" defer></script>
+    <script src="admin.js?v=20260727-1" defer></script>
   </head>
   <body class="admin-body" data-theme="night">
     <main class="admin-login" id="admin-login">
@@ -52,7 +54,7 @@
       </a>
       <div class="admin-header-copy">
         <strong>Dashboard</strong>
-        <span>Prenotazioni e contabilità</span>
+        <span>Prenotazioni, contabilità e QR</span>
       </div>
       <div class="admin-header-actions">
         <button class="icon-button" id="lock-admin" type="button" aria-label="Blocca area admin" title="Blocca area admin">
@@ -90,6 +92,9 @@
         </button>
         <button class="admin-tab" type="button" data-admin-view="accounting" aria-pressed="false">
           <i data-lucide="landmark"></i><span>Contabilità</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-view="qr" aria-pressed="false">
+          <i data-lucide="qr-code"></i><span>QR Code</span>
         </button>
       </nav>
 
@@ -246,6 +251,63 @@
                 <h2>Nessun movimento</h2>
                 <p>Registra il primo incasso o costo del periodo.</p>
               </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="qr-view" data-view-panel="qr" hidden>
+        <div class="qr-toolbar">
+          <div>
+            <p class="eyebrow">Strumento</p>
+            <h2>Generatore QR Code</h2>
+          </div>
+        </div>
+
+        <div class="qr-generator-layout">
+          <section class="qr-form-panel">
+            <form id="qr-form">
+              <label for="qr-content">Sito o parola</label>
+              <textarea
+                id="qr-content"
+                name="content"
+                rows="5"
+                maxlength="1200"
+                placeholder="https://loungebarparadiso.it/"
+                required
+              ></textarea>
+              <p class="form-message" id="qr-form-message" role="status"></p>
+              <div class="qr-form-actions">
+                <button class="button primary" type="submit">
+                  <i data-lucide="qr-code"></i><span>Genera QR</span>
+                </button>
+                <button class="button outline" id="clear-qr" type="button">
+                  <i data-lucide="trash-2"></i><span>Cancella</span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <section class="qr-preview-panel" aria-labelledby="qr-preview-title">
+            <div class="qr-preview-heading">
+              <div>
+                <p class="eyebrow">Anteprima</p>
+                <h3 id="qr-preview-title">QR pronto per la stampa</h3>
+              </div>
+              <button class="button outline" id="print-qr" type="button" disabled>
+                <i data-lucide="printer"></i><span>Stampa</span>
+              </button>
+            </div>
+            <div class="qr-print-area" id="qr-print-area">
+              <div class="qr-print-brand">
+                <span class="qr-print-mark">P</span>
+                <strong>Paradiso Lounge Bar</strong>
+              </div>
+              <div class="qr-output" id="qr-output" aria-live="polite">
+                <i data-lucide="scan-line"></i>
+                <span>Il QR Code apparirà qui</span>
+              </div>
+              <p id="qr-print-value"></p>
             </div>
           </section>
         </div>

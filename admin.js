@@ -24,6 +24,12 @@ const loginError = document.querySelector("#admin-login-error");
 const adminHeader = document.querySelector("#admin-header");
 const adminMain = document.querySelector("#admin-main");
 const ledgerForm = document.querySelector("#ledger-form");
+const qrForm = document.querySelector("#qr-form");
+const qrContent = document.querySelector("#qr-content");
+const qrOutput = document.querySelector("#qr-output");
+const qrPrintValue = document.querySelector("#qr-print-value");
+const qrMessage = document.querySelector("#qr-form-message");
+const printQrButton = document.querySelector("#print-qr");
 
 async function api(path, options = {}) {
   const headers = { ...(options.headers || {}) };
@@ -381,6 +387,53 @@ function csvCell(value) {
   return `"${String(value ?? "").replaceAll('"', '""')}"`;
 }
 
+function generateQrCode(event) {
+  event.preventDefault();
+  const value = qrContent.value.trim();
+  qrMessage.textContent = "";
+  qrMessage.classList.remove("is-error");
+
+  if (!value) {
+    qrMessage.textContent = "Inserisci un sito o una parola.";
+    qrMessage.classList.add("is-error");
+    qrContent.focus();
+    return;
+  }
+
+  try {
+    const code = window.qrcode(0, "M");
+    code.addData(value);
+    code.make();
+    qrOutput.innerHTML = code.createSvgTag({
+      cellSize: 8,
+      margin: 32,
+      scalable: true,
+      title: "QR Code Paradiso",
+      alt: `QR Code per ${value}`,
+    });
+    qrOutput.classList.add("has-qr");
+    qrPrintValue.textContent = value;
+    printQrButton.disabled = false;
+    qrMessage.textContent = "QR Code generato.";
+  } catch {
+    qrMessage.textContent = "Il testo è troppo lungo per creare il QR Code.";
+    qrMessage.classList.add("is-error");
+    printQrButton.disabled = true;
+  }
+}
+
+function clearQrCode() {
+  qrForm.reset();
+  qrOutput.classList.remove("has-qr");
+  qrOutput.innerHTML = '<i data-lucide="scan-line"></i><span>Il QR Code apparirà qui</span>';
+  qrPrintValue.textContent = "";
+  qrMessage.textContent = "";
+  qrMessage.classList.remove("is-error");
+  printQrButton.disabled = true;
+  refreshIcons();
+  qrContent.focus();
+}
+
 function switchView(name) {
   document.querySelectorAll("[data-admin-view]").forEach(button => {
     const active = button.dataset.adminView === name;
@@ -391,7 +444,9 @@ function switchView(name) {
     panel.hidden = panel.dataset.viewPanel !== name;
   });
   document.querySelector("#export-orders").hidden = name !== "bookings";
+  document.querySelector("#refresh-data").hidden = name === "qr";
   if (name === "accounting") loadAccounting().catch(error => showAdminToast(error.message, true));
+  if (name === "qr") qrContent.focus();
 }
 
 function formatDate(value) {
@@ -459,6 +514,9 @@ document.querySelector("#refresh-data").addEventListener("click", refreshAll);
 document.querySelectorAll("[data-admin-view]").forEach(button => button.addEventListener("click", () => switchView(button.dataset.adminView)));
 document.querySelectorAll("#accounting-from, #accounting-to").forEach(input => input.addEventListener("change", () => loadAccounting().catch(error => showAdminToast(error.message, true))));
 ledgerForm.addEventListener("submit", createLedgerEntry);
+qrForm.addEventListener("submit", generateQrCode);
+document.querySelector("#clear-qr").addEventListener("click", clearQrCode);
+printQrButton.addEventListener("click", () => window.print());
 document.querySelector(".order-dialog-close").addEventListener("click", () => orderDialog.close());
 
 loginForm.addEventListener("submit", async event => {
