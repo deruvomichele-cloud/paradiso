@@ -532,6 +532,48 @@ const allNightDrinkProducts = ["cocktail", ...detailedDrinkCategories]
 const drinkDescriptions = allNightDrinkProducts.map((product) => product.description);
 const drinkFacts = allNightDrinkProducts.map((product) => product.fact);
 const API_BASE = window.PARADISO_API_BASE_URL ?? "";
+const phoneCountries = [
+  { code: "it", name: "Italia", prefix: "+39" },
+  { code: "ch", name: "Svizzera", prefix: "+41" },
+  { code: "fr", name: "Francia", prefix: "+33" },
+  { code: "de", name: "Germania", prefix: "+49" },
+  { code: "es", name: "Spagna", prefix: "+34" },
+  { code: "gb", name: "Regno Unito", prefix: "+44" },
+  { code: "at", name: "Austria", prefix: "+43" },
+  { code: "be", name: "Belgio", prefix: "+32" },
+  { code: "nl", name: "Paesi Bassi", prefix: "+31" },
+  { code: "pt", name: "Portogallo", prefix: "+351" },
+  { code: "gr", name: "Grecia", prefix: "+30" },
+  { code: "ro", name: "Romania", prefix: "+40" },
+  { code: "al", name: "Albania", prefix: "+355" },
+  { code: "hr", name: "Croazia", prefix: "+385" },
+  { code: "si", name: "Slovenia", prefix: "+386" },
+  { code: "pl", name: "Polonia", prefix: "+48" },
+  { code: "ua", name: "Ucraina", prefix: "+380" },
+  { code: "md", name: "Moldavia", prefix: "+373" },
+  { code: "rs", name: "Serbia", prefix: "+381" },
+  { code: "ba", name: "Bosnia", prefix: "+387" },
+  { code: "mk", name: "Macedonia del Nord", prefix: "+389" },
+  { code: "bg", name: "Bulgaria", prefix: "+359" },
+  { code: "hu", name: "Ungheria", prefix: "+36" },
+  { code: "cz", name: "Repubblica Ceca", prefix: "+420" },
+  { code: "sk", name: "Slovacchia", prefix: "+421" },
+  { code: "ma", name: "Marocco", prefix: "+212" },
+  { code: "tn", name: "Tunisia", prefix: "+216" },
+  { code: "eg", name: "Egitto", prefix: "+20" },
+  { code: "tr", name: "Turchia", prefix: "+90" },
+  { code: "us", secondaryCode: "ca", name: "Stati Uniti / Canada", prefix: "+1" },
+  { code: "br", name: "Brasile", prefix: "+55" },
+  { code: "ar", name: "Argentina", prefix: "+54" },
+  { code: "pe", name: "Perù", prefix: "+51" },
+  { code: "ec", name: "Ecuador", prefix: "+593" },
+  { code: "co", name: "Colombia", prefix: "+57" },
+  { code: "cn", name: "Cina", prefix: "+86" },
+  { code: "in", name: "India", prefix: "+91" },
+  { code: "bd", name: "Bangladesh", prefix: "+880" },
+  { code: "pk", name: "Pakistan", prefix: "+92" },
+  { code: "ph", name: "Filippine", prefix: "+63" },
+];
 
 if (allNightDrinkProducts.some((product) => !product.description || !product.fact)) {
   throw new Error("Una bevanda del menu notte non ha ingredienti o chicca.");
@@ -558,6 +600,12 @@ const showMoreButton = document.querySelector("#show-more");
 const cartDrawer = document.querySelector("#cart-drawer");
 const drawerBackdrop = document.querySelector("#drawer-backdrop");
 const bookingForm = document.querySelector("#booking-form");
+const countrySelect = document.querySelector("[data-country-select]");
+const countrySelectTrigger = countrySelect.querySelector("[data-country-trigger]");
+const countrySelectMenu = countrySelect.querySelector("[data-country-menu]");
+const countryPrefixInput = countrySelect.querySelector("[data-country-prefix-input]");
+const countryCurrentFlags = countrySelect.querySelector("[data-country-current-flags]");
+const countryCurrentPrefix = countrySelect.querySelector("[data-country-current-prefix]");
 const confirmationDialog = document.querySelector("#confirmation-dialog");
 const productDialog = document.querySelector("#product-dialog");
 const menuSearch = document.querySelector("#menu-search");
@@ -941,6 +989,82 @@ function showToast(message) {
   }, 1800);
 }
 
+function countryFlagMarkup(country) {
+  return [country.code, country.secondaryCode]
+    .filter(Boolean)
+    .map((code) => `<img src="assets/flags/${code}.svg" alt="" />`)
+    .join("");
+}
+
+function renderPhoneCountries() {
+  countrySelectMenu.innerHTML = phoneCountries
+    .map(
+      (country) => `
+        <button
+          class="country-select-option"
+          type="button"
+          role="option"
+          aria-selected="${country.prefix === "+39"}"
+          data-country-prefix="${country.prefix}"
+        >
+          <span class="country-flag-stack">${countryFlagMarkup(country)}</span>
+          <span class="country-option-name">${country.name}</span>
+          <strong>${country.prefix}</strong>
+        </button>
+      `,
+    )
+    .join("");
+}
+
+function setCountryMenuOpen(open, focusSelected = false) {
+  countrySelect.classList.toggle("is-open", open);
+  countrySelectTrigger.setAttribute("aria-expanded", String(open));
+  countrySelectMenu.hidden = !open;
+  if (!open || !focusSelected) return;
+
+  const selectedOption = [...countrySelectMenu.querySelectorAll("[data-country-prefix]")].find(
+    (option) => option.dataset.countryPrefix === countryPrefixInput.value,
+  );
+  selectedOption?.focus();
+}
+
+function selectPhoneCountry(prefix, returnFocus = true) {
+  const country = phoneCountries.find((entry) => entry.prefix === prefix) ?? phoneCountries[0];
+  countryPrefixInput.value = country.prefix;
+  countryCurrentFlags.innerHTML = countryFlagMarkup(country);
+  countryCurrentPrefix.textContent = country.prefix;
+  countrySelectTrigger.setAttribute(
+    "aria-label",
+    `Paese e prefisso telefonico: ${country.name} ${country.prefix}`,
+  );
+  countrySelectMenu.querySelectorAll("[data-country-prefix]").forEach((option) => {
+    option.setAttribute("aria-selected", String(option.dataset.countryPrefix === country.prefix));
+  });
+  setCountryMenuOpen(false);
+  if (returnFocus) countrySelectTrigger.focus();
+}
+
+function moveCountryOptionFocus(event) {
+  const options = [...countrySelectMenu.querySelectorAll("[data-country-prefix]")];
+  const currentIndex = options.indexOf(document.activeElement);
+  if (event.key === "Escape") {
+    event.preventDefault();
+    setCountryMenuOpen(false);
+    countrySelectTrigger.focus();
+    return;
+  }
+  if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+
+  event.preventDefault();
+  const nextIndex = {
+    ArrowDown: Math.min(currentIndex + 1, options.length - 1),
+    ArrowUp: Math.max(currentIndex - 1, 0),
+    Home: 0,
+    End: options.length - 1,
+  }[event.key];
+  options[nextIndex]?.focus();
+}
+
 function formatBookingPhone(prefix, number) {
   const rawNumber = String(number || "").trim();
   const digits = rawNumber.replace(/\D/g, "");
@@ -1122,7 +1246,35 @@ document.querySelector("#checkout-button").addEventListener("click", () => {
   window.setTimeout(() => bookingForm.elements.name.focus(), 500);
 });
 
+renderPhoneCountries();
+selectPhoneCountry("+39", false);
+countrySelectTrigger.addEventListener("click", () => {
+  const nextOpen = countrySelectTrigger.getAttribute("aria-expanded") !== "true";
+  setCountryMenuOpen(nextOpen, nextOpen);
+});
+countrySelectTrigger.addEventListener("keydown", (event) => {
+  if (event.key !== "ArrowDown") return;
+  event.preventDefault();
+  setCountryMenuOpen(true, true);
+});
+countrySelectMenu.addEventListener("click", (event) => {
+  const option = event.target.closest("[data-country-prefix]");
+  if (option) selectPhoneCountry(option.dataset.countryPrefix);
+});
+countrySelectMenu.addEventListener("keydown", moveCountryOptionFocus);
+countrySelect.addEventListener("focusout", () => {
+  window.setTimeout(() => {
+    if (!countrySelect.contains(document.activeElement)) setCountryMenuOpen(false);
+  });
+});
+document.addEventListener("click", (event) => {
+  if (!countrySelect.contains(event.target)) setCountryMenuOpen(false);
+});
+
 bookingForm.addEventListener("submit", submitBooking);
+bookingForm.addEventListener("reset", () => {
+  window.setTimeout(() => selectPhoneCountry("+39", false));
+});
 document.querySelectorAll("[data-time-step]").forEach((button) => {
   button.addEventListener("click", () => adjustBookingTime(Number(button.dataset.timeStep)));
 });
