@@ -2,6 +2,7 @@ package it.paradisolounge.admin
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SmsGatewayTest {
@@ -15,9 +16,11 @@ class SmsGatewayTest {
 
     @Test
     fun buildsConciseBookingConfirmation() {
+        val message = bookingConfirmationSms("P-ABC12345", "2026-07-27", "21:30", 4)
         assertEquals(
             "Paradiso Lounge Bar: prenotazione P-ABC12345 confermata il 27/07/2026 alle 21:30 per 4 persone. Mostra il QR ricevuto via email.",
-            bookingConfirmationSms("P-ABC12345", "2026-07-27", "21:30", 4),
+            message,
         )
+        assertTrue(message.length <= 160)
     }
 }

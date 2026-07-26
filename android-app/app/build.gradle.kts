@@ -8,7 +8,7 @@ if (file("google-services.json").exists()) {
 }
 
 val apiBaseUrl = providers.gradleProperty("PARADISO_API_BASE_URL")
-    .orElse("https://paradiso-bookings-api.fly.dev")
+    .orElse("https://faithful-violet-707.fly.dev")
     .get()
 
 android {
@@ -19,8 +19,8 @@ android {
         applicationId = "it.paradisolounge.admin"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.2.0"
+        versionCode = 4
+        versionName = "1.3.0"
 
         buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl.trimEnd('/')}\"")
     }

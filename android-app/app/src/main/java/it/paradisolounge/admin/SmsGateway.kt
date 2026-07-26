@@ -1,7 +1,11 @@
 package it.paradisolounge.admin
 
 import android.Manifest
+import android.app.Activity
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.telephony.SmsManager
 import android.telephony.SubscriptionManager
@@ -13,7 +17,12 @@ private const val SMS_PREFERENCES = "paradiso_sms_gateway"
 private const val SMS_ENABLED = "enabled"
 private const val SMS_CONFIGURED = "configured"
 private const val SENT_BOOKING_IDS = "sent_booking_ids"
+private const val PENDING_BOOKING_IDS = "pending_booking_ids"
 private const val MAX_SAVED_BOOKING_IDS = 100
+private const val ACTION_SMS_SENT = "it.paradisolounge.admin.SMS_SENT"
+private const val ACTION_SMS_DELIVERED = "it.paradisolounge.admin.SMS_DELIVERED"
+private const val EXTRA_BOOKING_ID = "booking_id"
+private const val EXTRA_BOOKING_CODE = "booking_code"
 
 enum class SmsGatewayResult {
     QUEUED,
@@ -39,6 +48,7 @@ object SmsGateway {
             .apply()
     }
 
+    @Synchronized
     fun sendBookingConfirmation(
         context: Context,
         bookingId: String,
@@ -55,7 +65,9 @@ object SmsGateway {
         if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
             return SmsGatewayResult.NO_TELEPHONY
         }
-        if (wasAlreadySent(context, bookingId)) return SmsGatewayResult.ALREADY_SENT
+        if (wasAlreadySent(context, bookingId) || isPending(context, bookingId)) {
+            return SmsGatewayResult.ALREADY_SENT
+        }
 
         val destination = normalizeSmsDestination(phone) ?: return SmsGatewayResult.INVALID_DESTINATION
         val message = bookingConfirmationSms(code, reservationDate, reservationTime, guests)
@@ -67,15 +79,17 @@ object SmsGateway {
             } else {
                 SmsManager.getDefault()
             }
-            val parts = manager.divideMessage(message)
-            if (parts.size == 1) {
-                manager.sendTextMessage(destination, null, message, null, null)
-            } else {
-                manager.sendMultipartTextMessage(destination, null, parts, null, null)
-            }
-            rememberSent(context, bookingId)
+            rememberPending(context, bookingId)
+            manager.sendTextMessage(
+                destination,
+                null,
+                message,
+                statusIntent(context, ACTION_SMS_SENT, bookingId, code),
+                statusIntent(context, ACTION_SMS_DELIVERED, bookingId, code),
+            )
             SmsGatewayResult.QUEUED
         }.getOrElse {
+            clearPending(context, bookingId)
             SmsGatewayResult.FAILED
         }
     }
@@ -88,13 +102,103 @@ object SmsGateway {
         return preferences(context).getStringSet(SENT_BOOKING_IDS, emptySet()).orEmpty().contains(bookingId)
     }
 
-    private fun rememberSent(context: Context, bookingId: String) {
+    private fun isPending(context: Context, bookingId: String): Boolean {
+        if (bookingId.isBlank()) return false
+        return preferences(context).getStringSet(PENDING_BOOKING_IDS, emptySet()).orEmpty().contains(bookingId)
+    }
+
+    private fun rememberPending(context: Context, bookingId: String) {
+        if (bookingId.isBlank()) return
+        val pending = preferences(context).getStringSet(PENDING_BOOKING_IDS, emptySet()).orEmpty().toMutableSet()
+        pending += bookingId
+        preferences(context).edit().putStringSet(PENDING_BOOKING_IDS, pending).apply()
+    }
+
+    internal fun markSent(context: Context, bookingId: String) {
         if (bookingId.isBlank()) return
         val saved = preferences(context).getStringSet(SENT_BOOKING_IDS, emptySet()).orEmpty().toMutableSet()
         if (saved.size >= MAX_SAVED_BOOKING_IDS) saved.remove(saved.first())
         saved += bookingId
-        preferences(context).edit().putStringSet(SENT_BOOKING_IDS, saved).apply()
+        val pending = preferences(context).getStringSet(PENDING_BOOKING_IDS, emptySet()).orEmpty().toMutableSet()
+        pending -= bookingId
+        preferences(context).edit()
+            .putStringSet(SENT_BOOKING_IDS, saved)
+            .putStringSet(PENDING_BOOKING_IDS, pending)
+            .apply()
     }
+
+    internal fun clearPending(context: Context, bookingId: String) {
+        if (bookingId.isBlank()) return
+        val pending = preferences(context).getStringSet(PENDING_BOOKING_IDS, emptySet()).orEmpty().toMutableSet()
+        pending -= bookingId
+        preferences(context).edit().putStringSet(PENDING_BOOKING_IDS, pending).apply()
+    }
+
+    private fun statusIntent(
+        context: Context,
+        action: String,
+        bookingId: String,
+        code: String,
+    ): PendingIntent {
+        val intent = Intent(context, SmsStatusReceiver::class.java).apply {
+            this.action = action
+            putExtra(EXTRA_BOOKING_ID, bookingId)
+            putExtra(EXTRA_BOOKING_CODE, code)
+        }
+        return PendingIntent.getBroadcast(
+            context,
+            "$action:$bookingId".hashCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
+}
+
+class SmsStatusReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val bookingId = intent.getStringExtra(EXTRA_BOOKING_ID).orEmpty()
+        val code = intent.getStringExtra(EXTRA_BOOKING_CODE).orEmpty()
+        when (intent.action) {
+            ACTION_SMS_SENT -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    SmsGateway.markSent(context, bookingId)
+                    showParadisoNotification(
+                        context,
+                        "SMS inviato",
+                        "La conferma per $code è stata accettata dalla rete Vodafone.",
+                    )
+                } else {
+                    SmsGateway.clearPending(context, bookingId)
+                    showParadisoNotification(
+                        context,
+                        "SMS non inviato",
+                        "La rete mobile ha rifiutato la conferma per $code (${smsError(resultCode)}).",
+                    )
+                }
+            }
+
+            ACTION_SMS_DELIVERED -> {
+                val delivered = resultCode == Activity.RESULT_OK
+                showParadisoNotification(
+                    context,
+                    if (delivered) "SMS consegnato" else "Consegna SMS non confermata",
+                    if (delivered) {
+                        "Il cliente della prenotazione $code ha ricevuto la conferma."
+                    } else {
+                        "Vodafone non ha confermato la consegna per $code."
+                    },
+                )
+            }
+        }
+    }
+}
+
+private fun smsError(resultCode: Int): String = when (resultCode) {
+    SmsManager.RESULT_ERROR_NO_SERVICE -> "nessun servizio"
+    SmsManager.RESULT_ERROR_RADIO_OFF -> "rete mobile disattivata"
+    SmsManager.RESULT_ERROR_LIMIT_EXCEEDED -> "limite SMS raggiunto"
+    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> "errore operatore"
+    else -> "codice $resultCode"
 }
 
 internal fun normalizeSmsDestination(rawPhone: String): String? {

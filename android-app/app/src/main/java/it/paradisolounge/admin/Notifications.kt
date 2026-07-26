@@ -35,6 +35,15 @@ class ParadisoApplication : Application() {
                 enableVibration(true)
             },
         )
+        manager.createNotificationChannel(
+            NotificationChannel(
+                "gateway",
+                "Gateway SMS",
+                NotificationManager.IMPORTANCE_LOW,
+            ).apply {
+                description = "Mantiene attivo il controllo delle prenotazioni e l'invio SMS"
+            },
+        )
         val syncRequest = PeriodicWorkRequestBuilder<BookingSyncWorker>(15, TimeUnit.MINUTES)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
@@ -100,34 +109,7 @@ class BookingSyncWorker(
     override fun doWork(): Result {
         val token = SecureStorage(applicationContext).readToken() ?: return Result.success()
         return runCatching {
-            val bookings = ApiClient().bookings(token)
-            val newest = bookings.maxOfOrNull { it.createdAt } ?: return Result.success()
-            val preferences = applicationContext.getSharedPreferences("paradiso_sync", Context.MODE_PRIVATE)
-            val previous = preferences.getString("latest_booking", null)
-            if (previous != null) {
-                val additions = bookings.filter { it.createdAt > previous && it.status == "Nuovo" }
-                if (additions.isNotEmpty()) {
-                    val latest = additions.maxBy { it.createdAt }
-                    additions.sortedBy { it.createdAt }.forEach { booking ->
-                        SmsGateway.sendBookingConfirmation(
-                            context = applicationContext,
-                            bookingId = booking.id,
-                            code = booking.code,
-                            phone = booking.phone,
-                            reservationDate = booking.reservationDate,
-                            reservationTime = booking.reservationTime,
-                            guests = booking.guests,
-                        )
-                    }
-                    val body = if (additions.size == 1) {
-                        "${latest.reservationDate} alle ${latest.reservationTime} · ${latest.guests} ospiti"
-                    } else {
-                        "${additions.size} nuove richieste da controllare"
-                    }
-                    showParadisoNotification(applicationContext, "Nuova prenotazione ${latest.code}", body)
-                }
-            }
-            preferences.edit().putString("latest_booking", newest).apply()
+            BookingGatewaySync.synchronize(applicationContext, token)
             Result.success()
         }.getOrElse { error ->
             if (error is ApiException && error.status == 401) Result.success() else Result.retry()
@@ -135,7 +117,59 @@ class BookingSyncWorker(
     }
 }
 
-private fun showParadisoNotification(context: Context, title: String, body: String) {
+internal object BookingGatewaySync {
+    @Synchronized
+    fun synchronize(context: Context, token: String) {
+        val bookings = ApiClient().bookings(token)
+        val newest = bookings.maxOfOrNull { it.createdAt } ?: return
+        val preferences = context.getSharedPreferences("paradiso_sync", Context.MODE_PRIVATE)
+        val previous = preferences.getString("latest_booking", null)
+        if (previous == null) {
+            preferences.edit().putString("latest_booking", newest).apply()
+            return
+        }
+
+        val additions = bookings
+            .filter { it.createdAt > previous && it.status == "Nuovo" }
+            .sortedBy { it.createdAt }
+        val outcomes = additions.map { booking ->
+            SmsGateway.sendBookingConfirmation(
+                context = context,
+                bookingId = booking.id,
+                code = booking.code,
+                phone = booking.phone,
+                reservationDate = booking.reservationDate,
+                reservationTime = booking.reservationTime,
+                guests = booking.guests,
+            )
+        }
+        if (additions.isNotEmpty() && outcomes.any { it != SmsGatewayResult.ALREADY_SENT }) {
+            val latest = additions.last()
+            val queued = outcomes.count { it == SmsGatewayResult.QUEUED }
+            val failed = outcomes.count {
+                it == SmsGatewayResult.FAILED ||
+                    it == SmsGatewayResult.PERMISSION_MISSING ||
+                    it == SmsGatewayResult.NO_TELEPHONY ||
+                    it == SmsGatewayResult.INVALID_DESTINATION
+            }
+            val details = buildList {
+                add(
+                    if (additions.size == 1) {
+                        "${latest.reservationDate} alle ${latest.reservationTime} · ${latest.guests} ospiti"
+                    } else {
+                        "${additions.size} nuove richieste"
+                    },
+                )
+                if (queued > 0) add("$queued SMS in invio")
+                if (failed > 0) add("$failed SMS non inviati")
+            }.joinToString(" · ")
+            showParadisoNotification(context, "Nuova prenotazione ${latest.code}", details)
+        }
+        preferences.edit().putString("latest_booking", newest).apply()
+    }
+}
+
+internal fun showParadisoNotification(context: Context, title: String, body: String) {
     if (Build.VERSION.SDK_INT >= 33 &&
         context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     ) return

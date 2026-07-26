@@ -184,6 +184,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
     ) { granted ->
         SmsGateway.setEnabled(context, granted)
         smsGatewayEnabled = granted
+        if (granted) BookingGatewayService.start(context)
         smsPermissionDenied = !granted
         showSmsGatewayDialog = !granted
     }
@@ -203,6 +204,11 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
                     vm.registerDevice(messagingToken, "${Build.MANUFACTURER} ${Build.MODEL}")
                 }
             }
+        }
+        if (state.token != null && SmsGateway.isEnabled(context)) {
+            BookingGatewayService.start(context)
+        } else if (!state.isRestoringSession && state.token == null) {
+            BookingGatewayService.stop(context)
         }
         if (state.token != null && !SmsGateway.hasBeenConfigured(context)) {
             showSmsGatewayDialog = true
@@ -354,6 +360,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
                 if (context.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     SmsGateway.setEnabled(context, true)
                     smsGatewayEnabled = true
+                    BookingGatewayService.start(context)
                     showSmsGatewayDialog = false
                 } else {
                     smsPermission.launch(Manifest.permission.SEND_SMS)
@@ -362,6 +369,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
             onDisable = {
                 SmsGateway.setEnabled(context, false)
                 smsGatewayEnabled = false
+                BookingGatewayService.stop(context)
                 showSmsGatewayDialog = false
             },
         )
@@ -394,7 +402,7 @@ private fun SmsGatewayDialog(
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
                     if (enabled) {
-                        "Gateway attivo: le nuove prenotazioni ricevono automaticamente un SMS."
+                        "Gateway attivo: l'app controlla continuamente le nuove prenotazioni e invia automaticamente l'SMS."
                     } else {
                         "Questo telefono invierà le conferme ai clienti usando la propria SIM."
                     },
@@ -405,7 +413,7 @@ private fun SmsGatewayDialog(
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    "Non usa servizi esterni. Gli SMS consumano il credito o i messaggi inclusi nel piano della SIM.",
+                    "Quando è attivo resta una notifica fissa. Gli SMS consumano il credito o i messaggi inclusi nel piano della SIM.",
                     color = TextMuted,
                     fontSize = 13.sp,
                 )
