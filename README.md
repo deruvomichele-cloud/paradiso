@@ -94,7 +94,8 @@ Con `WEB_ROOT=..`, sito e API sono disponibili su `http://localhost:8080`. Datab
    fly deploy --config backend/fly.toml --dockerfile backend/Dockerfile
    ```
 
-Il sito sarà su `https://faithful-violet-707.fly.dev/` e l'admin su `/admin.html`.
+Il sito pubblico sarà su `https://loungebarparadiso.it/`, l'admin su `/admin.html`
+e l'indirizzo tecnico Fly resterà `https://faithful-violet-707.fly.dev/`.
 
 Se il nome Fly viene cambiato, aggiornare:
 

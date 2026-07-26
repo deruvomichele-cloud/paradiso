@@ -10,7 +10,7 @@ primary_region = "fra"
   WEB_ROOT = "/srv/site"
   DATABASE_PATH = "/data/paradiso.db"
   TOKEN_TTL_HOURS = "12"
-  ALLOWED_ORIGINS = "https://faithful-violet-707.fly.dev"
+  ALLOWED_ORIGINS = "https://loungebarparadiso.it,https://www.loungebarparadiso.it,https://faithful-violet-707.fly.dev"
   BOOKING_EMAIL_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzd0ZEddVWO3gwgnD08PbNH_Yh4D5A1REOhCMGEp75DyxXWaVxxMtZtcQ79geN1mx1s/exec"
 
 [http_service]

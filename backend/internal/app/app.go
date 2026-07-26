@@ -517,7 +517,7 @@ func (a *App) sendBookingConfirmation(parent context.Context, booking Booking) e
 	}
 	payload, err := json.Marshal(map[string]any{
 		"source":  "paradiso-booking-v1",
-		"website": "",
+		"website": "https://loungebarparadiso.it/",
 		"id":      booking.Code,
 		"name":    booking.CustomerName,
 		"phone":   booking.Phone,
