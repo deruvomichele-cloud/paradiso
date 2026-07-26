@@ -164,7 +164,9 @@ body[data-theme="night"] .brand-symbol-night {
   gap: 8px;
 }
 
-.icon-button.gallery-header-link {
+.icon-button.gallery-header-link,
+.icon-button.menu-header-link,
+.icon-button.events-header-link {
   display: none;
 }
 
@@ -2054,7 +2056,9 @@ body[data-theme="night"] .map-wrap {
     display: none;
   }
 
-  .icon-button.gallery-header-link {
+  .icon-button.gallery-header-link,
+  .icon-button.menu-header-link,
+  .icon-button.events-header-link {
     display: inline-grid;
   }
 
