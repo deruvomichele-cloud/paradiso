@@ -11,6 +11,17 @@ val apiBaseUrl = providers.gradleProperty("PARADISO_API_BASE_URL")
     .orElse("https://faithful-violet-707.fly.dev")
     .get()
 
+val releaseKeystorePath = System.getenv("ANDROID_SIGNING_KEY_PATH")
+val releaseStorePassword = System.getenv("ANDROID_SIGNING_STORE_PASSWORD")
+val releaseKeyAlias = System.getenv("ANDROID_SIGNING_KEY_ALIAS")
+val releaseKeyPassword = System.getenv("ANDROID_SIGNING_KEY_PASSWORD")
+val hasReleaseSigning = listOf(
+    releaseKeystorePath,
+    releaseStorePassword,
+    releaseKeyAlias,
+    releaseKeyPassword,
+).all { !it.isNullOrBlank() }
+
 android {
     namespace = "it.paradisolounge.admin"
     compileSdk = 36
@@ -35,8 +46,23 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseKeystorePath!!)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+                storeType = "PKCS12"
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

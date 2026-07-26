@@ -3,6 +3,7 @@
 *.iml
 *.jks
 *.keystore
+*.p12
 local.properties
 android-app/.gradle/
 android-app/**/build/
