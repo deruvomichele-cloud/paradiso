@@ -941,6 +941,17 @@ function showToast(message) {
   }, 1800);
 }
 
+function formatBookingPhone(prefix, number) {
+  const rawNumber = String(number || "").trim();
+  const digits = rawNumber.replace(/\D/g, "");
+  if (!digits) return "";
+  if (rawNumber.startsWith("+")) return `+${digits}`;
+  if (rawNumber.startsWith("00")) return `+${digits.slice(2)}`;
+
+  const normalizedPrefix = `+${String(prefix || "+39").replace(/\D/g, "")}`;
+  return `${normalizedPrefix}${digits}`;
+}
+
 async function submitBooking(event) {
   event.preventDefault();
   const submitButton = bookingForm.querySelector(".submit-button");
@@ -949,7 +960,7 @@ async function submitBooking(event) {
   const data = new FormData(bookingForm);
   const request = {
     customerName: data.get("name"),
-    phone: data.get("phone"),
+    phone: formatBookingPhone(data.get("phonePrefix"), data.get("phone")),
     email: data.get("email"),
     reservationDate: data.get("date"),
     reservationTime: data.get("time"),

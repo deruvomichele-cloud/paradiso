@@ -1385,6 +1385,18 @@ body.gallery-open {
   min-width: 0;
 }
 
+.phone-input-control {
+  display: grid;
+  grid-template-columns: minmax(148px, 0.82fr) minmax(0, 1.18fr);
+  gap: 8px;
+  min-width: 0;
+}
+
+.phone-input-control select,
+.phone-input-control input {
+  min-width: 0;
+}
+
 .time-input-control input,
 .number-input-control input {
   min-width: 0;
@@ -1456,6 +1468,10 @@ body.gallery-open {
 
 .two-columns {
   grid-template-columns: 1fr 1fr;
+}
+
+.booking-identity-row {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
 }
 
 .three-columns {
@@ -2453,6 +2469,10 @@ body[data-theme="night"] .map-wrap {
     grid-template-columns: 1fr;
   }
 
+  .phone-input-control {
+    grid-template-columns: minmax(136px, 0.9fr) minmax(0, 1.1fr);
+  }
+
   .booking-form {
     padding: 22px 18px;
   }
@@ -2463,6 +2483,12 @@ body[data-theme="night"] .map-wrap {
 
   .cart-drawer {
     padding: 20px 17px;
+  }
+}
+
+@media (max-width: 340px) {
+  .phone-input-control {
+    grid-template-columns: 1fr;
   }
 }
 

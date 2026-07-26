@@ -245,14 +245,68 @@
           </div>
 
           <form class="booking-form" id="booking-form">
-            <div class="form-row two-columns">
+            <div class="form-row two-columns booking-identity-row">
               <label>
                 Nome e cognome
                 <input name="name" autocomplete="name" required placeholder="Mario Rossi" />
               </label>
               <label>
                 Telefono
-                <input name="phone" type="tel" autocomplete="tel" required placeholder="+39 333 123 4567" />
+                <span class="phone-input-control">
+                  <select name="phonePrefix" autocomplete="tel-country-code" aria-label="Paese e prefisso telefonico">
+                    <option value="+39" selected>🇮🇹 Italia (+39)</option>
+                    <option value="+41">🇨🇭 Svizzera (+41)</option>
+                    <option value="+33">🇫🇷 Francia (+33)</option>
+                    <option value="+49">🇩🇪 Germania (+49)</option>
+                    <option value="+34">🇪🇸 Spagna (+34)</option>
+                    <option value="+44">🇬🇧 Regno Unito (+44)</option>
+                    <option value="+43">🇦🇹 Austria (+43)</option>
+                    <option value="+32">🇧🇪 Belgio (+32)</option>
+                    <option value="+31">🇳🇱 Paesi Bassi (+31)</option>
+                    <option value="+351">🇵🇹 Portogallo (+351)</option>
+                    <option value="+30">🇬🇷 Grecia (+30)</option>
+                    <option value="+40">🇷🇴 Romania (+40)</option>
+                    <option value="+355">🇦🇱 Albania (+355)</option>
+                    <option value="+385">🇭🇷 Croazia (+385)</option>
+                    <option value="+386">🇸🇮 Slovenia (+386)</option>
+                    <option value="+48">🇵🇱 Polonia (+48)</option>
+                    <option value="+380">🇺🇦 Ucraina (+380)</option>
+                    <option value="+373">🇲🇩 Moldavia (+373)</option>
+                    <option value="+381">🇷🇸 Serbia (+381)</option>
+                    <option value="+387">🇧🇦 Bosnia (+387)</option>
+                    <option value="+389">🇲🇰 Macedonia del Nord (+389)</option>
+                    <option value="+359">🇧🇬 Bulgaria (+359)</option>
+                    <option value="+36">🇭🇺 Ungheria (+36)</option>
+                    <option value="+420">🇨🇿 Repubblica Ceca (+420)</option>
+                    <option value="+421">🇸🇰 Slovacchia (+421)</option>
+                    <option value="+212">🇲🇦 Marocco (+212)</option>
+                    <option value="+216">🇹🇳 Tunisia (+216)</option>
+                    <option value="+20">🇪🇬 Egitto (+20)</option>
+                    <option value="+90">🇹🇷 Turchia (+90)</option>
+                    <option value="+1">🇺🇸 🇨🇦 Stati Uniti / Canada (+1)</option>
+                    <option value="+55">🇧🇷 Brasile (+55)</option>
+                    <option value="+54">🇦🇷 Argentina (+54)</option>
+                    <option value="+51">🇵🇪 Perù (+51)</option>
+                    <option value="+593">🇪🇨 Ecuador (+593)</option>
+                    <option value="+57">🇨🇴 Colombia (+57)</option>
+                    <option value="+86">🇨🇳 Cina (+86)</option>
+                    <option value="+91">🇮🇳 India (+91)</option>
+                    <option value="+880">🇧🇩 Bangladesh (+880)</option>
+                    <option value="+92">🇵🇰 Pakistan (+92)</option>
+                    <option value="+63">🇵🇭 Filippine (+63)</option>
+                  </select>
+                  <input
+                    name="phone"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel-national"
+                    minlength="6"
+                    maxlength="24"
+                    required
+                    placeholder="333 123 4567"
+                    aria-label="Numero di telefono"
+                  />
+                </span>
               </label>
             </div>
             <label>
