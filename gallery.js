@@ -8,7 +8,9 @@ const galleryThemes = {
 const toIdSet = (values) => new Set(values.trim().split(/\s+/).filter(Boolean).map(Number));
 const padGalleryId = (value) => String(value).padStart(4, "0");
 
-const missingPhotoIds = toIdSet("15 17 21 35 65 86 87 113 114 144 146 150 153 160 176 187 190 203");
+const missingPhotoIds = toIdSet(
+  "15 17 20 21 27 35 47 65 86 87 113 114 125 137 144 146 150 153 160 176 187 190 203 212 217",
+);
 const missingVideoIds = toIdSet(
   "239 240 243 245 246 247 248 250 253 255 257 260 262 263 266 268 271 272 273 282 286 288 293 298 299 302 305 306 307 308 309 311 321 324 329 333 334 335 337",
 );
