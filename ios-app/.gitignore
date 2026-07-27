@@ -1,0 +1,6 @@
+ParadisoAdmin.xcodeproj/
+.build/
+DerivedData/
+ParadisoAdmin/GoogleService-Info.plist
+*.xcuserstate
+xcuserdata/

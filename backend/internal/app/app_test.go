@@ -13,6 +13,38 @@ import (
 	"time"
 )
 
+func TestBookingNotificationMessageSupportsAndroidAndIOS(t *testing.T) {
+	message := bookingNotificationMessage([]string{"device-a", "device-b"}, map[string]any{
+		"bookingId":    "booking-1",
+		"code":         "P-12AB34CD",
+		"customerName": "Mario Rossi",
+		"phone":        "+393331234567",
+		"date":         "2026-07-28",
+		"time":         "21:30",
+		"guests":       4,
+	})
+
+	if len(message.Fids) != 2 || message.Android == nil || message.Android.Priority != "high" {
+		t.Fatal("expected high-priority Android configuration")
+	}
+	if message.APNS == nil || message.APNS.Payload == nil || message.APNS.Payload.Aps == nil {
+		t.Fatal("expected APNs configuration")
+	}
+	aps := message.APNS.Payload.Aps
+	if aps.Alert == nil || aps.Alert.Title != "Nuova prenotazione P-12AB34CD" {
+		t.Fatalf("unexpected APNs alert: %#v", aps.Alert)
+	}
+	if aps.Sound != "default" || aps.Category != "BOOKING_CREATED" || aps.ThreadID != "bookings" {
+		t.Fatalf("unexpected APNs metadata: %#v", aps)
+	}
+	if message.APNS.Headers["apns-push-type"] != "alert" {
+		t.Fatalf("unexpected APNs headers: %#v", message.APNS.Headers)
+	}
+	if message.Data["bookingId"] != "booking-1" || message.Data["code"] != "P-12AB34CD" {
+		t.Fatalf("missing booking deep-link data: %#v", message.Data)
+	}
+}
+
 func TestValidateBookingInput(t *testing.T) {
 	tomorrow := time.Now().AddDate(0, 0, 1).Format("2006-01-02")
 	validItems := []BookingItem{{ID: "night:cocktail:negroni", Name: "Negroni", Price: 8, Quantity: 2}}

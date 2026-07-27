@@ -8,5 +8,8 @@ local.properties
 android-app/.gradle/
 android-app/**/build/
 android-app/app/google-services.json
+ios-app/ParadisoAdmin.xcodeproj/
+ios-app/DerivedData/
+ios-app/ParadisoAdmin/GoogleService-Info.plist
 backend/.env
 coverage.out

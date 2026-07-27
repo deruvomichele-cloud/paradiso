@@ -906,7 +906,7 @@ func (a *App) dispatchOutbox(ctx context.Context) error {
 		_, err = tx.ExecContext(ctx, `
 			UPDATE notification_outbox
 			SET attempts = attempts + 1, available_at = $2,
-				last_error = 'no active Android devices'
+				last_error = 'no active admin devices'
 			WHERE id = $1
 		`, outboxID, time.Now().Add(5*time.Minute).UTC().Format(time.RFC3339Nano))
 		if err != nil {
@@ -919,28 +919,7 @@ func (a *App) dispatchOutbox(ctx context.Context) error {
 	if err := json.Unmarshal(payloadJSON, &payload); err != nil {
 		return err
 	}
-	code := fmt.Sprint(payload["code"])
-	date := fmt.Sprint(payload["date"])
-	clock := fmt.Sprint(payload["time"])
-	guests := fmt.Sprint(payload["guests"])
-	response, sendErr := a.messaging.SendEachForMulticast(ctx, &messaging.MulticastMessage{
-		Fids: fids,
-		Data: map[string]string{
-			"type":         "booking.created",
-			"bookingId":    fmt.Sprint(payload["bookingId"]),
-			"code":         code,
-			"customerName": fmt.Sprint(payload["customerName"]),
-			"phone":        fmt.Sprint(payload["phone"]),
-			"date":         date,
-			"time":         clock,
-			"guests":       guests,
-			"title":        "Nuova prenotazione " + code,
-			"body":         date + " alle " + clock + " · " + guests + " ospiti",
-		},
-		Android: &messaging.AndroidConfig{
-			Priority: "high",
-		},
-	})
+	response, sendErr := a.messaging.SendEachForMulticast(ctx, bookingNotificationMessage(fids, payload))
 	if sendErr != nil {
 		var attempts int
 		_ = tx.QueryRowContext(ctx, `SELECT attempts FROM notification_outbox WHERE id = $1`, outboxID).Scan(&attempts)
@@ -973,6 +952,52 @@ func (a *App) dispatchOutbox(ctx context.Context) error {
 		return err
 	}
 	return tx.Commit()
+}
+
+func bookingNotificationMessage(fids []string, payload map[string]any) *messaging.MulticastMessage {
+	code := fmt.Sprint(payload["code"])
+	date := fmt.Sprint(payload["date"])
+	clock := fmt.Sprint(payload["time"])
+	guests := fmt.Sprint(payload["guests"])
+	title := "Nuova prenotazione " + code
+	body := date + " alle " + clock + " · " + guests + " ospiti"
+
+	return &messaging.MulticastMessage{
+		Fids: fids,
+		Data: map[string]string{
+			"type":         "booking.created",
+			"bookingId":    fmt.Sprint(payload["bookingId"]),
+			"code":         code,
+			"customerName": fmt.Sprint(payload["customerName"]),
+			"phone":        fmt.Sprint(payload["phone"]),
+			"date":         date,
+			"time":         clock,
+			"guests":       guests,
+			"title":        title,
+			"body":         body,
+		},
+		Android: &messaging.AndroidConfig{
+			Priority: "high",
+		},
+		APNS: &messaging.APNSConfig{
+			Headers: map[string]string{
+				"apns-priority":  "10",
+				"apns-push-type": "alert",
+			},
+			Payload: &messaging.APNSPayload{
+				Aps: &messaging.Aps{
+					Alert: &messaging.ApsAlert{
+						Title: title,
+						Body:  body,
+					},
+					Sound:            "default",
+					ContentAvailable: true,
+					Category:         "BOOKING_CREATED",
+					ThreadID:         "bookings",
+				},
+			},
+		},
+	}
 }
 
 func dateRange(w http.ResponseWriter, r *http.Request) (string, string, bool) {

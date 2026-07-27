@@ -1,0 +1,71 @@
+name: ParadisoAdmin
+
+options:
+  bundleIdPrefix: it.paradisolounge
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 12.14.0
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+
+targets:
+  ParadisoAdmin:
+    type: application
+    platform: iOS
+    sources:
+      - path: ParadisoAdmin/Sources
+      - path: ParadisoAdmin/Resources
+      - path: ParadisoAdmin/GoogleService-Info.plist
+        optional: true
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: it.paradisolounge.admin.ios
+        PRODUCT_NAME: Paradiso Admin
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_FILE: ParadisoAdmin/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ParadisoAdmin/ParadisoAdmin.entitlements
+        CODE_SIGN_STYLE: Automatic
+    dependencies:
+      - package: Firebase
+        product: FirebaseCore
+      - package: Firebase
+        product: FirebaseMessaging
+
+  ParadisoAdminTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ParadisoAdminTests
+    dependencies:
+      - target: ParadisoAdmin
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: it.paradisolounge.admin.ios.tests
+        GENERATE_INFOPLIST_FILE: true
+
+schemes:
+  ParadisoAdmin:
+    build:
+      targets:
+        ParadisoAdmin: all
+        ParadisoAdminTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - ParadisoAdminTests
+    archive:
+      config: Release

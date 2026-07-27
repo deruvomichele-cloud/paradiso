@@ -1,13 +1,13 @@
 # Paradiso Lounge Bar
 
-Sito, API di prenotazione, dashboard amministrativa e app Android per il Paradiso Lounge Bar di Nova Milanese.
+Sito, API di prenotazione, dashboard amministrativa e app native Android/iOS per il Paradiso Lounge Bar di Nova Milanese.
 
 ## Architettura
 
 ```text
 Browser clienti ─┐
 Dashboard web ───┼── HTTPS ──> Fly Machine (sito statico + API Go)
-App Android ─────┘                         │
+App Android/iOS ┘                         │
                                           ├── SQLite su Fly Volume
                                           └── FCM opzionale (push immediato)
 ```
@@ -15,9 +15,9 @@ App Android ─────┘                         │
 - Un solo container Fly serve il sito e l'API `/v1`, evitando CORS e configurazioni duplicate.
 - SQLite su volume persistente è l'unica fonte dati per prenotazioni, stati, dispositivi e contabilità.
 - Le notifiche usano una transactional outbox: prenotazione e evento push vengono salvati nella stessa transazione.
-- Android controlla periodicamente le nuove richieste ogni 15 minuti circa anche senza Firebase; FCM aggiunge il push immediato.
+- Android controlla periodicamente le nuove richieste anche senza Firebase; FCM aggiunge il push immediato su Android e iOS.
 - Firebase non contiene dati del locale: quando configurato, viene usato soltanto come canale FCM.
-- GitHub Actions verifica backend, JavaScript e app Android, conserva l'APK e può distribuire automaticamente su Fly.
+- GitHub Actions verifica backend, JavaScript e app Android/iOS, conserva l'APK e può distribuire automaticamente su Fly.
 
 ## Funzioni
 
@@ -28,7 +28,7 @@ App Android ─────┘                         │
 - esportazione CSV di prenotazioni e libro cassa;
 - contabilità con incassi, spese, rimborsi, categorie e saldo netto;
 - registrazione dell'incasso reale collegato a una prenotazione;
-- app Android nativa con le stesse funzioni amministrative;
+- app native Android e iOS con le stesse funzioni amministrative;
 - lettura del QR ricevuto dal cliente per aprire e gestire subito la prenotazione;
 - notifica push alla creazione di una prenotazione;
 - build APK scaricabile dagli artifact GitHub o dalle release `android-v*`.
@@ -43,6 +43,7 @@ Il valore del preordine è una stima. Il saldo contabile usa soltanto i moviment
 ├── assets/                              # immagini e video
 ├── backend/                             # API Go, migrazioni, Docker e fly.toml
 ├── android-app/                         # app Android Kotlin + Compose
+├── ios-app/                             # app iOS SwiftUI + XcodeGen
 └── .github/workflows/                   # CI, APK, release e deploy Fly
 ```
 
@@ -101,9 +102,10 @@ Se il nome Fly viene cambiato, aggiornare:
 
 - `app` e `ALLOWED_ORIGINS` in `backend/fly.toml`;
 - `PARADISO_API_BASE_URL` in `android-app/app/build.gradle.kts`;
+- `PARADISO_API_BASE_URL` in `ios-app/ParadisoAdmin/Info.plist`;
 - il valore `url` nei dati strutturati di `index.html`.
 
-## Notifiche Android
+## Notifiche Android e iOS
 
 1. Creare un progetto Firebase e aggiungere un'app Android con package `it.paradisolounge.admin`.
 2. Abilitare Cloud Messaging.
@@ -119,15 +121,21 @@ Se il nome Fly viene cambiato, aggiornare:
 
 5. Per abilitare FCM anche nelle build GitHub Actions, salvare il contenuto base64 di `google-services.json` nel secret repository facoltativo `GOOGLE_SERVICES_JSON_BASE64`.
 
+Per iOS, aggiungere nello stesso progetto Firebase l'app con bundle identifier
+`it.paradisolounge.admin.ios`, scaricare `GoogleService-Info.plist` in
+`ios-app/ParadisoAdmin/` e caricare in Firebase la chiave APNs dell'account
+Apple. Per la CI, il plist può essere salvato nel secret facoltativo
+`GOOGLE_SERVICE_INFO_PLIST_BASE64`.
+
 Senza questi valori l'app e l'API continuano a funzionare, ma il push resta disabilitato.
 
-## Lettore QR Android
+## Lettore QR
 
 Nella sezione Prenotazioni, toccare **Scansiona QR prenotazione** e inquadrare il
-QR della conferma ricevuta dal cliente. L'app estrae il codice `P-XXXXXXXX`,
-recupera la prenotazione dall'API e apre direttamente la scheda da cui aggiornare
-lo stato o registrare l'incasso. La scansione usa Google Code Scanner e non
-richiede il permesso fotocamera all'app.
+QR della conferma ricevuta dal cliente. Le app estraggono il codice `P-XXXXXXXX`,
+recuperano la prenotazione dall'API e aprono direttamente la scheda da cui aggiornare
+lo stato o registrare l'incasso. Android usa Google Code Scanner; iOS usa
+AVFoundation e richiede l'autorizzazione alla fotocamera.
 
 ## Deploy e APK da GitHub
 
@@ -142,6 +150,7 @@ Ogni push su `main` esegue il deploy Fly. Ogni branch e pull request eseguono:
 - controllo sintassi JavaScript;
 - test, race detector e build dell'API Go;
 - test Android e generazione di `app-debug.apk`, pubblicato come artifact `paradiso-admin-apk`.
+- generazione progetto, build e test dell'app iOS su simulatore.
 
 Per creare una GitHub Release installabile:
 
