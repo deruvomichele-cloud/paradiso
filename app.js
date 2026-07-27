@@ -292,8 +292,8 @@ const photoReferences = {
       "generated:focaccia-paradiso",
       "generated:toast-classico",
       "generated:insalatona",
-      "generated:piatto-del-giorno",
-      "generated:pausa-pranzo",
+      "generated:piatto-del-giorno-v2",
+      "generated:pausa-pranzo-v2",
     ],
     bibite: ["generated:acqua", "generated:bibite-lattina", "generated:succhi-frutta", "generated:te-freddo"],
     tessere: [138, 154, 132, 183, 154, 123],
@@ -783,7 +783,8 @@ function setTheme(theme) {
 }
 
 function renderTabs() {
-  categoryTabs.innerHTML = Object.entries(menus[currentTheme].categories)
+  const categoryEntries = Object.entries(menus[currentTheme].categories);
+  const tabs = categoryEntries
     .map(([key, category]) => `
       <button
         class="category-tab"
@@ -792,8 +793,22 @@ function renderTabs() {
         data-category="${key}"
         aria-selected="${key === activeCategory}"
       >${category.label}</button>
-    `)
-    .join("");
+    `);
+
+  if (currentTheme === "night") {
+    const aperitivoIndex = categoryEntries.findIndex(([key]) => key === "aperitivo");
+    tabs.splice(aperitivoIndex + 1, 0, `
+      <button
+        class="category-tab"
+        type="button"
+        role="tab"
+        data-menu-page="eventi.html"
+        aria-selected="false"
+      >Offerta drink</button>
+    `);
+  }
+
+  categoryTabs.innerHTML = tabs.join("");
 }
 
 function renderMenu() {
@@ -1168,6 +1183,12 @@ document.querySelectorAll("[data-set-theme]").forEach((button) => {
 });
 
 categoryTabs.addEventListener("click", (event) => {
+  const pageButton = event.target.closest("[data-menu-page]");
+  if (pageButton) {
+    window.location.href = pageButton.dataset.menuPage;
+    return;
+  }
+
   const button = event.target.closest("[data-category]");
   if (!button) return;
   activeCategory = button.dataset.category;
