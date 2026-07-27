@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 class ParadisoViewModel(application: Application) : AndroidViewModel(application) {
     private val api = ApiClient()
     private val storage = SecureStorage(application)
-    private val executor = Executors.newSingleThreadExecutor()
+    private val executor = Executors.newFixedThreadPool(3)
 
     var state by mutableStateOf(AppState())
         private set
@@ -30,40 +30,29 @@ class ParadisoViewModel(application: Application) : AndroidViewModel(application
             work = { api.login(email, password) },
             success = { newToken ->
                 storage.saveToken(newToken)
-                state = state.copy(token = newToken, isLoading = false, isRestoringSession = false)
-                refresh()
+                state = state.copy(token = newToken, isLoading = false)
+                refreshBookings()
             },
         )
     }
 
     fun logout() {
         storage.clear()
-        state = AppState(isRestoringSession = false)
+        state = AppState()
     }
 
     fun refresh() {
-        val token = state.token ?: return
-        state = state.copy(isLoading = true)
-        background(
-            work = {
-                val bookings = api.bookings(token)
-                val period = currentPeriod()
-                val accounting = api.accounting(token, period.first, period.second)
-                Triple(bookings, accounting.first, accounting.second)
-            },
-            success = { (bookings, summary, entries) ->
-                state = state.copy(
-                    isLoading = false,
-                    bookings = bookings,
-                    summary = summary,
-                    entries = entries,
-                )
-            },
-        )
+        when (state.selectedSection) {
+            Section.BOOKINGS -> refreshBookings()
+            Section.ACCOUNTING -> refreshAccounting()
+        }
     }
 
     fun setSection(section: Section) {
         state = state.copy(selectedSection = section)
+        if (section == Section.ACCOUNTING && !state.accountingLoaded) {
+            refreshAccounting()
+        }
     }
 
     fun setStatusFilter(status: String) {
@@ -76,33 +65,54 @@ class ParadisoViewModel(application: Application) : AndroidViewModel(application
             notice("QR non valido: il codice prenotazione non è stato riconosciuto.", true)
             return
         }
+        openBooking(bookingTarget(null, code)!!, "${code}: prenotazione trovata.")
+    }
+
+    fun openBookingFromNotification(target: BookingTarget) {
+        openBooking(target)
+    }
+
+    fun consumeTargetBooking() {
+        state = state.copy(targetBooking = null)
+    }
+
+    private fun openBooking(target: BookingTarget, successMessage: String? = null) {
         val token = state.token ?: return
+        val cached = state.bookings.firstOrNull {
+            it.id == target.bookingId || it.code.equals(target.code, ignoreCase = true)
+        }
+        if (cached != null) {
+            presentBooking(cached)
+            successMessage?.let { notice(it) }
+            return
+        }
+
         state = state.copy(isLoading = true)
         background(
-            work = { api.bookingByCode(token, code) },
+            work = {
+                target.code?.let { api.bookingByCode(token, it) }
+                    ?: api.bookings(token).firstOrNull { it.id == target.bookingId }
+                    ?: throw ApiException(404, "Prenotazione non trovata.")
+            },
             success = { booking ->
-                val updatedBookings = state.bookings
-                    .filterNot { it.id == booking.id }
-                    .toMutableList()
-                    .apply { add(0, booking) }
-                state = state.copy(
-                    isLoading = false,
-                    bookings = updatedBookings,
-                    selectedSection = Section.BOOKINGS,
-                    statusFilter = "Tutti",
-                    scannedBooking = booking,
-                )
-                notice("${booking.code}: prenotazione trovata.")
+                presentBooking(booking)
+                successMessage?.let { notice(it) }
             },
         )
     }
 
-    fun consumeScannedBooking() {
-        state = state.copy(scannedBooking = null)
-    }
-
-    fun scannerUnavailable() {
-        notice("Lettore QR non disponibile. Controlla Google Play Services e riprova.", true)
+    private fun presentBooking(booking: Booking) {
+        val updatedBookings = state.bookings
+            .filterNot { it.id == booking.id }
+            .toMutableList()
+            .apply { add(0, booking) }
+        state = state.copy(
+            isLoading = false,
+            bookings = updatedBookings,
+            selectedSection = Section.BOOKINGS,
+            statusFilter = "Tutti",
+            targetBooking = booking,
+        )
     }
 
     fun updateStatus(booking: Booking, status: String) {
@@ -144,7 +154,7 @@ class ParadisoViewModel(application: Application) : AndroidViewModel(application
             success = {
                 onDone()
                 notice("Movimento registrato.")
-                refresh()
+                refreshAccounting()
             },
         )
     }
@@ -167,7 +177,7 @@ class ParadisoViewModel(application: Application) : AndroidViewModel(application
             success = {
                 onDone()
                 notice("Incasso ${booking.code} registrato.")
-                refresh()
+                refreshAccounting()
             },
         )
     }
@@ -193,23 +203,34 @@ class ParadisoViewModel(application: Application) : AndroidViewModel(application
 
     private fun restoreSession() {
         val saved = storage.readToken()
-        if (saved == null) {
-            state = state.copy(isRestoringSession = false)
-            return
-        }
+        state = AppState(token = saved)
+        if (saved != null) refreshBookings()
+    }
+
+    private fun refreshBookings() {
+        val token = state.token ?: return
+        state = state.copy(isLoading = true)
         background(
-            work = {
-                api.me(saved)
-                saved
+            work = { api.bookings(token) },
+            success = { bookings ->
+                state = state.copy(isLoading = false, bookings = bookings)
             },
-            success = {
-                state = state.copy(token = saved, isRestoringSession = false)
-                refresh()
-            },
-            showLoading = false,
-            failure = {
-                storage.clear()
-                state = AppState(isRestoringSession = false)
+        )
+    }
+
+    private fun refreshAccounting() {
+        val token = state.token ?: return
+        state = state.copy(isLoading = true)
+        val period = currentPeriod()
+        background(
+            work = { api.accounting(token, period.first, period.second) },
+            success = { (summary, entries) ->
+                state = state.copy(
+                    isLoading = false,
+                    summary = summary,
+                    entries = entries,
+                    accountingLoaded = true,
+                )
             },
         )
     }

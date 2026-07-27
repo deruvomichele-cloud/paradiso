@@ -166,6 +166,7 @@ class SmsStatusReceiver : BroadcastReceiver() {
                         context,
                         "SMS inviato",
                         "La conferma per $code è stata accettata dalla rete Vodafone.",
+                        bookingTarget(bookingId, code),
                     )
                 } else {
                     SmsGateway.clearPending(context, bookingId)
@@ -173,6 +174,7 @@ class SmsStatusReceiver : BroadcastReceiver() {
                         context,
                         "SMS non inviato",
                         "La rete mobile ha rifiutato la conferma per $code (${smsError(resultCode)}).",
+                        bookingTarget(bookingId, code),
                     )
                 }
             }
@@ -187,6 +189,7 @@ class SmsStatusReceiver : BroadcastReceiver() {
                     } else {
                         "Vodafone non ha confermato la consegna per $code."
                     },
+                    bookingTarget(bookingId, code),
                 )
             }
         }

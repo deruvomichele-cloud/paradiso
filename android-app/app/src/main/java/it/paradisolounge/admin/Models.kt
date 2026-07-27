@@ -48,14 +48,14 @@ data class AccountingSummary(
 
 data class AppState(
     val token: String? = null,
-    val isRestoringSession: Boolean = true,
     val isLoading: Boolean = false,
     val bookings: List<Booking> = emptyList(),
     val entries: List<LedgerEntry> = emptyList(),
     val summary: AccountingSummary = AccountingSummary(),
+    val accountingLoaded: Boolean = false,
     val selectedSection: Section = Section.BOOKINGS,
     val statusFilter: String = "Tutti",
-    val scannedBooking: Booking? = null,
+    val targetBooking: Booking? = null,
     val notice: String? = null,
     val noticeIsError: Boolean = false,
 )

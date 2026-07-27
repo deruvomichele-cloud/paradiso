@@ -1,4 +1,8 @@
 <resources>
-    <color name="paradiso_gold">#D8B56C</color>
-    <color name="paradiso_navy">#080D14</color>
+    <color name="paradiso_accent">#6FB9E9</color>
+    <color name="paradiso_navy">#070B11</color>
+    <color name="paradiso_surface">#0D121B</color>
+    <color name="paradiso_text">#F4F7FB</color>
+    <color name="paradiso_muted">#A3AFBD</color>
+    <color name="paradiso_line">#253447</color>
 </resources>

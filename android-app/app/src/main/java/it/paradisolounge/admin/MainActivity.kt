@@ -1,6 +1,7 @@
 package it.paradisolounge.admin
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,7 +30,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -50,7 +51,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -83,6 +83,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -91,35 +92,49 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-private val Night = Color(0xFF080D14)
-private val SurfaceDark = Color(0xFF101821)
-private val SurfaceRaised = Color(0xFF17222E)
-private val Gold = Color(0xFFD8B56C)
-private val TextPrimary = Color(0xFFF5F1E8)
-private val TextMuted = Color(0xFF98A3AE)
-private val Green = Color(0xFF65D6A1)
-private val Red = Color(0xFFFF9090)
+private val Night = Color(0xFF070B11)
+private val HeaderDark = Color(0xFF0A1018)
+private val SurfaceDark = Color(0xFF0D121B)
+private val SurfaceRaised = Color(0xFF111D2C)
+private val Gold = Color(0xFF6FB9E9)
+private val AccentSoft = Color(0xFF12283A)
+private val TextPrimary = Color(0xFFF4F7FB)
+private val TextMuted = Color(0xFFA3AFBD)
+private val Line = Color(0xFF253447)
+private val Green = Color(0xFF61D49B)
+private val Red = Color(0xFFFF8E8E)
 private val euro = NumberFormat.getCurrencyInstance(Locale.ITALY)
 private val italianDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
 class MainActivity : ComponentActivity() {
+    private var notificationTarget by mutableStateOf<BookingTarget?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        notificationTarget = intent.paradisoBookingTarget()
         setContent {
             ParadisoTheme {
-                ParadisoApp()
+                ParadisoApp(
+                    notificationTarget = notificationTarget,
+                    onNotificationTargetConsumed = { notificationTarget = null },
+                )
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        notificationTarget = intent.paradisoBookingTarget()
     }
 }
 
@@ -136,12 +151,26 @@ private fun ParadisoTheme(content: @Composable () -> Unit) {
             onBackground = TextPrimary,
             onSurface = TextPrimary,
             onSurfaceVariant = TextMuted,
+            secondaryContainer = AccentSoft,
+            outline = Line,
             error = Red,
         ),
         typography = MaterialTheme.typography.copy(
-            headlineLarge = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Black),
-            headlineMedium = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            titleLarge = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            headlineLarge = MaterialTheme.typography.headlineLarge.copy(
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Black,
+                letterSpacing = 0.sp,
+            ),
+            headlineMedium = MaterialTheme.typography.headlineMedium.copy(
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.sp,
+            ),
+            titleLarge = MaterialTheme.typography.titleLarge.copy(
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.sp,
+            ),
         ),
         content = content,
     )
@@ -149,7 +178,11 @@ private fun ParadisoTheme(content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
+private fun ParadisoApp(
+    notificationTarget: BookingTarget?,
+    onNotificationTargetConsumed: () -> Unit,
+    vm: ParadisoViewModel = viewModel(),
+) {
     val state = vm.state
     val snackbar = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -158,21 +191,20 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
     var showSmsGatewayDialog by remember { mutableStateOf(false) }
     var smsGatewayEnabled by remember { mutableStateOf(SmsGateway.isEnabled(context)) }
     var smsPermissionDenied by remember { mutableStateOf(false) }
-    val qrScanner = remember(context) {
-        val options = GmsBarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-            .enableAutoZoom()
-            .build()
-        GmsBarcodeScanning.getClient(context, options)
+    val qrScanner = rememberLauncherForActivityResult(ScanContract()) { result ->
+        result.contents?.let(vm::openBookingFromQr)
+    }
+    val qrOptions = remember {
+        ScanOptions()
+            .setCaptureActivity(ParadisoQrCaptureActivity::class.java)
+            .setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+            .setPrompt("Inquadra il QR della prenotazione")
+            .setOrientationLocked(false)
+            .setBeepEnabled(false)
+            .setBarcodeImageEnabled(false)
     }
     val startQrScanner = {
-        qrScanner.startScan()
-            .addOnSuccessListener { barcode ->
-                vm.openBookingFromQr(barcode.rawValue.orEmpty())
-            }
-            .addOnFailureListener {
-                vm.scannerUnavailable()
-            }
+        qrScanner.launch(qrOptions)
         Unit
     }
 
@@ -197,6 +229,13 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
         }
     }
 
+    LaunchedEffect(notificationTarget, state.token) {
+        if (notificationTarget != null && state.token != null) {
+            vm.openBookingFromNotification(notificationTarget)
+            onNotificationTargetConsumed()
+        }
+    }
+
     LaunchedEffect(state.token) {
         if (state.token != null && FirebaseApp.getApps(context).isNotEmpty()) {
             runCatching {
@@ -207,7 +246,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
         }
         if (state.token != null && SmsGateway.isEnabled(context)) {
             BookingGatewayService.start(context)
-        } else if (!state.isRestoringSession && state.token == null) {
+        } else if (state.token == null) {
             BookingGatewayService.stop(context)
         }
         if (state.token != null && !SmsGateway.hasBeenConfigured(context)) {
@@ -222,15 +261,14 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
         }
     }
 
-    LaunchedEffect(state.scannedBooking?.id) {
-        state.scannedBooking?.let {
+    LaunchedEffect(state.targetBooking?.id) {
+        state.targetBooking?.let {
             selectedBooking = it
-            vm.consumeScannedBooking()
+            vm.consumeTargetBooking()
         }
     }
 
     when {
-        state.isRestoringSession -> LoadingScreen()
         state.token == null -> Scaffold(snackbarHost = { SnackbarHost(snackbar) }) { padding ->
             LoginScreen(
                 loading = state.isLoading,
@@ -243,7 +281,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
             snackbarHost = { SnackbarHost(snackbar) },
             topBar = {
                 TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = SurfaceDark),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = HeaderDark),
                     title = {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Logo()
@@ -279,7 +317,7 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
                 )
             },
             bottomBar = {
-                NavigationBar(containerColor = SurfaceDark) {
+                NavigationBar(containerColor = HeaderDark) {
                     NavigationBarItem(
                         selected = state.selectedSection == Section.BOOKINGS,
                         onClick = { vm.setSection(Section.BOOKINGS) },
@@ -377,17 +415,6 @@ private fun ParadisoApp(vm: ParadisoViewModel = viewModel()) {
 }
 
 @Composable
-private fun LoadingScreen() {
-    Box(Modifier.fillMaxSize().background(Night), contentAlignment = Alignment.Center) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Logo(72)
-            Spacer(Modifier.height(22.dp))
-            CircularProgressIndicator(color = Gold)
-        }
-    }
-}
-
-@Composable
 private fun SmsGatewayDialog(
     enabled: Boolean,
     permissionDenied: Boolean,
@@ -452,7 +479,7 @@ private fun LoginScreen(loading: Boolean, onLogin: (String, String) -> Unit, mod
         Card(
             modifier = Modifier.fillMaxWidth().widthIn(max = 480.dp),
             colors = CardDefaults.cardColors(containerColor = SurfaceDark),
-            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.09f)),
+            border = BorderStroke(1.dp, Line),
         ) {
             Column(Modifier.padding(28.dp), horizontalAlignment = Alignment.Start) {
                 Logo(64)
@@ -578,7 +605,7 @@ private fun StatCard(label: String, value: String, icon: androidx.compose.ui.gra
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = SurfaceDark),
-        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.08f)),
+        border = BorderStroke(1.dp, Line),
     ) {
         Column(Modifier.padding(16.dp)) {
             Icon(icon, null, tint = Gold, modifier = Modifier.size(20.dp))
@@ -605,7 +632,7 @@ private fun BookingCard(booking: Booking, onClick: () -> Unit) {
                 StatusPill(booking.status)
             }
             Spacer(Modifier.height(14.dp))
-            HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
+            HorizontalDivider(color = Line)
             Spacer(Modifier.height(13.dp))
             Row {
                 Icon(Icons.Default.CalendarMonth, null, tint = TextMuted, modifier = Modifier.size(18.dp))
@@ -884,10 +911,19 @@ private fun EmptyState(title: String, copy: String) {
 @Composable
 private fun Logo(size: Int = 44) {
     Box(
-        Modifier.size(size.dp).background(Gold, CircleShape),
+        Modifier
+            .size(size.dp)
+            .background(SurfaceRaised, CircleShape)
+            .border(1.dp, Line, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        Text("P", color = Night, fontSize = (size * 0.56f).sp, fontWeight = FontWeight.Black)
+        Text(
+            "P",
+            color = Gold,
+            fontFamily = FontFamily.Serif,
+            fontSize = (size * 0.56f).sp,
+            fontWeight = FontWeight.Black,
+        )
     }
 }
 

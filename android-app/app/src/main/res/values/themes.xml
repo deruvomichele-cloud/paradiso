@@ -6,4 +6,11 @@
         <item name="android:navigationBarColor">@color/paradiso_navy</item>
         <item name="android:windowActionModeOverlay">true</item>
     </style>
+
+    <style name="Theme.Paradiso.Scanner" parent="Theme.Paradiso">
+        <item name="android:windowBackground">@color/paradiso_navy</item>
+        <item name="android:colorAccent">@color/paradiso_accent</item>
+        <item name="android:textColor">@color/paradiso_text</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
 </resources>

@@ -70,7 +70,7 @@ class BookingGatewayService : Service() {
         )
         return Notification.Builder(this, "gateway")
             .setSmallIcon(R.drawable.ic_notification)
-            .setColor(getColor(R.color.paradiso_gold))
+            .setColor(getColor(R.color.paradiso_accent))
             .setContentTitle("Paradiso · Gateway SMS")
             .setContentText(status)
             .setOngoing(true)

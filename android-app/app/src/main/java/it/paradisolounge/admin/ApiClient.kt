@@ -16,10 +16,6 @@ class ApiClient(private val baseUrl: String = BuildConfig.API_BASE_URL) {
         return request("POST", "/v1/auth/login", body).getString("token")
     }
 
-    fun me(token: String) {
-        request("GET", "/v1/me", token = token)
-    }
-
     fun bookings(token: String): List<Booking> {
         val result = request("GET", "/v1/bookings?limit=300", token = token)
         val array = result.optJSONArray("bookings") ?: return emptyList()
@@ -113,8 +109,8 @@ class ApiClient(private val baseUrl: String = BuildConfig.API_BASE_URL) {
         val connection = URL(baseUrl.trimEnd('/') + path).openConnection() as HttpURLConnection
         try {
             connection.requestMethod = method
-            connection.connectTimeout = 12_000
-            connection.readTimeout = 20_000
+            connection.connectTimeout = 7_000
+            connection.readTimeout = 12_000
             connection.setRequestProperty("Accept", "application/json")
             if (token != null) connection.setRequestProperty("Authorization", "Bearer $token")
             if (body != null) {

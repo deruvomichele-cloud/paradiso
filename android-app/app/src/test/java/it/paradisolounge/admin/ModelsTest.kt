@@ -54,4 +54,14 @@ class ModelsTest {
         assertNull(extractBookingCode(""))
         assertNull(extractBookingCode("P-TOO-SHORT"))
     }
+
+    @Test
+    fun notificationTargetKeepsBookingIdentity() {
+        assertEquals(
+            BookingTarget("booking-123", "P-ABC12345"),
+            bookingTarget(" booking-123 ", "p-abc12345"),
+        )
+        assertEquals("P-ABC12345", bookingTarget(null, "p-abc12345")?.key)
+        assertNull(bookingTarget(" ", " "))
+    }
 }

@@ -21,6 +21,11 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.util.concurrent.TimeUnit
 
+private const val ACTION_OPEN_BOOKING = "it.paradisolounge.admin.OPEN_BOOKING"
+private const val ACTION_OPEN_DASHBOARD = "it.paradisolounge.admin.OPEN_DASHBOARD"
+private const val EXTRA_NOTIFICATION_BOOKING_ID = "notification_booking_id"
+private const val EXTRA_NOTIFICATION_BOOKING_CODE = "notification_booking_code"
+
 class ParadisoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -98,7 +103,12 @@ class ParadisoMessagingService : FirebaseMessagingService() {
             -> "$body · SMS di conferma non inviato"
             else -> body
         }
-        showParadisoNotification(this, title, notificationBody)
+        showParadisoNotification(
+            context = this,
+            title = title,
+            body = notificationBody,
+            target = bookingTarget(message.data["bookingId"], message.data["code"]),
+        )
     }
 }
 
@@ -163,28 +173,46 @@ internal object BookingGatewaySync {
                 if (queued > 0) add("$queued SMS in invio")
                 if (failed > 0) add("$failed SMS non inviati")
             }.joinToString(" · ")
-            showParadisoNotification(context, "Nuova prenotazione ${latest.code}", details)
+            showParadisoNotification(
+                context,
+                "Nuova prenotazione ${latest.code}",
+                details,
+                bookingTarget(latest.id, latest.code),
+            )
         }
         preferences.edit().putString("latest_booking", newest).apply()
     }
 }
 
-internal fun showParadisoNotification(context: Context, title: String, body: String) {
+internal fun Intent.paradisoBookingTarget(): BookingTarget? = bookingTarget(
+    getStringExtra(EXTRA_NOTIFICATION_BOOKING_ID),
+    getStringExtra(EXTRA_NOTIFICATION_BOOKING_CODE),
+)
+
+internal fun showParadisoNotification(
+    context: Context,
+    title: String,
+    body: String,
+    target: BookingTarget? = null,
+) {
     if (Build.VERSION.SDK_INT >= 33 &&
         context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     ) return
     val intent = Intent(context, MainActivity::class.java).apply {
-        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        action = target?.let { "$ACTION_OPEN_BOOKING:${it.key}" } ?: ACTION_OPEN_DASHBOARD
+        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        target?.bookingId?.let { putExtra(EXTRA_NOTIFICATION_BOOKING_ID, it) }
+        target?.code?.let { putExtra(EXTRA_NOTIFICATION_BOOKING_CODE, it) }
     }
     val pendingIntent = PendingIntent.getActivity(
         context,
-        0,
+        intent.action.hashCode(),
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )
     val notification = Notification.Builder(context, "bookings")
         .setSmallIcon(R.drawable.ic_notification)
-        .setColor(context.getColor(R.color.paradiso_gold))
+        .setColor(context.getColor(R.color.paradiso_accent))
         .setContentTitle(title)
         .setContentText(body)
         .setStyle(Notification.BigTextStyle().bigText(body))
