@@ -290,14 +290,14 @@ const generatedPhoto = (name) => `assets/images/generated/${name}.webp`;
 
 const photoReferences = {
   day: {
-    colazione: [138, 154, 219, 172, 132, 37],
+    colazione: [138, 154, 219, 172, 132, 132, 37],
     pranzo: [
       "generated:focaccia-paradiso",
       "generated:toast-classico",
     ],
     bibite: ["generated:acqua", "generated:bibite-lattina", "generated:succhi-frutta", "generated:te-freddo"],
     tessere: [138, 154, 132, 183, 154, 123],
-    servizi: [200, 185, "generated:pizza-compleanno", 69],
+    servizi: [200, 119, "generated:pizza-compleanno", 69],
   },
   night: {
     cocktail: [
@@ -339,7 +339,7 @@ const photoReferences = {
       120,
       "assets/images/generated/tagliere-base-v3.webp",
     ],
-    servizi: [200, 185, "generated:pizza-compleanno", 69],
+    servizi: [200, 119, "generated:pizza-compleanno", 69],
     birre: [
       "assets/images/night-drinks/beers/birra-bottiglia.webp?v=2",
       "assets/images/night-drinks/beers/media-trancio-v3.webp",
