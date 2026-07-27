@@ -35,7 +35,7 @@ Il target minimo è iOS 17 e il bundle identifier è
 
 1. Nello stesso progetto Firebase del backend, aggiungere un'app iOS con bundle
    identifier `it.paradisolounge.admin.ios`.
-2. Scaricare `GoogleService-Info.plist` in `ios-app/ParadisoAdmin/`.
+2. Scaricare `GoogleService-Info.plist` in `ios-app/ParadisoAdmin/Resources/`.
 3. Nel progetto Firebase, caricare la chiave APNs dell'account Apple.
 4. In Xcode, scegliere il team di firma e verificare la capability Push
    Notifications.

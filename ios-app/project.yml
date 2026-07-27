@@ -22,9 +22,6 @@ targets:
     sources:
       - path: ParadisoAdmin/Sources
       - path: ParadisoAdmin/Resources
-      - path: ParadisoAdmin/GoogleService-Info.plist
-        optional: true
-        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: it.paradisolounge.admin.ios

@@ -123,7 +123,7 @@ Se il nome Fly viene cambiato, aggiornare:
 
 Per iOS, aggiungere nello stesso progetto Firebase l'app con bundle identifier
 `it.paradisolounge.admin.ios`, scaricare `GoogleService-Info.plist` in
-`ios-app/ParadisoAdmin/` e caricare in Firebase la chiave APNs dell'account
+`ios-app/ParadisoAdmin/Resources/` e caricare in Firebase la chiave APNs dell'account
 Apple. Per la CI, il plist può essere salvato nel secret facoltativo
 `GOOGLE_SERVICE_INFO_PLIST_BASE64`.
 
