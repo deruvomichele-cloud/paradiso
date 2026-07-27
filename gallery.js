@@ -70,6 +70,41 @@ const galleryVideos = Array.from({ length: 108 }, (_, index) => index + 231)
     poster: `assets/gallery/posters/VID-20260721-WA${padGalleryId(id)}.webp?v=20260727-2`,
   }));
 
+const latestGalleryItems = [
+  {
+    id: "photo-special-20260727-01",
+    type: "photo",
+    theme: "drinks",
+    src: "assets/gallery/photos/paradiso-special-20260727-01.webp",
+  },
+  {
+    id: "photo-special-20260727-02",
+    type: "photo",
+    theme: "food",
+    src: "assets/gallery/photos/paradiso-special-20260727-02.webp",
+  },
+  {
+    id: "photo-special-20260727-03",
+    type: "photo",
+    theme: "drinks",
+    src: "assets/gallery/photos/paradiso-special-20260727-03.webp",
+  },
+  {
+    id: "video-special-20260727-01",
+    type: "video",
+    theme: "drinks",
+    src: "assets/gallery/videos/paradiso-special-20260727-01.mp4",
+    poster: "assets/gallery/photos/paradiso-special-20260727-01.webp",
+  },
+  {
+    id: "video-special-20260727-02",
+    type: "video",
+    theme: "food",
+    src: "assets/gallery/videos/paradiso-special-20260727-02.mp4",
+    poster: "assets/gallery/photos/paradiso-special-20260727-02.webp",
+  },
+];
+
 function interleaveGalleryMedia(photos, videos) {
   const items = [];
   let photoIndex = 0;
@@ -89,7 +124,7 @@ function interleaveGalleryMedia(photos, videos) {
   return items;
 }
 
-const galleryItems = interleaveGalleryMedia(galleryPhotos, galleryVideos);
+const galleryItems = [...latestGalleryItems, ...interleaveGalleryMedia(galleryPhotos, galleryVideos)];
 const galleryGrid = document.querySelector("#gallery-grid");
 const galleryFilters = document.querySelector("#gallery-filters");
 const galleryMore = document.querySelector("#gallery-more");
