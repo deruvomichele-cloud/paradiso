@@ -99,7 +99,7 @@ jobs:
       - name: Select simulator
         id: simulator
         run: |
-          UDID=$(xcrun simctl list devices available | sed -nE 's/.*iPhone.*\\(([0-9A-F-]{36})\\).*/\\1/p' | head -1)
+          UDID=$(xcrun simctl list devices available --json | jq -r '.devices[][] | select(.name | startswith("iPhone")) | .udid' | head -1)
           test -n "$UDID"
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
       - name: Test iOS app
