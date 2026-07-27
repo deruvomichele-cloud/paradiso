@@ -65,7 +65,7 @@ const galleryVideos = Array.from({ length: 108 }, (_, index) => index + 231)
     type: "video",
     theme: galleryThemeFor(id, "video"),
     src: `assets/gallery/videos/VID-20260721-WA${padGalleryId(id)}.mp4`,
-    poster: `assets/gallery/posters/VID-20260721-WA${padGalleryId(id)}.webp`,
+    poster: `assets/gallery/posters/VID-20260721-WA${padGalleryId(id)}.webp?v=20260727-2`,
   }));
 
 function interleaveGalleryMedia(photos, videos) {
