@@ -290,7 +290,7 @@ const generatedPhoto = (name) => `assets/images/generated/${name}.webp`;
 
 const photoReferences = {
   day: {
-    colazione: [138, 154, 219, 172, 132, 132, 37],
+    colazione: [138, 154, 219, 172, "assets/gallery/photos/paradiso-special-20260727-02.webp", 132, 37],
     pranzo: [
       "generated:focaccia-paradiso",
       "generated:toast-classico",
