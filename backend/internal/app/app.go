@@ -516,8 +516,9 @@ func (a *App) sendBookingConfirmation(parent context.Context, booking Booking) e
 		return nil
 	}
 	payload, err := json.Marshal(map[string]any{
-		"source":  "paradiso-booking-v1",
-		"website": "https://loungebarparadiso.it/",
+		"source": "paradiso-booking-v1",
+		// The Apps Script uses this field as an anti-spam honeypot.
+		"website": "",
 		"id":      booking.Code,
 		"name":    booking.CustomerName,
 		"phone":   booking.Phone,

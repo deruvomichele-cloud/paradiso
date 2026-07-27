@@ -66,6 +66,44 @@ func TestClean(t *testing.T) {
 	}
 }
 
+func TestSendBookingConfirmationLeavesHoneypotBlank(t *testing.T) {
+	payloads := make(chan map[string]any, 1)
+	webhook := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var payload map[string]any
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		payloads <- payload
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"ok":true}`))
+	}))
+	defer webhook.Close()
+
+	service := &App{cfg: Config{BookingEmailWebhookURL: webhook.URL}}
+	err := service.sendBookingConfirmation(context.Background(), Booking{
+		Code:            "P-TEST1234",
+		CustomerName:    "Mario Rossi",
+		Phone:           "+39 333 1234567",
+		Email:           "mario@example.com",
+		ReservationDate: "2026-07-28",
+		ReservationTime: "21:30",
+		Guests:          4,
+		Items:           []BookingItem{},
+	})
+	if err != nil {
+		t.Fatalf("send confirmation: %v", err)
+	}
+
+	payload := <-payloads
+	if payload["website"] != "" {
+		t.Fatalf("website honeypot must be blank, received %#v", payload["website"])
+	}
+	if payload["source"] != "paradiso-booking-v1" || payload["email"] != "mario@example.com" {
+		t.Fatalf("unexpected confirmation payload: %#v", payload)
+	}
+}
+
 func TestBookingAndAccountingFlow(t *testing.T) {
 	cfg := Config{
 		Port:          "0",
