@@ -410,7 +410,7 @@ const photoReferences = {
       "assets/images/generated/snacks/mentos-v2.jpg",
       14,
       14,
-      "assets/images/generated/snacks/patatine-san-carlo-v2.jpg",
+      "assets/images/generated/snacks/patatine-san-carlo-original.jpg",
       "assets/images/generated/snacks/patatine-impilate.jpg",
       "assets/images/generated/snacks/caramella-liquida.jpg",
     ],
