@@ -9,7 +9,7 @@ const toIdSet = (values) => new Set(values.trim().split(/\s+/).filter(Boolean).m
 const padGalleryId = (value) => String(value).padStart(4, "0");
 
 const missingPhotoIds = toIdSet(
-  "15 17 20 21 27 35 47 65 86 87 113 114 125 137 144 146 150 153 160 176 187 190 203 212 217",
+  "15 17 20 21 27 35 38 47 48 52 53 64 65 77 79 86 87 91 94 102 108 113 114 120 125 137 144 146 150 153 160 176 187 190 203 212 214 217 226",
 );
 const missingVideoIds = toIdSet(
   "239 240 243 245 246 247 248 250 253 255 257 260 262 263 266 268 271 272 273 282 286 288 293 298 299 302 305 306 307 308 309 311 321 324 329 333 334 335 337",
