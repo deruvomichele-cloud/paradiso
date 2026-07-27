@@ -80,3 +80,10 @@ CREATE TABLE IF NOT EXISTS notification_outbox (
 CREATE INDEX IF NOT EXISTS notification_outbox_pending_idx
   ON notification_outbox (available_at, id)
   WHERE processed_at IS NULL;
+
+CREATE TABLE IF NOT EXISTS site_content (
+  id integer PRIMARY KEY CHECK (id = 1),
+  content text NOT NULL CHECK (json_valid(content)),
+  updated_by text NOT NULL REFERENCES admin_users(id),
+  updated_at text NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);

@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"math"
 	"net/http"
 	"os"
 	"path"
@@ -41,6 +42,7 @@ type App struct {
 	db        *sql.DB
 	router    chi.Router
 	messaging *messaging.Client
+	mediaDir  string
 	cancel    context.CancelFunc
 	wg        sync.WaitGroup
 	rateMu    sync.Mutex
@@ -98,6 +100,39 @@ type LedgerEntry struct {
 	CreatedAt     string  `json:"createdAt"`
 }
 
+type SiteContent struct {
+	Version int                 `json:"version"`
+	Menus   map[string]SiteMenu `json:"menus"`
+}
+
+type SiteMenu struct {
+	Title              string                  `json:"title"`
+	Intro              string                  `json:"intro"`
+	HeroCopy           string                  `json:"heroCopy"`
+	HeroLabel          string                  `json:"heroLabel"`
+	HeroImage          string                  `json:"heroImage"`
+	HeroAlt            string                  `json:"heroAlt"`
+	HeroPosition       string                  `json:"heroPosition"`
+	HeroPositionMobile string                  `json:"heroPositionMobile"`
+	CategoryOrder      []string                `json:"categoryOrder"`
+	Categories         map[string]SiteCategory `json:"categories"`
+}
+
+type SiteCategory struct {
+	Label string     `json:"label"`
+	Items []SiteItem `json:"items"`
+}
+
+type SiteItem struct {
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Price       float64 `json:"price"`
+	Description string  `json:"description"`
+	Image       string  `json:"image"`
+	ImageFit    string  `json:"imageFit,omitempty"`
+	Fact        string  `json:"fact,omitempty"`
+}
+
 func New(ctx context.Context, cfg Config, logger *slog.Logger) (*App, error) {
 	dsn := cfg.DatabasePath + "?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)&_pragma=foreign_keys(1)"
 	pool, err := sql.Open("sqlite", dsn)
@@ -112,7 +147,13 @@ func New(ctx context.Context, cfg Config, logger *slog.Logger) (*App, error) {
 	}
 
 	appCtx, cancel := context.WithCancel(context.Background())
-	a := &App{cfg: cfg, log: logger, db: pool, cancel: cancel, rateHits: make(map[string][]time.Time)}
+	mediaDir := filepath.Join(filepath.Dir(cfg.DatabasePath), "site-media")
+	if err := os.MkdirAll(mediaDir, 0o755); err != nil {
+		pool.Close()
+		cancel()
+		return nil, fmt.Errorf("create site media directory: %w", err)
+	}
+	a := &App{cfg: cfg, log: logger, db: pool, mediaDir: mediaDir, cancel: cancel, rateHits: make(map[string][]time.Time)}
 	if err := a.runMigrations(ctx); err != nil {
 		a.Close()
 		return nil, err
@@ -206,6 +247,7 @@ func (a *App) routes() chi.Router {
 	r.Route("/v1", func(r chi.Router) {
 		r.With(a.rateLimit("login", 10, 15*time.Minute)).Post("/auth/login", a.login)
 		r.With(a.rateLimit("booking", 8, time.Hour)).Post("/bookings", a.createBooking)
+		r.Get("/site-content", a.getSiteContent)
 		r.Group(func(r chi.Router) {
 			r.Use(a.authenticate)
 			r.Get("/me", a.me)
@@ -216,12 +258,23 @@ func (a *App) routes() chi.Router {
 			r.Post("/accounting/entries", a.createLedgerEntry)
 			r.Post("/accounting/bookings/{id}/register-income", a.registerBookingIncome)
 			r.Post("/devices", a.registerDevice)
+			r.Put("/site-content", a.updateSiteContent)
+			r.Post("/site-media", a.uploadSiteMedia)
 		})
 	})
+	r.Handle("/media/*", a.siteMediaHandler())
 	if a.cfg.WebRoot != "" {
 		r.Handle("/*", a.staticHandler())
 	}
 	return r
+}
+
+func (a *App) siteMediaHandler() http.Handler {
+	files := http.StripPrefix("/media/", http.FileServer(http.Dir(a.mediaDir)))
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+		files.ServeHTTP(w, r)
+	})
 }
 
 func (a *App) staticHandler() http.Handler {
@@ -314,7 +367,7 @@ func (a *App) cors(next http.Handler) http.Handler {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, OPTIONS")
 		}
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusNoContent)
@@ -434,6 +487,249 @@ func (a *App) me(w http.ResponseWriter, r *http.Request) {
 func adminFromContext(ctx context.Context) Admin {
 	admin, _ := ctx.Value(authContextKey{}).(Admin)
 	return admin
+}
+
+func (a *App) getSiteContent(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store")
+	var payload, updatedAt string
+	err := a.db.QueryRowContext(r.Context(), `
+		SELECT content, updated_at
+		FROM site_content
+		WHERE id = 1
+	`).Scan(&payload, &updatedAt)
+	if errors.Is(err, sql.ErrNoRows) {
+		writeJSON(w, http.StatusOK, map[string]any{"content": nil, "updatedAt": nil})
+		return
+	}
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "database_error", "Contenuti del sito non disponibili.")
+		return
+	}
+	var content SiteContent
+	if err := json.Unmarshal([]byte(payload), &content); err != nil {
+		a.log.Error("stored site content is invalid", "error", err)
+		writeError(w, http.StatusInternalServerError, "content_error", "Contenuti del sito non validi.")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"content": content, "updatedAt": updatedAt})
+}
+
+func (a *App) updateSiteContent(w http.ResponseWriter, r *http.Request) {
+	var input SiteContent
+	if err := decodeJSON(w, r, &input); err != nil {
+		return
+	}
+	if err := normalizeSiteContent(&input); err != nil {
+		writeError(w, http.StatusUnprocessableEntity, "invalid_site_content", err.Error())
+		return
+	}
+	payload, err := json.Marshal(input)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "content_error", "Contenuti del sito non salvati.")
+		return
+	}
+	admin := adminFromContext(r.Context())
+	var updatedAt string
+	err = a.db.QueryRowContext(r.Context(), `
+		INSERT INTO site_content (id, content, updated_by)
+		VALUES (1, $1, $2)
+		ON CONFLICT (id) DO UPDATE SET
+			content = excluded.content,
+			updated_by = excluded.updated_by,
+			updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now')
+		RETURNING updated_at
+	`, string(payload), admin.ID).Scan(&updatedAt)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "database_error", "Contenuti del sito non salvati.")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"content": input, "updatedAt": updatedAt})
+}
+
+func (a *App) uploadSiteMedia(w http.ResponseWriter, r *http.Request) {
+	r.Body = http.MaxBytesReader(w, r.Body, 9<<20)
+	if err := r.ParseMultipartForm(8 << 20); err != nil {
+		writeError(w, http.StatusBadRequest, "invalid_media", "Immagine non valida o superiore a 8 MB.")
+		return
+	}
+	file, _, err := r.FormFile("file")
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "missing_media", "Seleziona un'immagine.")
+		return
+	}
+	defer file.Close()
+
+	header := make([]byte, 512)
+	read, err := file.Read(header)
+	if err != nil && !errors.Is(err, io.EOF) {
+		writeError(w, http.StatusBadRequest, "invalid_media", "Impossibile leggere l'immagine.")
+		return
+	}
+	contentType := http.DetectContentType(header[:read])
+	extension, ok := siteMediaExtension(contentType)
+	if !ok {
+		writeError(w, http.StatusUnsupportedMediaType, "unsupported_media", "Usa un'immagine JPG, PNG o WebP.")
+		return
+	}
+	if _, err := file.Seek(0, io.SeekStart); err != nil {
+		writeError(w, http.StatusBadRequest, "invalid_media", "Impossibile leggere l'immagine.")
+		return
+	}
+
+	filename := uuid.NewString() + extension
+	target := filepath.Join(a.mediaDir, filename)
+	output, err := os.OpenFile(target, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o644)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "media_error", "Immagine non salvata.")
+		return
+	}
+	written, copyErr := io.Copy(output, io.LimitReader(file, (8<<20)+1))
+	closeErr := output.Close()
+	if copyErr != nil || closeErr != nil || written > 8<<20 {
+		_ = os.Remove(target)
+		writeError(w, http.StatusBadRequest, "invalid_media", "Immagine non valida o superiore a 8 MB.")
+		return
+	}
+	writeJSON(w, http.StatusCreated, map[string]any{
+		"url":         "/media/" + filename,
+		"contentType": contentType,
+		"size":        written,
+	})
+}
+
+func siteMediaExtension(contentType string) (string, bool) {
+	switch contentType {
+	case "image/jpeg":
+		return ".jpg", true
+	case "image/png":
+		return ".png", true
+	case "image/webp":
+		return ".webp", true
+	default:
+		return "", false
+	}
+}
+
+func normalizeSiteContent(content *SiteContent) error {
+	if content.Version == 0 {
+		content.Version = 1
+	}
+	if content.Version != 1 {
+		return errors.New("Versione dei contenuti non supportata.")
+	}
+	if len(content.Menus) != 2 {
+		return errors.New("Configura i menu Giorno e Notte.")
+	}
+
+	seenItemIDs := make(map[string]bool)
+	for _, theme := range []string{"day", "night"} {
+		menu, ok := content.Menus[theme]
+		if !ok {
+			return fmt.Errorf("Menu %s mancante.", theme)
+		}
+		menu.Title = strings.TrimSpace(menu.Title)
+		menu.Intro = strings.TrimSpace(menu.Intro)
+		menu.HeroCopy = strings.TrimSpace(menu.HeroCopy)
+		menu.HeroLabel = strings.TrimSpace(menu.HeroLabel)
+		menu.HeroImage = strings.TrimSpace(menu.HeroImage)
+		menu.HeroAlt = strings.TrimSpace(menu.HeroAlt)
+		menu.HeroPosition = strings.TrimSpace(menu.HeroPosition)
+		menu.HeroPositionMobile = strings.TrimSpace(menu.HeroPositionMobile)
+		if len(menu.Title) < 2 || len(menu.Title) > 100 ||
+			len(menu.Intro) < 2 || len(menu.Intro) > 500 ||
+			len(menu.HeroCopy) < 2 || len(menu.HeroCopy) > 300 ||
+			len(menu.HeroLabel) < 2 || len(menu.HeroLabel) > 80 ||
+			len(menu.HeroAlt) < 2 || len(menu.HeroAlt) > 240 {
+			return fmt.Errorf("Testi del menu %s non validi.", theme)
+		}
+		if !validSiteImage(menu.HeroImage) {
+			return fmt.Errorf("Immagine principale del menu %s non valida.", theme)
+		}
+		if len(menu.Categories) == 0 || len(menu.Categories) > 30 {
+			return fmt.Errorf("Categorie del menu %s non valide.", theme)
+		}
+		if len(menu.CategoryOrder) != len(menu.Categories) {
+			return fmt.Errorf("Ordine categorie del menu %s non valido.", theme)
+		}
+
+		seenCategories := make(map[string]bool)
+		itemCount := 0
+		for _, categoryKey := range menu.CategoryOrder {
+			if !validSiteKey(categoryKey) || seenCategories[categoryKey] {
+				return fmt.Errorf("Categoria %q non valida.", categoryKey)
+			}
+			seenCategories[categoryKey] = true
+			category, exists := menu.Categories[categoryKey]
+			if !exists {
+				return fmt.Errorf("Categoria %q mancante.", categoryKey)
+			}
+			category.Label = strings.TrimSpace(category.Label)
+			if len(category.Label) < 1 || len(category.Label) > 80 {
+				return fmt.Errorf("Nome della categoria %q non valido.", categoryKey)
+			}
+			if len(category.Items) > 300 {
+				return fmt.Errorf("Troppi prodotti nella categoria %q.", category.Label)
+			}
+			for index := range category.Items {
+				product := &category.Items[index]
+				product.ID = strings.TrimSpace(product.ID)
+				product.Name = strings.TrimSpace(product.Name)
+				product.Description = strings.TrimSpace(product.Description)
+				product.Image = strings.TrimSpace(product.Image)
+				product.ImageFit = strings.TrimSpace(product.ImageFit)
+				product.Fact = strings.TrimSpace(product.Fact)
+				if len(product.ID) < 3 || len(product.ID) > 140 || seenItemIDs[product.ID] {
+					return fmt.Errorf("Identificativo prodotto non valido o duplicato in %q.", category.Label)
+				}
+				seenItemIDs[product.ID] = true
+				if len(product.Name) < 1 || len(product.Name) > 140 ||
+					len(product.Description) > 2000 || len(product.Fact) > 1500 {
+					return fmt.Errorf("Contenuti di un prodotto in %q non validi.", category.Label)
+				}
+				if math.IsNaN(product.Price) || math.IsInf(product.Price, 0) || product.Price < 0 || product.Price > 100000 {
+					return fmt.Errorf("Prezzo di %q non valido.", product.Name)
+				}
+				if !validSiteImage(product.Image) {
+					return fmt.Errorf("Immagine di %q non valida.", product.Name)
+				}
+				if product.ImageFit != "" && product.ImageFit != "contain" && product.ImageFit != "cover" {
+					return fmt.Errorf("Adattamento immagine di %q non valido.", product.Name)
+				}
+			}
+			itemCount += len(category.Items)
+			menu.Categories[categoryKey] = category
+		}
+		if itemCount > 1000 {
+			return fmt.Errorf("Troppi prodotti nel menu %s.", theme)
+		}
+		content.Menus[theme] = menu
+	}
+	return nil
+}
+
+func validSiteKey(value string) bool {
+	if len(value) < 1 || len(value) > 80 {
+		return false
+	}
+	for _, character := range value {
+		if (character >= 'a' && character <= 'z') ||
+			(character >= '0' && character <= '9') ||
+			character == '-' || character == '_' {
+			continue
+		}
+		return false
+	}
+	return true
+}
+
+func validSiteImage(value string) bool {
+	if len(value) < 1 || len(value) > 600 {
+		return false
+	}
+	return strings.HasPrefix(value, "assets/") ||
+		strings.HasPrefix(value, "/media/") ||
+		strings.HasPrefix(value, "https://") ||
+		strings.HasPrefix(value, "http://")
 }
 
 func (a *App) createBooking(w http.ResponseWriter, r *http.Request) {

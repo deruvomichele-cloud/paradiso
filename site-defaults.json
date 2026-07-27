@@ -1,0 +1,1728 @@
+{
+  "version": 1,
+  "menus": {
+    "day": {
+      "title": "Menu del giorno",
+      "intro": "Colazioni curate e proposte semplici per la pausa pranzo.",
+      "heroCopy": "Colazioni e pausa pranzo nel cuore di Nova Milanese.",
+      "heroLabel": "Scopri il menu",
+      "heroImage": "assets/gallery/photos/IMG-20260721-WA0222.webp",
+      "heroAlt": "L'ingresso e il giardino del Paradiso Lounge Bar",
+      "heroPosition": "center 53%",
+      "heroPositionMobile": "58% center",
+      "categories": {
+        "colazione": {
+          "label": "Colazione",
+          "items": [
+            {
+              "name": "Espresso",
+              "price": 1.2,
+              "description": "La pausa italiana, intensa e fragrante.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
+              "id": "day-colazione-espresso"
+            },
+            {
+              "name": "Caffè macchiato",
+              "price": 1.3,
+              "description": "Espresso con una nuvola di latte.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
+              "id": "day-colazione-caffè-macchiato"
+            },
+            {
+              "name": "Cappuccino",
+              "price": 1.5,
+              "description": "Espresso, latte caldo e schiuma vellutata.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
+              "id": "day-colazione-cappuccino"
+            },
+            {
+              "name": "Cornetto",
+              "price": 1.5,
+              "description": "Sfoglia fragrante, semplice o farcita.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
+              "id": "day-colazione-cornetto"
+            },
+            {
+              "name": "Cornetto con la frutta",
+              "price": 2.5,
+              "description": "Sfoglia fragrante con ripieno alla frutta.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
+              "id": "day-colazione-cornetto-con-la-frutta"
+            },
+            {
+              "name": "Cappuccino e cornetto",
+              "price": 3.5,
+              "description": "La colazione classica del Paradiso.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
+              "id": "day-colazione-cappuccino-e-cornetto"
+            },
+            {
+              "name": "Spremuta d'arancia",
+              "price": 4,
+              "description": "Arance spremute al momento.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
+              "id": "day-colazione-spremuta-d-arancia"
+            }
+          ]
+        },
+        "pranzo": {
+          "label": "Pranzo",
+          "items": [
+            {
+              "name": "Focaccia Paradiso",
+              "price": 6.5,
+              "description": "Prosciutto crudo, mozzarella e rucola.",
+              "image": "assets/images/generated/focaccia-paradiso.webp",
+              "id": "day-pranzo-focaccia-paradiso"
+            },
+            {
+              "name": "Toast classico",
+              "price": 5,
+              "description": "Prosciutto cotto e formaggio filante.",
+              "image": "assets/images/generated/toast-classico.webp",
+              "id": "day-pranzo-toast-classico"
+            }
+          ]
+        },
+        "bibite": {
+          "label": "Bibite",
+          "items": [
+            {
+              "name": "Acqua",
+              "price": 1,
+              "description": "Naturale o frizzante.",
+              "image": "assets/images/generated/acqua.webp",
+              "id": "day-bibite-acqua"
+            },
+            {
+              "name": "Bibita in lattina",
+              "price": 3,
+              "description": "Chiedi le disponibilità del giorno.",
+              "image": "assets/images/generated/bibite-lattina.webp",
+              "id": "day-bibite-bibita-in-lattina"
+            },
+            {
+              "name": "Succo di frutta",
+              "price": 3,
+              "description": "Diversi gusti disponibili.",
+              "image": "assets/images/generated/succhi-frutta.webp",
+              "id": "day-bibite-succo-di-frutta"
+            },
+            {
+              "name": "Tè freddo",
+              "price": 3,
+              "description": "Limone o pesca.",
+              "image": "assets/images/generated/te-freddo.webp",
+              "id": "day-bibite-tè-freddo"
+            }
+          ]
+        },
+        "tessere": {
+          "label": "Tessere",
+          "items": [
+            {
+              "name": "Tessera caffè",
+              "price": 11,
+              "description": "Formula prepagata per i tuoi caffè al Paradiso.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
+              "id": "day-tessere-tessera-caffè"
+            },
+            {
+              "name": "Tessera cappuccino",
+              "price": 15,
+              "description": "Formula prepagata dedicata al cappuccino.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
+              "id": "day-tessere-tessera-cappuccino"
+            },
+            {
+              "name": "Tessera cappuccino e brioche",
+              "price": 30,
+              "description": "Colazione completa in formula prepagata.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
+              "id": "day-tessere-tessera-cappuccino-e-brioche"
+            },
+            {
+              "name": "Tessera spremuta",
+              "price": 40,
+              "description": "Formula prepagata per spremute fresche.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0183.webp",
+              "id": "day-tessere-tessera-spremuta"
+            },
+            {
+              "name": "Tessera Ginseng o Orzo grande",
+              "price": 15,
+              "description": "Formula prepagata, formato grande.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
+              "id": "day-tessere-tessera-ginseng-o-orzo-grande"
+            },
+            {
+              "name": "Tessera Ginseng o Orzo piccolo",
+              "price": 13,
+              "description": "Formula prepagata, formato piccolo.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0123.webp",
+              "id": "day-tessere-tessera-ginseng-o-orzo-piccolo"
+            }
+          ]
+        },
+        "servizi": {
+          "label": "Servizi feste",
+          "items": [
+            {
+              "name": "Festa bimbi",
+              "price": 8,
+              "description": "Servizio feste per bambini come da listino.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0200.webp",
+              "id": "day-servizi-festa-bimbi"
+            },
+            {
+              "name": "Apericena gruppi",
+              "price": 18,
+              "description": "Per gruppi di oltre 10 persone, prezzo a persona con una consumazione inclusa. Menu: riso freddo o pasta fredda, focaccia, pizza, affettati e formaggi, nuggets o ali di pollo, patatine fritte e würstel, crocchette di patate in varie opzioni e paninetti salati farciti. In omaggio dal locale: una bottiglia di prosecco oppure un analcolico da 3 litri.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0119.webp",
+              "id": "day-servizi-apericena-gruppi"
+            },
+            {
+              "name": "Tagliere pizza compleanno",
+              "price": 20,
+              "description": "Tagliere pizza per la festa di compleanno.",
+              "image": "assets/images/generated/pizza-compleanno.webp",
+              "id": "day-servizi-tagliere-pizza-compleanno"
+            },
+            {
+              "name": "Taglio torta",
+              "price": 1.5,
+              "description": "Prezzo a persona, con piattini e forchette forniti dal locale.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0069.webp",
+              "id": "day-servizi-taglio-torta"
+            }
+          ]
+        }
+      },
+      "categoryOrder": [
+        "colazione",
+        "pranzo",
+        "bibite",
+        "tessere",
+        "servizi"
+      ]
+    },
+    "night": {
+      "title": "Menu della sera",
+      "intro": "Cocktail, gin, birre e distillati per vivere il Paradiso dopo il tramonto.",
+      "heroCopy": "Aperitivi, cocktail e serate a Nova Milanese.",
+      "heroLabel": "Scopri la sera",
+      "heroImage": "assets/gallery/photos/IMG-20260721-WA0220.webp",
+      "heroAlt": "Il bancone serale del Paradiso Lounge Bar illuminato in blu",
+      "heroPosition": "center 52%",
+      "heroPositionMobile": "48% center",
+      "categories": {
+        "cocktail": {
+          "label": "Cocktail",
+          "items": [
+            {
+              "name": "Boulevardier",
+              "price": 8,
+              "description": "Ingredienti: bourbon o rye whiskey, Campari, vermouth rosso dolce e scorza d'arancia.",
+              "image": "assets/images/generated/boulevardier.webp",
+              "fact": "Comparve nel 1927 nel libro Barflies and Cocktails: al posto del gin del Negroni usa whiskey americano.",
+              "id": "night-cocktail-boulevardier"
+            },
+            {
+              "name": "Caipiroska",
+              "price": 8,
+              "description": "Ingredienti: vodka, lime fresco a spicchi, zucchero di canna e ghiaccio tritato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0158.webp",
+              "fact": "È la variante alla vodka della Caipirinha: lime e zucchero vengono pestati direttamente nel bicchiere.",
+              "id": "night-cocktail-caipiroska"
+            },
+            {
+              "name": "Caipiroska alla fragola",
+              "price": 7,
+              "description": "Ingredienti: vodka, lime fresco, fragole, zucchero di canna e ghiaccio tritato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0049.webp",
+              "fact": "Le fragole vengono pestate con il lime: aggiungono polpa e profumo, non soltanto dolcezza.",
+              "id": "night-cocktail-caipiroska-alla-fragola"
+            },
+            {
+              "name": "Cuba Libre chiaro",
+              "price": 6,
+              "description": "Ingredienti: rum bianco, Coca-Cola, succo di lime fresco e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/cuba-libre-chiaro.webp",
+              "fact": "Il lime è indispensabile: senza la sua acidità sarebbe semplicemente un rum e cola.",
+              "id": "night-cocktail-cuba-libre-chiaro"
+            },
+            {
+              "name": "Cuba Libre scuro",
+              "price": 7,
+              "description": "Ingredienti: rum scuro, Coca-Cola, succo di lime fresco e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/cuba-libre-scuro.webp",
+              "fact": "Il rum scuro porta note di legno, vaniglia e caramello che il rum bianco non possiede.",
+              "id": "night-cocktail-cuba-libre-scuro"
+            },
+            {
+              "name": "Cuba Zombie",
+              "price": 8,
+              "description": "Ingredienti: rum bianco, rum scuro, lime, ananas, granatina e bitter aromatico.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0070.webp",
+              "fact": "Si ispira allo Zombie di Donn Beach del 1934, celebre per l'uso di più rum nello stesso bicchiere.",
+              "id": "night-cocktail-cuba-zombie"
+            },
+            {
+              "name": "Daiquiri",
+              "price": 8,
+              "description": "Ingredienti: rum bianco, succo di lime fresco e sciroppo di zucchero.",
+              "image": "assets/images/generated/daiquiri.webp",
+              "fact": "Prende il nome da Daiquirí, località cubana vicino a Santiago: la ricetta classica ha soltanto tre ingredienti.",
+              "id": "night-cocktail-daiquiri"
+            },
+            {
+              "name": "Disaronno Red Bull o Coca-Cola",
+              "price": 7,
+              "description": "Ingredienti: Disaronno, Red Bull oppure Coca-Cola e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/disaronno-energy.webp",
+              "fact": "Con la cola emergono le note di caramello; con la Red Bull il profilo diventa più secco e vivace.",
+              "id": "night-cocktail-disaronno-red-bull-o-coca-cola"
+            },
+            {
+              "name": "Disaronno Sour",
+              "price": 7,
+              "description": "Ingredienti: Disaronno, succo di limone fresco, sciroppo di zucchero e albume pastorizzato.",
+              "image": "assets/images/generated/disaronno-sour.webp",
+              "fact": "La schiuma nasce dall'albume agitato nello shaker e rende più morbido il contrasto tra amaretto e limone.",
+              "id": "night-cocktail-disaronno-sour"
+            },
+            {
+              "name": "Disaronno Tè",
+              "price": 7,
+              "description": "Ingredienti: Disaronno, tè freddo al limone, succo di limone e ghiaccio.",
+              "image": "assets/images/generated/disaronno-te.webp",
+              "fact": "È un long drink: il tè allunga l'amaretto e il limone ne alleggerisce la dolcezza.",
+              "id": "night-cocktail-disaronno-tè"
+            },
+            {
+              "name": "Drink premium",
+              "price": 10,
+              "description": "Ingredienti: distillato premium scelto al momento, mixer abbinato, ghiaccio e guarnizione dedicata.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0230.webp",
+              "fact": "È una preparazione della casa: base, mixer e guarnizione vengono decisi insieme per evitare abbinamenti casuali.",
+              "id": "night-cocktail-drink-premium"
+            },
+            {
+              "name": "Gin Lemon Base",
+              "price": 6,
+              "description": "Ingredienti: gin, lemon soda, ghiaccio e fetta di limone.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0098.webp",
+              "fact": "La lemon soda è già dolce e agrumata, quindi il drink non richiede sciroppo di zucchero.",
+              "id": "night-cocktail-gin-lemon-base"
+            },
+            {
+              "name": "Gin Tonic Base",
+              "price": 6,
+              "description": "Ingredienti: gin, acqua tonica, ghiaccio e scorza di limone.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "La tonica contiene chinino: è quella nota amaricante a rendere il finale asciutto.",
+              "id": "night-cocktail-gin-tonic-base"
+            },
+            {
+              "name": "Hugo",
+              "price": 8,
+              "description": "Ingredienti: prosecco, sciroppo di sambuco, soda, menta fresca, lime e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0157.webp",
+              "fact": "Nato in Alto Adige nei primi anni Duemila, sostituisce l'amaro dello Spritz con il profumo floreale del sambuco.",
+              "id": "night-cocktail-hugo"
+            },
+            {
+              "name": "Jack Red Bull o Coca-Cola",
+              "price": 6,
+              "description": "Ingredienti: Jack Daniel's, Red Bull oppure Coca-Cola e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/jack-energy.webp",
+              "fact": "La cola richiama le note vanigliate del Tennessee whiskey; la Red Bull crea un highball più vivace.",
+              "id": "night-cocktail-jack-red-bull-o-coca-cola"
+            },
+            {
+              "name": "Japanese",
+              "price": 8,
+              "description": "Ingredienti: cognac, sciroppo d'orzata, bitter aromatico e scorza di limone.",
+              "image": "assets/images/generated/japanese-cocktail.webp",
+              "fact": "Fu pubblicato da Jerry Thomas nel 1862: non contiene ingredienti giapponesi, ma celebrava una delegazione nipponica.",
+              "id": "night-cocktail-japanese"
+            },
+            {
+              "name": "Long Island",
+              "price": 8,
+              "description": "Ingredienti: vodka, gin, rum bianco, tequila, triple sec, limone, sciroppo di zucchero e Coca-Cola.",
+              "image": "assets/images/night-drinks/cocktails/long-island.webp",
+              "fact": "Non contiene tè: è la piccola aggiunta di cola a dargli il colore dell'iced tea.",
+              "id": "night-cocktail-long-island"
+            },
+            {
+              "name": "Malibu Sambuca",
+              "price": 6,
+              "description": "Ingredienti: Malibu al cocco, sambuca e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0063.webp",
+              "fact": "È un drink della casa costruito sul contrasto tra cocco tropicale e anice della sambuca.",
+              "id": "night-cocktail-malibu-sambuca"
+            },
+            {
+              "name": "Margarita",
+              "price": 8,
+              "description": "Ingredienti: tequila, triple sec, succo di lime fresco e sale sul bordo.",
+              "image": "assets/images/generated/margarita.webp",
+              "fact": "Il sale sul bordo non è decorativo: attenua l'acidità del lime e mette in risalto l'agave.",
+              "id": "night-cocktail-margarita"
+            },
+            {
+              "name": "Martini",
+              "price": 8,
+              "description": "Ingredienti: gin, vermouth dry e oliva oppure scorza di limone.",
+              "image": "assets/images/generated/martini.webp",
+              "fact": "Mescolarlo e non shakerarlo mantiene il drink limpido e gli dà una consistenza più setosa.",
+              "id": "night-cocktail-martini"
+            },
+            {
+              "name": "Espresso Martini",
+              "price": 8,
+              "description": "Ingredienti: vodka, liquore al caffè, espresso, sciroppo di zucchero e chicchi di caffè.",
+              "image": "assets/images/generated/espresso-martini.webp",
+              "fact": "Dick Bradsell lo creò a Londra negli anni Ottanta; l'espresso fresco produce la crema in superficie.",
+              "id": "night-cocktail-espresso-martini"
+            },
+            {
+              "name": "Mojito",
+              "price": 8,
+              "description": "Ingredienti: rum bianco, lime, menta fresca, zucchero bianco, soda e ghiaccio tritato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0158.webp",
+              "fact": "La menta va premuta delicatamente: triturarla libera clorofilla e può rendere il drink amaro.",
+              "id": "night-cocktail-mojito"
+            },
+            {
+              "name": "Moscow Mule",
+              "price": 8,
+              "description": "Ingredienti: vodka, ginger beer, succo di lime fresco e ghiaccio.",
+              "image": "assets/images/generated/moscow-mule.webp",
+              "fact": "Nacque negli Stati Uniti nel 1941; la tazza di rame fu parte decisiva della sua identità e del suo successo.",
+              "id": "night-cocktail-moscow-mule"
+            },
+            {
+              "name": "Negroni",
+              "price": 8,
+              "description": "Ingredienti: gin, Campari e vermouth rosso dolce in parti uguali, con scorza d'arancia.",
+              "image": "assets/images/night-drinks/cocktails/negroni.webp",
+              "fact": "La formula classica è facilissima da ricordare: gin, Campari e vermouth rosso in parti uguali.",
+              "id": "night-cocktail-negroni"
+            },
+            {
+              "name": "Paloma",
+              "price": 6,
+              "description": "Ingredienti: tequila, soda al pompelmo rosa, succo di lime, un pizzico di sale e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0205.webp",
+              "fact": "Il pizzico di sale esalta il pompelmo e rende il finale più netto senza far sembrare il drink salato.",
+              "id": "night-cocktail-paloma"
+            },
+            {
+              "name": "Piña Colada",
+              "price": 8,
+              "description": "Ingredienti: rum bianco, crema di cocco, succo d'ananas e ghiaccio.",
+              "image": "assets/images/generated/pina-colada.webp",
+              "fact": "Dal 1978 è il drink ufficiale di Porto Rico; crema di cocco e ananas ne definiscono la texture.",
+              "id": "night-cocktail-piña-colada"
+            },
+            {
+              "name": "Pornstar Martini",
+              "price": 7,
+              "description": "Ingredienti: vodka alla vaniglia, liquore e purea di passion fruit, lime, sciroppo di vaniglia e prosecco a parte.",
+              "image": "assets/images/generated/pornstar-martini.webp",
+              "fact": "Douglas Ankrah lo creò a Londra nei primi anni Duemila; il prosecco si serve a parte, non nel cocktail.",
+              "id": "night-cocktail-pornstar-martini"
+            },
+            {
+              "name": "Sambuca Vodka",
+              "price": 6,
+              "description": "Ingredienti: vodka, sambuca e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0063.webp",
+              "fact": "È una preparazione della casa: la vodka asciuga la dolcezza e lascia emergere l'anice della sambuca.",
+              "id": "night-cocktail-sambuca-vodka"
+            },
+            {
+              "name": "Sangria",
+              "price": 4,
+              "description": "Ingredienti: vino rosso, brandy, arancia, limone, frutta fresca, zucchero e soda.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0110.webp",
+              "fact": "Il riposo in frigorifero permette a vino, agrumi e frutta di scambiarsi profumi prima del servizio.",
+              "id": "night-cocktail-sangria"
+            },
+            {
+              "name": "Sbagliato",
+              "price": 8,
+              "description": "Ingredienti: Campari, vermouth rosso dolce, prosecco e fetta d'arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0117.webp",
+              "fact": "La tradizione lo lega al Bar Basso di Milano: il prosecco prese il posto del gin del Negroni.",
+              "id": "night-cocktail-sbagliato"
+            },
+            {
+              "name": "Sex on the Beach",
+              "price": 7,
+              "description": "Ingredienti: vodka, liquore alla pesca, succo d'arancia e succo di cranberry.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0049.webp",
+              "fact": "Il cranberry dà colore e acidità, mentre pesca e arancia costruiscono la parte più morbida e fruttata.",
+              "id": "night-cocktail-sex-on-the-beach"
+            },
+            {
+              "name": "Spritz Aperol",
+              "price": 6,
+              "description": "Ingredienti: prosecco, Aperol, soda, ghiaccio e fetta d'arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0223.webp",
+              "fact": "La proporzione classica è 3-2-1: tre parti di prosecco, due di Aperol e una di soda.",
+              "id": "night-cocktail-spritz-aperol"
+            },
+            {
+              "name": "Spritz Campari",
+              "price": 6,
+              "description": "Ingredienti: prosecco, Campari, soda, ghiaccio e fetta d'arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0202.webp",
+              "fact": "Rispetto all'Aperol Spritz è meno dolce e più amaricante grazie al profilo del Campari.",
+              "id": "night-cocktail-spritz-campari"
+            },
+            {
+              "name": "Vodka Lemon Base",
+              "price": 6,
+              "description": "Ingredienti: vodka, lemon soda, ghiaccio e fetta di limone.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0098.webp",
+              "fact": "La lemon soda unisce bollicine, dolcezza e agrume: per questo non serve aggiungere sciroppo.",
+              "id": "night-cocktail-vodka-lemon-base"
+            },
+            {
+              "name": "Vodka Premium",
+              "price": 10,
+              "description": "Ingredienti: vodka premium, mixer scelto al momento, ghiaccio e guarnizione abbinata.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "È una preparazione della casa: il mixer viene scelto per rispettare il profilo della vodka selezionata.",
+              "id": "night-cocktail-vodka-premium"
+            },
+            {
+              "name": "Vodka Red Bull",
+              "price": 6,
+              "description": "Ingredienti: vodka, Red Bull e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/vodka-energy.webp",
+              "fact": "È un highball costruito direttamente nel bicchiere: ghiaccio, vodka e Red Bull senza shaker.",
+              "id": "night-cocktail-vodka-red-bull"
+            },
+            {
+              "name": "Vodka Sour",
+              "price": 7,
+              "description": "Ingredienti: vodka, succo di limone fresco, sciroppo di zucchero e albume pastorizzato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0228.webp",
+              "fact": "Il dry shake, eseguito prima senza ghiaccio, monta l'albume e crea una schiuma più compatta.",
+              "id": "night-cocktail-vodka-sour"
+            },
+            {
+              "name": "Vodka Tonic Base",
+              "price": 6,
+              "description": "Ingredienti: vodka, acqua tonica, ghiaccio e scorza di limone.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0097.webp",
+              "fact": "Il chinino della tonica aggiunge l'amaro che la vodka, naturalmente neutra, non possiede.",
+              "id": "night-cocktail-vodka-tonic-base"
+            },
+            {
+              "name": "Jäger Red Bull",
+              "price": 6,
+              "description": "Ingredienti: Jägermeister, Red Bull e ghiaccio.",
+              "image": "assets/images/night-drinks/cocktails/jager-energy.webp",
+              "fact": "Jägermeister contiene 56 botaniche: la Red Bull allunga il liquore senza nasconderne il carattere erbaceo.",
+              "id": "night-cocktail-jäger-red-bull"
+            }
+          ]
+        },
+        "bottiglie": {
+          "label": "Bottiglie",
+          "items": [
+            {
+              "name": "Clase Azul",
+              "price": 500,
+              "description": "Ingredienti e stile: tequila reposado da 100% agave blu Weber, cotta lentamente e affinata in rovere.",
+              "image": "assets/images/bottles-studio/clase-azul.png",
+              "fact": "Il decanter in ceramica viene dipinto a mano in Messico: ogni bottiglia presenta piccole differenze.",
+              "id": "night-bottiglie-clase-azul"
+            },
+            {
+              "name": "Shot Clase Azul",
+              "price": 30,
+              "description": "Ingredienti e stile: una dose di tequila Clase Azul Reposado da 100% agave blu Weber.",
+              "image": "assets/images/bottles-studio/clase-azul.png",
+              "fact": "Servirla senza ghiaccio permette di seguire meglio le note di agave cotta, vaniglia e legno.",
+              "id": "night-bottiglie-shot-clase-azul"
+            },
+            {
+              "name": "Don Papa Baroko",
+              "price": 180,
+              "description": "Ingredienti e stile: rum filippino da melassa di canna da zucchero, morbido, vanigliato e agrumato.",
+              "image": "assets/images/bottles-studio/don-papa.png",
+              "fact": "La canna da zucchero cresce ai piedi del monte Kanlaon, sull'isola filippina di Negros.",
+              "id": "night-bottiglie-don-papa-baroko"
+            },
+            {
+              "name": "Jack Daniel's",
+              "price": 150,
+              "description": "Ingredienti e stile: Tennessee whiskey da mais, segale e malto d'orzo, addolcito con carbone d'acero.",
+              "image": "assets/images/bottles-studio/jack-daniels.png",
+              "fact": "La ricetta usa 80% mais, 8% segale e 12% malto d'orzo prima del passaggio nel carbone.",
+              "id": "night-bottiglie-jack-daniel-s"
+            },
+            {
+              "name": "Keglevich Fragola",
+              "price": 100,
+              "description": "Ingredienti e stile: vodka di cereali aromatizzata alla fragola, dolce e intensamente fruttata. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
+              "image": "assets/images/bottles-studio/keglevich-fragola.png",
+              "fact": "Fredda diventa più compatta e lascia emergere il profumo della fragola senza bisogno di mixer.",
+              "id": "night-bottiglie-keglevich-fragola"
+            },
+            {
+              "name": "Keglevich Pesca",
+              "price": 100,
+              "description": "Ingredienti e stile: vodka di cereali aromatizzata alla pesca, morbida e profumata. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
+              "image": "assets/images/bottles-studio/keglevich-pesca.png",
+              "fact": "La pesca dà un finale più rotondo rispetto alla vodka neutra e si abbina bene a soda o tè freddo.",
+              "id": "night-bottiglie-keglevich-pesca"
+            },
+            {
+              "name": "Alkkemist Gin",
+              "price": 180,
+              "description": "Ingredienti e stile: gin con ginepro, botaniche mediterranee e uva Moscato, da servire con tonica.",
+              "image": "assets/images/bottles-studio/alkkemist.png",
+              "fact": "La distillazione nelle notti di luna piena e l'uva Moscato sono i tratti distintivi dichiarati dal produttore.",
+              "id": "night-bottiglie-alkkemist-gin"
+            },
+            {
+              "name": "Amuerte Coca Gin",
+              "price": 180,
+              "description": "Ingredienti e stile: gin con ginepro, coriandolo, angelica, agrumi, frutti tropicali e foglie di coca peruviane.",
+              "image": "assets/images/bottles-studio/amuerte.png",
+              "fact": "Tamarillo, papaya, pitaya e physalis costruiscono un profilo tropicale insolito per un gin.",
+              "id": "night-bottiglie-amuerte-coca-gin"
+            },
+            {
+              "name": "Hendrick's Grand Cabaret",
+              "price": 160,
+              "description": "Ingredienti e stile: gin Hendrick's con frutta a nocciolo, erbe dolci, tonica, ghiaccio e cetriolo.",
+              "image": "assets/images/bottles-studio/hendricks-cabaret.png",
+              "fact": "Grand Cabaret prende ispirazione dai punch alla frutta serviti nelle feste parigine di inizio Novecento.",
+              "id": "night-bottiglie-hendrick-s-grand-cabaret"
+            },
+            {
+              "name": "Nordés con toniche",
+              "price": 150,
+              "description": "Ingredienti e stile: gin da distillato d'uva Albariño, botaniche galiziane, toniche, ghiaccio e uva.",
+              "image": "assets/images/bottles-studio/nordes-bottle.png",
+              "fact": "Salvia, alloro ed eucalipto gli danno un carattere atlantico più floreale che resinoso.",
+              "id": "night-bottiglie-nordés-con-toniche"
+            },
+            {
+              "name": "Bombay Sapphire con toniche",
+              "price": 120,
+              "description": "Ingredienti e stile: London Dry gin con dieci botaniche, toniche, ghiaccio e scorza di limone.",
+              "image": "assets/images/bottles-studio/bombay-bottle.png",
+              "fact": "Le botaniche sono estratte per infusione a vapore, così i profumi restano netti e delicati.",
+              "id": "night-bottiglie-bombay-sapphire-con-toniche"
+            },
+            {
+              "name": "Gin Mare con toniche",
+              "price": 140,
+              "description": "Ingredienti e stile: gin con ginepro, oliva Arbequina, basilico, rosmarino e timo, servito con toniche.",
+              "image": "assets/images/bottles-studio/gin-mare-bottle.png",
+              "fact": "L'oliva Arbequina porta una lieve nota sapida che richiama immediatamente la cucina mediterranea.",
+              "id": "night-bottiglie-gin-mare-con-toniche"
+            },
+            {
+              "name": "Grey Goose",
+              "price": 150,
+              "description": "Ingredienti e stile: vodka francese da grano tenero invernale e acqua di sorgente filtrata nel calcare. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
+              "image": "assets/images/bottles-studio/grey-goose.png",
+              "fact": "Viene prodotta tra Piccardia e Cognac: il grano arriva dal nord, l'acqua dalla regione di imbottigliamento.",
+              "id": "night-bottiglie-grey-goose"
+            },
+            {
+              "name": "Belvedere",
+              "price": 150,
+              "description": "Ingredienti e stile: vodka polacca da segale e acqua purificata, senza aromi o zuccheri aggiunti. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
+              "image": "assets/images/bottles-studio/belvedere.png",
+              "fact": "La segale le lascia una trama più cremosa e una lieve speziatura rispetto a molte vodka di grano.",
+              "id": "night-bottiglie-belvedere"
+            },
+            {
+              "name": "Absolut Vodka",
+              "price": 120,
+              "description": "Ingredienti e stile: vodka svedese da grano invernale e acqua profonda di Åhus. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
+              "image": "assets/images/bottles-studio/absolut.png",
+              "fact": "Dal 1879 usa la distillazione continua, ideata per ottenere uno spirito particolarmente uniforme.",
+              "id": "night-bottiglie-absolut-vodka"
+            },
+            {
+              "name": "Veuve Clicquot Brut",
+              "price": 160,
+              "description": "Ingredienti e stile: Champagne brut da Pinot Noir, Chardonnay e Meunier, con forte impronta del Pinot Noir.",
+              "image": "assets/images/bottles-studio/veuve-brut.png",
+              "fact": "La celebre etichetta gialla identifica una cuvée costruita anche con vini di riserva della maison.",
+              "id": "night-bottiglie-veuve-clicquot-brut"
+            },
+            {
+              "name": "Bellavista Alma Gran Cuvée",
+              "price": 100,
+              "description": "Ingredienti e stile: Franciacorta brut da Chardonnay, Pinot Nero e una piccola parte di Pinot Bianco.",
+              "image": "assets/images/bottles-studio/bellavista.png",
+              "fact": "La presa di spuma avviene in bottiglia secondo il metodo Franciacorta, con lungo riposo sui lieviti.",
+              "id": "night-bottiglie-bellavista-alma-gran-cuvée"
+            },
+            {
+              "name": "Berlucchi Cuvée Imperiale",
+              "price": 70,
+              "description": "Ingredienti e stile: Franciacorta brut da Chardonnay e Pinot Nero, fresco e finemente cremoso.",
+              "image": "assets/images/bottles-studio/berlucchi.png",
+              "fact": "Berlucchi produsse nel 1961 uno dei primi spumanti metodo classico della Franciacorta.",
+              "id": "night-bottiglie-berlucchi-cuvée-imperiale"
+            },
+            {
+              "name": "Valdo Prosecco",
+              "price": 50,
+              "description": "Ingredienti e stile: Prosecco Extra Dry da uva Glera, floreale, fruttato e leggermente morbido.",
+              "image": "assets/images/bottles-studio/valdo.png",
+              "fact": "Extra Dry è più morbido di Brut: il nome può trarre in inganno, ma indica un residuo zuccherino maggiore.",
+              "id": "night-bottiglie-valdo-prosecco"
+            },
+            {
+              "name": "Moët N.I.R Rosé",
+              "price": 220,
+              "description": "Ingredienti e stile: Champagne rosé demi-sec da Pinot Noir, Meunier e Chardonnay.",
+              "image": "assets/images/bottles-studio/moet-nir.png",
+              "fact": "N.I.R significa Nectar Impérial Rosé: la bottiglia luminosa è stata pensata per il servizio serale.",
+              "id": "night-bottiglie-moët-n-i-r-rosé"
+            },
+            {
+              "name": "Veuve Clicquot Rosé",
+              "price": 180,
+              "description": "Ingredienti e stile: Champagne rosé da Pinot Noir, Chardonnay, Meunier e vino rosso della Champagne.",
+              "image": "assets/images/bottles-studio/veuve-rose.png",
+              "fact": "Nel 1818 Madame Clicquot creò il primo rosé d'assemblaggio conosciuto aggiungendo vino rosso alla cuvée.",
+              "id": "night-bottiglie-veuve-clicquot-rosé"
+            },
+            {
+              "name": "Moët Ice Impérial",
+              "price": 180,
+              "description": "Ingredienti e stile: Champagne demi-sec da Pinot Noir, Meunier e Chardonnay, creato per essere servito con ghiaccio.",
+              "image": "assets/images/bottles-studio/moet-ice.png",
+              "fact": "È uno dei rari Champagne progettati espressamente per conservare equilibrio e profumo sopra cubi di ghiaccio.",
+              "id": "night-bottiglie-moët-ice-impérial"
+            },
+            {
+              "name": "Moët Impérial Brut",
+              "price": 140,
+              "description": "Ingredienti e stile: Champagne brut da Pinot Noir, Meunier e Chardonnay, fresco e cremoso.",
+              "image": "assets/images/bottles-studio/moet-brut.png",
+              "fact": "La cuvée unisce numerosi cru e vini di riserva per mantenere costante lo stile della maison.",
+              "id": "night-bottiglie-moët-impérial-brut"
+            },
+            {
+              "name": "Lanson White Label",
+              "price": 120,
+              "description": "Ingredienti e stile: Champagne da Pinot Noir, Chardonnay e Meunier, dal dosaggio morbido e aromatico.",
+              "image": "assets/images/bottles-studio/lanson.png",
+              "fact": "White Label è stato concepito per essere personalizzato nel calice con scorze o frutta fresca.",
+              "id": "night-bottiglie-lanson-white-label"
+            },
+            {
+              "name": "Monte Rossa Blanc de Blancs",
+              "price": 100,
+              "description": "Ingredienti e stile: Franciacorta Blanc de Blancs da uve bianche, con prevalenza di Chardonnay.",
+              "image": "assets/images/bottles-studio/monterossa-blanc.png",
+              "fact": "Blanc de Blancs significa letteralmente bianco da uve bianche, uno stile spesso fine e agrumato.",
+              "id": "night-bottiglie-monte-rossa-blanc-de-blancs"
+            },
+            {
+              "name": "Dom Pérignon 2012",
+              "price": 500,
+              "description": "Ingredienti e stile: Champagne millesimato 2012 da Chardonnay e Pinot Noir, affinato a lungo sui lieviti.",
+              "image": "assets/images/bottles-studio/dom-perignon-2012.png",
+              "fact": "Dom Pérignon produce soltanto millesimati: se l'annata non è ritenuta adatta, la cuvée non viene dichiarata.",
+              "id": "night-bottiglie-dom-pérignon-2012"
+            },
+            {
+              "name": "Cristal Louis Roederer",
+              "price": 450,
+              "description": "Ingredienti e stile: Champagne millesimato da Pinot Noir e Chardonnay provenienti da vigneti della maison.",
+              "image": "assets/images/bottles-studio/cristal.png",
+              "fact": "Fu creato nel 1876 per lo zar Alessandro II; il fondo piatto e il vetro trasparente nacquero per la corte.",
+              "id": "night-bottiglie-cristal-louis-roederer"
+            },
+            {
+              "name": "Krug Grande Cuvée",
+              "price": 450,
+              "description": "Ingredienti e stile: Champagne da Pinot Noir, Chardonnay e Meunier, assemblato con molti vini di riserva.",
+              "image": "assets/images/bottles-studio/krug.png",
+              "fact": "Ogni edizione riunisce oltre cento vini di numerose annate per ricreare ogni volta la stessa ampiezza.",
+              "id": "night-bottiglie-krug-grande-cuvée"
+            },
+            {
+              "name": "Dom Pérignon 2013",
+              "price": 400,
+              "description": "Ingredienti e stile: Champagne millesimato 2013 da Pinot Noir e Chardonnay, teso e minerale.",
+              "image": "assets/images/bottles-studio/dom-perignon-2013.png",
+              "fact": "L'annata 2013 maturò lentamente: la vendemmia tardiva ha dato una cuvée più verticale della 2012.",
+              "id": "night-bottiglie-dom-pérignon-2013"
+            }
+          ]
+        },
+        "gin": {
+          "label": "Gin",
+          "items": [
+            {
+              "name": "Amuerte",
+              "price": 13,
+              "description": "Ingredienti: Amuerte gin, acqua tonica, ghiaccio e una guarnizione agrumata o tropicale.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0216.webp",
+              "fact": "Tra le botaniche compaiono foglie di coca peruviane e frutti tropicali, oltre a ginepro e spezie.",
+              "id": "night-gin-amuerte"
+            },
+            {
+              "name": "Aviation",
+              "price": 8,
+              "description": "Ingredienti: Aviation gin con ginepro, coriandolo, cardamomo, lavanda, anice, salsapariglia e scorza d'arancia; tonica e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "È un American Dry meno dominato dal ginepro, con lavanda e salsapariglia ben riconoscibili.",
+              "id": "night-gin-aviation"
+            },
+            {
+              "name": "Ballykeefe",
+              "price": 12,
+              "description": "Ingredienti: Ballykeefe Irish gin, acqua tonica, ghiaccio e scorza di agrume.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0215.webp",
+              "fact": "È un gin irlandese grain-to-glass: la distilleria segue il cereale dalla propria azienda agricola al bicchiere.",
+              "id": "night-gin-ballykeefe"
+            },
+            {
+              "name": "Base Gordon's",
+              "price": 6,
+              "description": "Ingredienti: Gordon's London Dry gin, acqua tonica, ghiaccio e spicchio di lime.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "Ginepro, coriandolo, angelica e liquirizia costruiscono il suo profilo classico e asciutto.",
+              "id": "night-gin-base-gordon-s"
+            },
+            {
+              "name": "Base Mr. Higgins",
+              "price": 6,
+              "description": "Ingredienti: Mr. Higgins gin, acqua tonica, ghiaccio e guarnizione scelta in base alla bottiglia disponibile.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0217.webp",
+              "fact": "La guarnizione viene decisa al banco dopo l'assaggio, così non copre le botaniche specifiche dell'etichetta.",
+              "id": "night-gin-base-mr-higgins"
+            },
+            {
+              "name": "Bombay",
+              "price": 8,
+              "description": "Ingredienti: Bombay Sapphire, tonica, ghiaccio e limone; ginepro, coriandolo, angelica, agrumi e altre sei botaniche nel gin.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0171.webp",
+              "fact": "L'infusione a vapore estrae le dieci botaniche senza bollirle direttamente nello spirito.",
+              "id": "night-gin-bombay"
+            },
+            {
+              "name": "Brockmans",
+              "price": 10,
+              "description": "Ingredienti: Brockmans gin, tonica, ghiaccio, pompelmo e frutti di bosco; nel gin anche ginepro, coriandolo e agrumi.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0162.webp",
+              "fact": "Mora e mirtillo rendono il profilo più morbido e fruttato di un London Dry tradizionale.",
+              "id": "night-gin-brockmans"
+            },
+            {
+              "name": "Bulldog",
+              "price": 10,
+              "description": "Ingredienti: Bulldog gin, tonica, ghiaccio e lime; dodici botaniche tra cui ginepro, dragon eye, loto, papavero e agrumi.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "Dragon eye e foglie di loto sono due botaniche asiatiche rare nella categoria London Dry.",
+              "id": "night-gin-bulldog"
+            },
+            {
+              "name": "Dolcevita",
+              "price": 8,
+              "description": "Ingredienti: Dolcevita gin, acqua tonica, ghiaccio e scorza d'arancia, secondo l'etichetta disponibile al banco.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0157.webp",
+              "fact": "Il servizio resta volutamente essenziale per lasciare leggibile il carattere del gin selezionato.",
+              "id": "night-gin-dolcevita"
+            },
+            {
+              "name": "Engine",
+              "price": 10,
+              "description": "Ingredienti: Engine gin con ginepro, limone, salvia e liquirizia; tonica, ghiaccio e scorza di limone.",
+              "image": "assets/images/night-drinks/gin/engine-v2.webp",
+              "fact": "La latta ricorda un olio motore, mentre salvia e limone richiamano ingredienti piemontesi.",
+              "id": "night-gin-engine"
+            },
+            {
+              "name": "Fifty Pounds",
+              "price": 10,
+              "description": "Ingredienti: Fifty Pounds London Dry gin, tonica, ghiaccio e limone; la ricetta comprende undici botaniche.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0201.webp",
+              "fact": "Il nome ricorda la tassa di cinquanta sterline imposta ai distillatori inglesi dal Gin Act del 1736.",
+              "id": "night-gin-fifty-pounds"
+            },
+            {
+              "name": "Gin Mare",
+              "price": 10,
+              "description": "Ingredienti: Gin Mare, tonica, ghiaccio e rosmarino; oliva Arbequina, basilico, timo e rosmarino nel distillato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0171.webp",
+              "fact": "Le botaniche mediterranee vengono distillate separatamente per rispettarne tempi e intensità differenti.",
+              "id": "night-gin-gin-mare"
+            },
+            {
+              "name": "Hendrick's",
+              "price": 10,
+              "description": "Ingredienti: Hendrick's gin, acqua tonica, ghiaccio e cetriolo; ginepro, botaniche, rosa e cetriolo nel gin.",
+              "image": "assets/images/night-drinks/gin/hendricks-v2.webp",
+              "fact": "Rosa e cetriolo vengono aggiunti come essenze dopo la distillazione e sono la firma della bottiglia.",
+              "id": "night-gin-hendrick-s"
+            },
+            {
+              "name": "Hendrick's Viola",
+              "price": 13,
+              "description": "Ingredienti: variante Hendrick's alla viola proposta dal locale, tonica, ghiaccio e guarnizione floreale.",
+              "image": "assets/images/night-drinks/gin/hendricks-viola-v2.webp",
+              "fact": "La viola sposta il gin tonic verso un profilo più profumato: una tonica neutra evita di coprirlo.",
+              "id": "night-gin-hendrick-s-viola"
+            },
+            {
+              "name": "Hendrick's Amazonia",
+              "price": 13,
+              "description": "Ingredienti: variante Hendrick's Amazonia, tonica, ghiaccio e guarnizione tropicale selezionata.",
+              "image": "assets/images/night-drinks/gin/hendricks-amazonia-v2.webp",
+              "fact": "Questa referenza punta su accenti tropicali; il servizio lungo mantiene il sorso fresco e leggibile.",
+              "id": "night-gin-hendrick-s-amazonia"
+            },
+            {
+              "name": "Lola Vera",
+              "price": 10,
+              "description": "Ingredienti: Lola Vera gin, acqua tonica, ghiaccio e guarnizione abbinata alla referenza presente al banco.",
+              "image": "assets/images/night-drinks/gin/lola-vera-v2.webp",
+              "fact": "Per questa etichetta il locale sceglie la guarnizione dopo aver verificato il lotto, evitando abbinamenti automatici.",
+              "id": "night-gin-lola-vera"
+            },
+            {
+              "name": "Malfy",
+              "price": 10,
+              "description": "Ingredienti: Malfy gin, tonica, ghiaccio e agrume fresco; ginepro, coriandolo, angelica, cassia e scorze nel distillato.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0089.webp",
+              "fact": "Gli agrumi italiani danno al gin un'apertura luminosa e un finale meno resinoso.",
+              "id": "night-gin-malfy"
+            },
+            {
+              "name": "Monkey",
+              "price": 15,
+              "description": "Ingredienti: Monkey 47 gin, tonica secca, ghiaccio e pompelmo; quarantasette botaniche nel distillato.",
+              "image": "assets/images/night-drinks/gin/monkey-47-v2.webp",
+              "fact": "Le 47 botaniche e i 47 gradi alcolici spiegano il numero nel nome di questo gin della Foresta Nera.",
+              "id": "night-gin-monkey"
+            },
+            {
+              "name": "Nordés",
+              "price": 10,
+              "description": "Ingredienti: Nordés gin da uva Albariño, tonica, ghiaccio e uva; undici botaniche tra cui salvia, alloro ed eucalipto.",
+              "image": "assets/images/night-drinks/gin/nordes-v2.webp",
+              "fact": "La base d'uva e le erbe galiziane gli danno un carattere floreale e atlantico.",
+              "id": "night-gin-nordés"
+            },
+            {
+              "name": "Portofino",
+              "price": 12,
+              "description": "Ingredienti: Portofino Dry Gin, tonica, ghiaccio e limone; ventuno botaniche liguri tra cui ginepro, lavanda, rosmarino e maggiorana.",
+              "image": "assets/images/night-drinks/gin/portofino-v2.webp",
+              "fact": "La ricetta raccoglie profumi del promontorio di Portofino e li traduce in un gin mediterraneo.",
+              "id": "night-gin-portofino"
+            },
+            {
+              "name": "Rena 41",
+              "price": 10,
+              "description": "Ingredienti: Rena 41 gin con botaniche sarde, acqua tonica, ghiaccio e guarnizione mediterranea.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0098.webp",
+              "fact": "Nasce in Sardegna, vicino a Porto Cervo, e costruisce la propria identità su materie botaniche dell'isola.",
+              "id": "night-gin-rena-41"
+            },
+            {
+              "name": "Rivo",
+              "price": 10,
+              "description": "Ingredienti: Rivo gin, tonica, ghiaccio e limone; dodici botaniche con erbe e fiori raccolti sul Lago di Como.",
+              "image": "assets/images/night-drinks/gin/rivo-v3.webp",
+              "fact": "Melissa e timo del territorio lariano contribuiscono al suo profilo erbaceo e agrumato.",
+              "id": "night-gin-rivo"
+            },
+            {
+              "name": "Royal Windsor",
+              "price": 12,
+              "description": "Ingredienti: Royal Windsor gin, acqua tonica, ghiaccio e scorza d'arancia, come da bottiglia disponibile.",
+              "image": "assets/images/night-drinks/gin/royal-windsor-v2.webp",
+              "fact": "Una tonica asciutta è scelta per non aggiungere aromi estranei alla referenza servita.",
+              "id": "night-gin-royal-windsor"
+            },
+            {
+              "name": "Santamania",
+              "price": 8,
+              "description": "Ingredienti: Santamania gin da spirito d'uva, tonica e ghiaccio; ginepro, coriandolo, cardamomo, cannella, angelica, agrumi ed erbe.",
+              "image": "assets/images/night-drinks/gin/santamania-v2.webp",
+              "fact": "La base d'uva dona maggiore rotondità, mentre le tredici botaniche mantengono il finale balsamico.",
+              "id": "night-gin-santamania"
+            },
+            {
+              "name": "Santana",
+              "price": 10,
+              "description": "Ingredienti: Santana gin, acqua tonica, ghiaccio e guarnizione definita sul profilo della bottiglia al banco.",
+              "image": "assets/images/night-drinks/gin/santana-v2.webp",
+              "fact": "Il locale evita una decorazione fissa: agrume o erba vengono scelti soltanto se coerenti con il gin.",
+              "id": "night-gin-santana"
+            },
+            {
+              "name": "Tanqueray",
+              "price": 8,
+              "description": "Ingredienti: Tanqueray London Dry gin, tonica, ghiaccio e lime; ginepro, coriandolo, angelica e liquirizia nel gin.",
+              "image": "assets/images/night-drinks/gin/tanqueray-v2.webp",
+              "fact": "Quattro botaniche essenziali e molto ginepro lo rendono uno dei gin tonic più netti e classici.",
+              "id": "night-gin-tanqueray"
+            }
+          ]
+        },
+        "aperitivo": {
+          "label": "Aperitivo",
+          "items": [
+            {
+              "name": "Bitter pompelmo",
+              "price": 5,
+              "description": "Ingredienti: bitter analcolico, pompelmo, soda e ghiaccio.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0202.webp",
+              "fact": "Il pompelmo unisce acidità e amaro naturale, lasciando il palato pulito prima del cibo.",
+              "id": "night-aperitivo-bitter-pompelmo"
+            },
+            {
+              "name": "Buffet drink",
+              "price": 10,
+              "description": "Ingredienti: drink della formula buffet scelto tra le proposte disponibili, con ghiaccio e guarnizione dedicata.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0119.webp",
+              "fact": "La composizione viene comunicata al banco perché cambia con la proposta buffet del giorno.",
+              "id": "night-aperitivo-buffet-drink"
+            },
+            {
+              "name": "Campari con bianco",
+              "price": 5,
+              "description": "Ingredienti: Campari, vino bianco, ghiaccio e fetta d'arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0117.webp",
+              "fact": "Il vino bianco allunga il bitter senza aggiungere dolcezza intensa e rende il sorso più vinoso.",
+              "id": "night-aperitivo-campari-con-bianco"
+            },
+            {
+              "name": "Campari Soda",
+              "price": 3.5,
+              "description": "Ingredienti: Campari, soda e scorza d'arancia, serviti molto freddi.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0202.webp",
+              "fact": "La bottiglietta conica disegnata da Fortunato Depero nel 1932 è un'icona del design italiano.",
+              "id": "night-aperitivo-campari-soda"
+            },
+            {
+              "name": "Crodino",
+              "price": 4,
+              "description": "Ingredienti: aperitivo analcolico con infusi aromatici, spezie, agrumi, acqua e zucchero; ghiaccio e arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0014.webp",
+              "fact": "Il suo colore e il finale amaricante conservano il rito dell'aperitivo senza alcol.",
+              "id": "night-aperitivo-crodino"
+            },
+            {
+              "name": "Offerta Spritz",
+              "price": 3.5,
+              "description": "Ingredienti: prosecco, bitter da aperitivo, soda, ghiaccio e fetta d'arancia.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0223.webp",
+              "fact": "La proporzione 3-2-1 mantiene in equilibrio bollicina, parte amaricante e diluizione.",
+              "id": "night-aperitivo-offerta-spritz"
+            },
+            {
+              "name": "Tagliere",
+              "price": 4,
+              "description": "Ingredienti: piccolo assortimento salato del giorno; la composizione e gli allergeni vengono indicati al banco.",
+              "image": "assets/images/generated/tagliere-v4.webp",
+              "fact": "La selezione cambia con la disponibilità, così resta fresca invece di essere una composizione fissa.",
+              "id": "night-aperitivo-tagliere"
+            },
+            {
+              "name": "Tagliere base",
+              "price": 10,
+              "description": "Ingredienti: salumi, formaggi, focaccia o pane e accompagnamenti della casa, secondo disponibilità.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0120.webp",
+              "fact": "È calibrato per la condivisione e alterna sapidità, parte lattica e una base da forno.",
+              "id": "night-aperitivo-tagliere-base"
+            },
+            {
+              "name": "Tagliere premium",
+              "price": 13,
+              "description": "Ingredienti: selezione superiore di salumi e formaggi, prodotti da forno e accompagnamenti stagionali.",
+              "image": "assets/images/generated/tagliere-base-v3.webp",
+              "fact": "La versione premium privilegia referenze più ricercate e contrasti dolci-salati da abbinare al calice.",
+              "id": "night-aperitivo-tagliere-premium"
+            }
+          ]
+        },
+        "birre": {
+          "label": "Birre",
+          "items": [
+            {
+              "name": "Birra in bottiglia",
+              "price": 3.5,
+              "description": "Ingredienti: quelli riportati sull'etichetta scelta; marca e stile disponibili vengono comunicati al banco.",
+              "image": "assets/images/night-drinks/beers/birra-bottiglia.webp?v=2",
+              "fact": "Controllare l'etichetta è il modo corretto per conoscere cereali, gradazione e possibili allergeni della bottiglia.",
+              "id": "night-birre-birra-in-bottiglia"
+            },
+            {
+              "name": "Birra media e trancio",
+              "price": 8,
+              "description": "Ingredienti: birra alla spina da acqua, malto, luppolo e lievito, più trancio con impasto, pomodoro e mozzarella.",
+              "image": "assets/images/night-drinks/beers/media-trancio-v3.webp",
+              "fact": "L'amaro del luppolo e la carbonazione alleggeriscono la parte filante e saporita della pizza.",
+              "id": "night-birre-birra-media-e-trancio"
+            },
+            {
+              "name": "Birra spina media",
+              "price": 5,
+              "description": "Ingredienti: acqua, malto d'orzo, luppolo e lievito della birra disponibile alla spina, formato medio.",
+              "image": "assets/images/night-drinks/beers/spina-media-v3.webp",
+              "fact": "Il formato medio permette alla schiuma di proteggere gli aromi mentre la birra resta fresca più a lungo.",
+              "id": "night-birre-birra-spina-media"
+            },
+            {
+              "name": "Birra spina piccola",
+              "price": 3,
+              "description": "Ingredienti: acqua, malto d'orzo, luppolo e lievito della birra disponibile alla spina, formato piccolo.",
+              "image": "assets/images/night-drinks/beers/spina-piccola-v3.webp",
+              "fact": "Il formato piccolo è ideale per berla alla temperatura di servizio prima che perda vivacità.",
+              "id": "night-birre-birra-spina-piccola"
+            },
+            {
+              "name": "Ceres",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, cereali, luppolo e lievito.",
+              "image": "assets/images/night-drinks/beers/ceres.webp?v=2",
+              "fact": "Ceres Strong Ale ha una gradazione più alta di una lager comune e un finale più caldo e maltato.",
+              "id": "night-birre-ceres"
+            },
+            {
+              "name": "Corona",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, cereali non maltati, luppolo e lievito; lime nel servizio.",
+              "image": "assets/images/night-drinks/beers/corona.webp?v=2",
+              "fact": "Lo spicchio di lime è un rito di servizio internazionale, non un ingrediente della birra in bottiglia.",
+              "id": "night-birre-corona"
+            },
+            {
+              "name": "Guinness",
+              "price": 8,
+              "description": "Ingredienti: acqua, malto d'orzo, orzo tostato, luppolo e lievito, spillati con azoto.",
+              "image": "assets/images/night-drinks/beers/guinness.webp?v=2",
+              "fact": "Le bolle di azoto creano la celebre cascata e una schiuma più compatta rispetto all'anidride carbonica.",
+              "id": "night-birre-guinness"
+            },
+            {
+              "name": "Heineken",
+              "price": 3.5,
+              "description": "Ingredienti: acqua, malto d'orzo, estratto di luppolo e lievito A.",
+              "image": "assets/images/night-drinks/beers/heineken.webp?v=2",
+              "fact": "Il lievito A, isolato nel 1886, contribuisce alle leggere note fruttate tipiche della birra.",
+              "id": "night-birre-heineken"
+            },
+            {
+              "name": "Ichnusa",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, mais e luppolo.",
+              "image": "assets/images/night-drinks/beers/ichnusa-v3.webp",
+              "fact": "Il nome deriva dall'antica denominazione greca della Sardegna, isola a cui il marchio è legato dal 1912.",
+              "id": "night-birre-ichnusa"
+            },
+            {
+              "name": "Ichnusa 50 cl",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, mais e luppolo, nel formato da 50 cl.",
+              "image": "assets/images/night-drinks/beers/ichnusa-50.webp?v=2",
+              "fact": "Il mezzo litro è pensato per un servizio più lungo: versarla in due tempi aiuta a conservare la schiuma.",
+              "id": "night-birre-ichnusa-50-cl"
+            },
+            {
+              "name": "Moretti grande",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, mais e luppolo, serviti nel formato grande.",
+              "image": "assets/images/night-drinks/beers/moretti.webp?v=2",
+              "fact": "Birra Moretti nasce a Udine nel 1859; il Baffo arrivò sull'etichetta nel Novecento.",
+              "id": "night-birre-moretti-grande"
+            },
+            {
+              "name": "Panaché",
+              "price": 5,
+              "description": "Ingredienti: birra lager e gassosa al limone, miscelate fredde.",
+              "image": "assets/images/night-drinks/beers/panache.webp?v=2",
+              "fact": "La limonata abbassa gradazione e amarezza, creando una bevuta più leggera e agrumata.",
+              "id": "night-birre-panaché"
+            },
+            {
+              "name": "Paulaner",
+              "price": 4.5,
+              "description": "Ingredienti: acqua, malto di frumento e d'orzo, luppolo e lievito nella referenza Paulaner disponibile.",
+              "image": "assets/images/night-drinks/beers/paulaner.webp?v=2",
+              "fact": "Nelle Weissbier il lievito resta protagonista con profumi che ricordano banana e chiodo di garofano.",
+              "id": "night-birre-paulaner"
+            },
+            {
+              "name": "Tennent's",
+              "price": 4,
+              "description": "Ingredienti: acqua, malto d'orzo, luppolo e lievito.",
+              "image": "assets/images/night-drinks/beers/tennents.webp?v=2",
+              "fact": "Il marchio nasce a Glasgow; la versione Super è conosciuta per corpo maltato e gradazione sostenuta.",
+              "id": "night-birre-tennent-s"
+            }
+          ]
+        },
+        "whisky": {
+          "label": "Whisky e brandy",
+          "items": [
+            {
+              "name": "Ballantine's",
+              "price": 5,
+              "description": "Ingredienti e stile: blended Scotch whisky da distillati di malto e cereali affinati in rovere.",
+              "image": "assets/images/night-drinks/whisky/ballantines.webp",
+              "fact": "Miltonduff e Glenburgie sono due malti importanti nel carattere morbido e mielato del blend.",
+              "id": "night-whisky-ballantine-s"
+            },
+            {
+              "name": "Chivas 12",
+              "price": 8,
+              "description": "Ingredienti e stile: blended Scotch whisky di malto e cereali, con componenti invecchiati almeno dodici anni.",
+              "image": "assets/images/night-drinks/whisky/chivas-12.webp",
+              "fact": "Strathisla, una delle più antiche distillerie delle Highlands, è un malto chiave della miscela.",
+              "id": "night-whisky-chivas-12"
+            },
+            {
+              "name": "Cognac",
+              "price": 6,
+              "description": "Ingredienti e stile: vino bianco, soprattutto da uva Ugni Blanc, distillato due volte e affinato in rovere francese.",
+              "image": "assets/images/night-drinks/whisky/cognac.webp",
+              "fact": "Per chiamarsi Cognac deve nascere nella regione delimitata e rispettare doppia distillazione e invecchiamento.",
+              "id": "night-whisky-cognac"
+            },
+            {
+              "name": "Don Papa",
+              "price": 8,
+              "description": "Ingredienti e stile: rum filippino da melassa di canna da zucchero, servito liscio o con ghiaccio.",
+              "image": "assets/images/night-drinks/whisky/don-papa.webp",
+              "fact": "Il clima caldo dell'isola di Negros accelera l'interazione tra distillato e botte.",
+              "id": "night-whisky-don-papa"
+            },
+            {
+              "name": "J&B",
+              "price": 5,
+              "description": "Ingredienti e stile: blended Scotch whisky composto da numerosi whisky di malto e cereali.",
+              "image": "assets/images/night-drinks/whisky/j-and-b.webp",
+              "fact": "La miscela è tradizionalmente guidata da malti dello Speyside e punta su leggerezza e note fruttate.",
+              "id": "night-whisky-j-b"
+            },
+            {
+              "name": "Jack Daniel's",
+              "price": 5,
+              "description": "Ingredienti e stile: Tennessee whiskey da 80% mais, 8% segale e 12% malto d'orzo.",
+              "image": "assets/images/night-drinks/whisky/jack-daniels.webp",
+              "fact": "Prima della botte attraversa lentamente carbone d'acero, il Lincoln County Process.",
+              "id": "night-whisky-jack-daniel-s"
+            },
+            {
+              "name": "Johnnie Walker Red Label",
+              "price": 5,
+              "description": "Ingredienti e stile: blended Scotch whisky di malto e cereali, con note speziate e leggermente affumicate.",
+              "image": "assets/images/night-drinks/whisky/johnnie-walker-red.webp",
+              "fact": "Fu costruito per mantenere carattere anche nei long drink, non soltanto nel servizio liscio.",
+              "id": "night-whisky-johnnie-walker-red-label"
+            },
+            {
+              "name": "Laphroaig",
+              "price": 7,
+              "description": "Ingredienti e stile: single malt Scotch di Islay da orzo maltato, acqua, lievito, torba e rovere.",
+              "image": "assets/images/night-drinks/whisky/laphroaig.webp",
+              "fact": "La torba di Islay genera i celebri richiami affumicati, iodati e marini.",
+              "id": "night-whisky-laphroaig"
+            },
+            {
+              "name": "Revel Stoke Spiced",
+              "price": 5,
+              "description": "Ingredienti e stile: Canadian whisky aromatizzato con spezie, vaniglia e note di cannella.",
+              "image": "assets/images/night-drinks/whisky/revel-stoke.webp",
+              "fact": "È pensato per un sorso dolce-speziato e funziona anche con cola o ginger ale.",
+              "id": "night-whisky-revel-stoke-spiced"
+            },
+            {
+              "name": "Stravecchio Branca",
+              "price": 5,
+              "description": "Ingredienti e stile: brandy italiano da distillati di vino affinati in botti di rovere.",
+              "image": "assets/images/night-drinks/whisky/stravecchio-branca.webp",
+              "fact": "Il lungo riposo in legno arrotonda il distillato e sviluppa note di vaniglia, frutta secca e spezie.",
+              "id": "night-whisky-stravecchio-branca"
+            }
+          ]
+        },
+        "amari": {
+          "label": "Amari",
+          "items": [
+            {
+              "name": "Amaro Cenote",
+              "price": 12,
+              "description": "Ingredienti e stile: tequila Cenote da 100% agave blu Weber, servita come proposta da fine pasto.",
+              "image": "assets/images/night-drinks/amari/amaro-cenote.webp",
+              "fact": "Non è tecnicamente un amaro: il nome nel listino indica la sezione di servizio, mentre il prodotto è tequila.",
+              "id": "night-amari-amaro-cenote"
+            },
+            {
+              "name": "Amaro del Capo",
+              "price": 4,
+              "description": "Ingredienti: infuso di ventinove erbe, fiori, frutti e radici calabresi, tra cui agrumi, liquirizia, menta e camomilla.",
+              "image": "assets/images/night-drinks/amari/amaro-del-capo.webp",
+              "fact": "La casa consiglia il servizio a -20 °C per evidenziare le note fresche e balsamiche.",
+              "id": "night-amari-amaro-del-capo"
+            },
+            {
+              "name": "Amaro Don Julio",
+              "price": 12,
+              "description": "Ingredienti e stile: tequila Don Julio da 100% agave blu Weber, servita liscia.",
+              "image": "assets/images/night-drinks/amari/amaro-don-julio.webp",
+              "fact": "Anche questa voce è una tequila collocata nella sezione dopocena, non un liquore amaro alle erbe.",
+              "id": "night-amari-amaro-don-julio"
+            },
+            {
+              "name": "Amaro Gin",
+              "price": 5,
+              "description": "Ingredienti: gin o amaro a base gin indicato al banco, servito liscio o con ghiaccio secondo la referenza.",
+              "image": "assets/images/night-drinks/amari/amaro-gin.webp",
+              "fact": "La bottiglia viene mostrata prima del servizio per chiarire botaniche e gradazione di questa voce generica.",
+              "id": "night-amari-amaro-gin"
+            },
+            {
+              "name": "Amaro Lucano",
+              "price": 4,
+              "description": "Ingredienti: infuso di oltre trenta erbe e spezie, tra cui assenzio, salvia, genziana, arancia e angelica.",
+              "image": "assets/images/night-drinks/amari/amaro-lucano.webp",
+              "fact": "La ricetta fu creata a Pisticci nel 1894 dal pasticcere Pasquale Vena.",
+              "id": "night-amari-amaro-lucano"
+            },
+            {
+              "name": "Assenzio",
+              "price": 4,
+              "description": "Ingredienti: alcol, grande assenzio, anice verde, finocchio e altre botaniche aromatiche.",
+              "image": "assets/images/night-drinks/amari/assenzio.webp",
+              "fact": "Il louche, la velatura che appare con acqua fredda, nasce dagli oli essenziali di anice e finocchio.",
+              "id": "night-amari-assenzio"
+            },
+            {
+              "name": "Averna",
+              "price": 4,
+              "description": "Ingredienti: infuso di erbe, radici e scorze di agrumi, zucchero e caramello.",
+              "image": "assets/images/night-drinks/amari/averna.webp",
+              "fact": "Nato in Sicilia nell'Ottocento, combina arancia, liquirizia e una morbida vena caramellata.",
+              "id": "night-amari-averna"
+            },
+            {
+              "name": "Baileys",
+              "price": 4,
+              "description": "Ingredienti: crema di latte irlandese, Irish whiskey, cacao, vaniglia e zucchero.",
+              "image": "assets/images/night-drinks/amari/baileys.webp",
+              "fact": "L'emulsione mantiene insieme crema e whiskey senza bisogno di conservanti nel prodotto chiuso.",
+              "id": "night-amari-baileys"
+            },
+            {
+              "name": "Branca Menta",
+              "price": 4,
+              "description": "Ingredienti: base Fernet-Branca con erbe, radici e spezie, arricchita da olio essenziale di menta piperita.",
+              "image": "assets/images/night-drinks/amari/branca-menta.webp",
+              "fact": "Fu sviluppato negli anni Sessanta unendo la complessità del Fernet a un finale nettamente mentolato.",
+              "id": "night-amari-branca-menta"
+            },
+            {
+              "name": "Braulio",
+              "price": 4,
+              "description": "Ingredienti: erbe e radici alpine, tra cui genziana, ginepro, assenzio e achillea, con affinamento in legno.",
+              "image": "assets/images/night-drinks/amari/braulio.webp",
+              "fact": "Nasce a Bormio e porta nel bicchiere un profilo balsamico che richiama i boschi di montagna.",
+              "id": "night-amari-braulio"
+            },
+            {
+              "name": "Chupito",
+              "price": 3,
+              "description": "Ingredienti: una dose del distillato o liquore base disponibile, dichiarato al momento dell'ordine.",
+              "image": "assets/images/night-drinks/amari/chupito.webp",
+              "fact": "Chupito indica il formato, non una ricetta: per questo prodotto e gradazione vanno scelti prima del servizio.",
+              "id": "night-amari-chupito"
+            },
+            {
+              "name": "Chupito Cenote",
+              "price": 4,
+              "description": "Ingredienti: una dose di tequila Cenote da 100% agave blu Weber.",
+              "image": "assets/images/night-drinks/amari/chupito-cenote.webp",
+              "fact": "Il piccolo formato concentra il profumo dell'agave; berlo lentamente evita di perdere le note vegetali.",
+              "id": "night-amari-chupito-cenote"
+            },
+            {
+              "name": "Chupito Premium",
+              "price": 6,
+              "description": "Ingredienti: una dose di distillato premium selezionato e mostrato al cliente prima del servizio.",
+              "image": "assets/images/night-drinks/amari/chupito-premium.webp",
+              "fact": "La categoria premium cambia etichetta: il valore è nella bottiglia scelta, non in una miscela segreta.",
+              "id": "night-amari-chupito-premium"
+            },
+            {
+              "name": "Disaronno",
+              "price": 4,
+              "description": "Ingredienti: liquore aromatico con zucchero bruciato, essenze di frutta ed erbe, dal gusto di mandorla.",
+              "image": "assets/images/night-drinks/amari/disaronno.webp",
+              "fact": "Il profilo ricorda la mandorla pur non contenendo mandorle, una particolarità spesso poco conosciuta.",
+              "id": "night-amari-disaronno"
+            },
+            {
+              "name": "Fernet Branca",
+              "price": 4,
+              "description": "Ingredienti: ventisette erbe, radici e spezie, tra cui aloe, genziana, camomilla e rabarbaro.",
+              "image": "assets/images/night-drinks/amari/fernet-branca.webp",
+              "fact": "Dopo l'infusione riposa in grandi botti di rovere, che integrano il carattere intensamente erbaceo.",
+              "id": "night-amari-fernet-branca"
+            },
+            {
+              "name": "Herbas",
+              "price": 8,
+              "description": "Ingredienti: liquore all'anice con erbe mediterranee come rosmarino, timo, finocchio, ginepro, menta e agrumi.",
+              "image": "assets/images/night-drinks/amari/herbas.webp",
+              "fact": "Le Hierbas Ibicencas sono una specialità delle Baleari e possono essere secche o più dolci.",
+              "id": "night-amari-herbas"
+            },
+            {
+              "name": "Jägermeister",
+              "price": 4,
+              "description": "Ingredienti: cinquantasei erbe, radici, fiori, frutti e spezie, macerati e affinati in rovere.",
+              "image": "assets/images/night-drinks/amari/jagermeister.webp",
+              "fact": "La ricetta riposa per mesi prima dell'aggiunta di acqua, alcol, zucchero e caramello.",
+              "id": "night-amari-jägermeister"
+            },
+            {
+              "name": "Jameson",
+              "price": 4,
+              "description": "Ingredienti e stile: Irish whiskey da orzo maltato e non maltato con whiskey di cereali, tripla distillazione.",
+              "image": "assets/images/night-drinks/amari/jameson.webp",
+              "fact": "La tripla distillazione contribuisce al profilo più morbido e leggero rispetto a molti Scotch.",
+              "id": "night-amari-jameson"
+            },
+            {
+              "name": "Jefferson",
+              "price": 5,
+              "description": "Ingredienti: amaro calabrese con bergamotto, arance amare e dolci, rosmarino, origano e altre botaniche.",
+              "image": "assets/images/night-drinks/amari/jefferson.webp",
+              "fact": "Il bergamotto lega agrume e parte erbacea, dando a Jefferson un'identità marcatamente calabrese.",
+              "id": "night-amari-jefferson"
+            },
+            {
+              "name": "Limoncello",
+              "price": 4,
+              "description": "Ingredienti: scorze di limone, alcol, acqua e zucchero.",
+              "image": "assets/images/night-drinks/amari/limoncello.webp",
+              "fact": "Si usano soltanto le scorze senza parte bianca, che renderebbe l'infuso inutilmente amaro.",
+              "id": "night-amari-limoncello"
+            },
+            {
+              "name": "Monte doppio",
+              "price": 8,
+              "description": "Ingredienti: doppia dose di Amaro Montenegro, da quaranta botaniche e dodici essenze aromatiche.",
+              "image": "assets/images/night-drinks/amari/monte-doppio.webp",
+              "fact": "Il formato doppio amplifica arancia, spezie dolci ed erbe: va sorseggiato, non bevuto come uno shot.",
+              "id": "night-amari-monte-doppio"
+            },
+            {
+              "name": "Montenegro",
+              "price": 4,
+              "description": "Ingredienti: quaranta botaniche lavorate in dodici essenze, con agrumi, erbe, spezie, alcol, acqua e zucchero.",
+              "image": "assets/images/night-drinks/amari/montenegro.webp",
+              "fact": "L'ultima essenza, chiamata Premio, è così intensa che ne bastano poche gocce per bottiglia.",
+              "id": "night-amari-montenegro"
+            },
+            {
+              "name": "Sambuca",
+              "price": 4,
+              "description": "Ingredienti: alcol, zucchero, acqua e oli essenziali di anice stellato o anice verde.",
+              "image": "assets/images/night-drinks/amari/sambuca.webp",
+              "fact": "Con tre chicchi di caffè diventa sambuca con la mosca: tradizionalmente rappresentano salute, felicità e prosperità.",
+              "id": "night-amari-sambuca"
+            },
+            {
+              "name": "Shot",
+              "price": 2,
+              "description": "Ingredienti: una dose del prodotto scelto tra le bottiglie base disponibili, comunicato prima del servizio.",
+              "image": "assets/images/night-drinks/amari/shot.webp",
+              "fact": "Shot descrive soltanto la quantità: nome, allergeni e gradazione dipendono dalla bottiglia selezionata.",
+              "id": "night-amari-shot"
+            },
+            {
+              "name": "Vecchia Romagna",
+              "price": 4,
+              "description": "Ingredienti e stile: brandy italiano da vini di uva Trebbiano distillati e affinati in rovere.",
+              "image": "assets/images/night-drinks/amari/vecchia-romagna.webp",
+              "fact": "L'etichetta nera e la bottiglia triangolare sono diventate due segni storici del brandy italiano.",
+              "id": "night-amari-vecchia-romagna"
+            },
+            {
+              "name": "Vodka",
+              "price": 4,
+              "description": "Ingredienti: distillato neutro di cereali e acqua; la marca disponibile viene indicata al banco.",
+              "image": "assets/images/night-drinks/amari/vodka.webp",
+              "fact": "La neutralità non significa assenza di carattere: materia prima e filtrazione cambiano corpo e finale.",
+              "id": "night-amari-vodka"
+            }
+          ]
+        },
+        "snack": {
+          "label": "Snack",
+          "items": [
+            {
+              "name": "Bueno",
+              "price": 2,
+              "description": "Wafer croccante ripieno di crema alla nocciola e ricoperto di cioccolato.",
+              "image": "assets/images/generated/snacks/wafer-nocciola.jpg",
+              "fact": "Il contrasto è tutto: cialda leggera, crema alla nocciola e copertura al cioccolato nello stesso morso.",
+              "id": "night-snack-bueno"
+            },
+            {
+              "name": "Caramelle singole",
+              "price": 0.2,
+              "description": "Caramelle assortite vendute singolarmente; gusti disponibili al banco.",
+              "image": "assets/images/generated/snacks/caramelle-singole-v2.jpg",
+              "fact": "La selezione cambia nel tempo: chiedi al banco i gusti presenti prima di aggiungerle all'ordine.",
+              "id": "night-snack-caramelle-singole"
+            },
+            {
+              "name": "Chupa Chups",
+              "price": 0.5,
+              "description": "Lecca-lecca alla frutta o alla cola; scegli il gusto disponibile.",
+              "image": "assets/images/generated/snacks/chupa-chups-v2.jpg",
+              "fact": "Il marchio nasce in Spagna nel 1958; il celebre logo fu ridisegnato da Salvador Dalí.",
+              "id": "night-snack-chupa-chups"
+            },
+            {
+              "name": "Cicche pacchetto",
+              "price": 2.5,
+              "description": "Confezione di gomme da masticare; marca e gusto secondo disponibilità.",
+              "image": "assets/images/generated/snacks/cicche-pacchetto-v2.jpg",
+              "fact": "La confezione mantiene le gomme protette e permette di conservarne più a lungo aroma e consistenza.",
+              "id": "night-snack-cicche-pacchetto"
+            },
+            {
+              "name": "Cicche singole",
+              "price": 1.2,
+              "description": "Gomme da masticare vendute singolarmente, in gusti assortiti.",
+              "image": "assets/images/generated/snacks/cicche-singole-v2.jpg",
+              "fact": "Una scelta rapida quando vuoi una sola gomma senza acquistare l'intero pacchetto.",
+              "id": "night-snack-cicche-singole"
+            },
+            {
+              "name": "Ciuccio",
+              "price": 2,
+              "description": "Caramella gommosa a forma di ciuccio, dolce o frizzante secondo disponibilità.",
+              "image": "assets/images/generated/snacks/ciuccio-v2.jpg",
+              "fact": "La forma giocosa rende questa caramella immediatamente riconoscibile nel banco dolci.",
+              "id": "night-snack-ciuccio"
+            },
+            {
+              "name": "Frisk",
+              "price": 1,
+              "description": "Piccole mentine pressate dal gusto fresco e intenso.",
+              "image": "assets/images/generated/snacks/frisk-v2.jpg",
+              "fact": "Le mentine pressate si sciolgono lentamente e liberano un gusto più concentrato rispetto a una gomma.",
+              "id": "night-snack-frisk"
+            },
+            {
+              "name": "Goleador",
+              "price": 0.2,
+              "description": "Doppia caramella gommosa venduta singolarmente, nel gusto disponibile al banco.",
+              "image": "assets/images/generated/snacks/goleador-v2.jpg",
+              "fact": "La sua firma è la doppia caramella gommosa, proposta nel tempo in gusti e formati assortiti.",
+              "id": "night-snack-goleador"
+            },
+            {
+              "name": "Golia",
+              "price": 2.5,
+              "description": "Pastiglie balsamiche alla liquirizia, disponibili nella confezione del giorno.",
+              "image": "assets/images/generated/snacks/liquirizie.jpg",
+              "fact": "Liquirizia e note balsamiche costruiscono un gusto più intenso delle comuni caramelle alla frutta.",
+              "id": "night-snack-golia"
+            },
+            {
+              "name": "Golia Immuno",
+              "price": 5,
+              "description": "Caramelle gommose con vitamine e ingredienti funzionali, nella variante disponibile.",
+              "image": "assets/images/generated/snacks/caramella-liquida.jpg",
+              "fact": "La composizione varia in base alla referenza: ingredienti e dose consigliata vanno sempre letti sulla confezione.",
+              "id": "night-snack-golia-immuno"
+            },
+            {
+              "name": "Mentos",
+              "price": 1.8,
+              "description": "Confetti gommosi in rotolo; gusto menta o frutta secondo disponibilità.",
+              "image": "assets/images/generated/snacks/mentos-v2.jpg",
+              "fact": "La superficie croccante protegge un interno gommoso, creando la doppia consistenza tipica del confetto.",
+              "id": "night-snack-mentos"
+            },
+            {
+              "name": "Patatine grandi",
+              "price": 2.5,
+              "description": "Confezione grande di patatine croccanti; gusto disponibile al banco.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0014.webp",
+              "fact": "Il formato grande è pensato per essere condiviso al tavolo durante l'aperitivo.",
+              "id": "night-snack-patatine-grandi"
+            },
+            {
+              "name": "Patatine piccole",
+              "price": 1.8,
+              "description": "Confezione piccola di patatine, ideale per uno spuntino veloce.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0014.webp",
+              "fact": "La monoporzione aiuta a conservare croccantezza e profumo fino all'apertura.",
+              "id": "night-snack-patatine-piccole"
+            },
+            {
+              "name": "Patatine San Carlo",
+              "price": 1.5,
+              "description": "Patatine San Carlo in confezione monoporzione; variante secondo disponibilità.",
+              "image": "assets/images/generated/snacks/patatine-san-carlo-original.jpg",
+              "fact": "Il gusto effettivamente disponibile può cambiare: la confezione viene confermata al momento dell'ordine.",
+              "id": "night-snack-patatine-san-carlo"
+            },
+            {
+              "name": "Pringles",
+              "price": 3,
+              "description": "Patatine impilate dalla forma curva, in gusto disponibile al banco.",
+              "image": "assets/images/generated/snacks/patatine-impilate.jpg",
+              "fact": "La forma a sella permette alle patatine di impilarsi ordinatamente e rompersi meno nella confezione.",
+              "id": "night-snack-pringles"
+            },
+            {
+              "name": "Trinketto",
+              "price": 2,
+              "description": "Caramella liquida alla frutta nel caratteristico flaconcino.",
+              "image": "assets/images/generated/snacks/caramella-liquida.jpg",
+              "fact": "Si gusta direttamente dal flaconcino: è una caramella liquida, non una bibita.",
+              "id": "night-snack-trinketto"
+            }
+          ]
+        },
+        "grappe": {
+          "label": "Grappe e rum",
+          "items": [
+            {
+              "name": "Castagner Riserva",
+              "price": 4,
+              "description": "Ingredienti e stile: acquavite di vinacce selezionate, distillata e affinata in legno.",
+              "image": "assets/images/night-drinks/grappe/castagner-riserva.webp",
+              "fact": "L'affinamento arrotonda l'impatto alcolico e aggiunge toni di vaniglia, frutta secca e spezie.",
+              "id": "night-grappe-castagner-riserva"
+            },
+            {
+              "name": "Grappa Amarone",
+              "price": 5,
+              "description": "Ingredienti e stile: distillato delle vinacce di uve usate per l'Amarone, come Corvina, Corvinone e Rondinella.",
+              "image": "assets/images/night-drinks/grappe/grappa-amarone.webp",
+              "fact": "Le vinacce di uve appassite conservano una ricchezza aromatica che rende il sorso più pieno e vinoso.",
+              "id": "night-grappe-grappa-amarone"
+            },
+            {
+              "name": "Grappa Barri",
+              "price": 5,
+              "description": "Ingredienti e stile: grappa della referenza Barri indicata al banco, ottenuta da vinacce e servita nel calice.",
+              "image": "assets/images/night-drinks/grappe/grappa-barri.webp",
+              "fact": "La bottiglia viene mostrata prima del servizio perché il nome abbreviato del listino non identifica vitigno o affinamento.",
+              "id": "night-grappe-grappa-barri"
+            },
+            {
+              "name": "Grappa Barricata",
+              "price": 4,
+              "description": "Ingredienti e stile: acquavite di vinacce affinata in piccole botti di legno.",
+              "image": "assets/images/night-drinks/grappe/grappa-barricata.webp",
+              "fact": "La barrique dona colore ambrato e aromi dolci, ma la materia prima resta sempre la vinaccia.",
+              "id": "night-grappe-grappa-barricata"
+            },
+            {
+              "name": "Grappa Bianca",
+              "price": 3,
+              "description": "Ingredienti e stile: distillato limpido di vinacce, non affinato in legno.",
+              "image": "assets/images/night-drinks/grappe/grappa-bianca.webp",
+              "fact": "L'assenza di botte mantiene in primo piano i profumi varietali dell'uva e un finale più diretto.",
+              "id": "night-grappe-grappa-bianca"
+            },
+            {
+              "name": "Grappa Gialla",
+              "price": 3,
+              "description": "Ingredienti e stile: grappa di vinacce con affinamento che le conferisce colore paglierino o ambrato.",
+              "image": "assets/images/night-drinks/grappe/grappa-gialla.webp",
+              "fact": "Il colore segnala il passaggio in legno o un affinamento aromatico, dettaglio confermato dall'etichetta al banco.",
+              "id": "night-grappe-grappa-gialla"
+            },
+            {
+              "name": "Grappino",
+              "price": 3,
+              "description": "Ingredienti e stile: piccola dose di grappa bianca da vinacce selezionate.",
+              "image": "assets/images/night-drinks/grappe/grappino.webp",
+              "fact": "Grappino indica il formato ridotto: il calice stretto permette comunque di percepirne i profumi.",
+              "id": "night-grappe-grappino"
+            },
+            {
+              "name": "Rum",
+              "price": 4,
+              "description": "Ingredienti e stile: distillato di melassa o succo di canna da zucchero; la bottiglia scelta viene indicata al banco.",
+              "image": "assets/images/night-drinks/grappe/rum.webp",
+              "fact": "La materia prima distingue due famiglie: i rum di melassa più rotondi e quelli di puro succo più vegetali.",
+              "id": "night-grappe-rum"
+            }
+          ]
+        },
+        "servizi": {
+          "label": "Servizi feste",
+          "items": [
+            {
+              "name": "Festa bimbi",
+              "price": 8,
+              "description": "Servizio feste per bambini come da listino.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0200.webp",
+              "id": "night-servizi-festa-bimbi"
+            },
+            {
+              "name": "Apericena gruppi",
+              "price": 18,
+              "description": "Per gruppi di oltre 10 persone, prezzo a persona con una consumazione inclusa. Menu: riso freddo o pasta fredda, focaccia, pizza, affettati e formaggi, nuggets o ali di pollo, patatine fritte e würstel, crocchette di patate in varie opzioni e paninetti salati farciti. In omaggio dal locale: una bottiglia di prosecco oppure un analcolico da 3 litri.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0119.webp",
+              "id": "night-servizi-apericena-gruppi"
+            },
+            {
+              "name": "Tagliere pizza compleanno",
+              "price": 20,
+              "description": "Tagliere pizza per la festa di compleanno.",
+              "image": "assets/images/generated/pizza-compleanno.webp",
+              "id": "night-servizi-tagliere-pizza-compleanno"
+            },
+            {
+              "name": "Taglio torta",
+              "price": 1.5,
+              "description": "Prezzo a persona, con piattini e forchette forniti dal locale.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0069.webp",
+              "id": "night-servizi-taglio-torta"
+            }
+          ]
+        }
+      },
+      "categoryOrder": [
+        "cocktail",
+        "bottiglie",
+        "gin",
+        "aperitivo",
+        "birre",
+        "whisky",
+        "amari",
+        "snack",
+        "grappe",
+        "servizi"
+      ]
+    }
+  }
+}

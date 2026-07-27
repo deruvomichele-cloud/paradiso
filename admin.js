@@ -7,6 +7,13 @@ let token = sessionStorage.getItem(SESSION_KEY) || "";
 let orders = [];
 let ledgerEntries = [];
 let pollTimer = null;
+let siteDefaults = null;
+let siteDraft = null;
+let siteUpdatedAt = "";
+let siteDirty = false;
+let activeSiteTheme = "day";
+let activeSiteCategory = "";
+let pendingSiteUpload = null;
 
 const ordersBody = document.querySelector("#orders-body");
 const emptyState = document.querySelector("#admin-empty");
@@ -30,10 +37,16 @@ const qrOutput = document.querySelector("#qr-output");
 const qrPrintValue = document.querySelector("#qr-print-value");
 const qrMessage = document.querySelector("#qr-form-message");
 const printQrButton = document.querySelector("#print-qr");
+const siteView = document.querySelector("#site-view");
+const siteProducts = document.querySelector("#site-products");
+const siteCategorySelect = document.querySelector("#site-category");
+const siteCategoryLabel = document.querySelector("#site-category-label");
+const siteImageUpload = document.querySelector("#site-image-upload");
+const saveSiteButton = document.querySelector("#save-site-content");
 
 async function api(path, options = {}) {
   const headers = { ...(options.headers || {}) };
-  if (options.body) headers["Content-Type"] = "application/json";
+  if (options.body && !(options.body instanceof FormData)) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;
   const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
   const result = await response.json().catch(() => ({}));
@@ -57,6 +70,11 @@ async function unlockAdmin() {
   adminMain.hidden = false;
   window.scrollTo({ top: 0, behavior: "auto" });
   await refreshAll();
+  try {
+    await loadSiteEditor();
+  } catch (error) {
+    showAdminToast(error.message, true);
+  }
   clearInterval(pollTimer);
   pollTimer = window.setInterval(() => loadBookings({ quiet: true }), 30000);
   searchInput.focus();
@@ -70,6 +88,8 @@ function lockAdmin(message = "") {
   if (orderDialog.open) orderDialog.close();
   orders = [];
   ledgerEntries = [];
+  siteDraft = null;
+  siteDirty = false;
   ordersBody.innerHTML = "";
   ledgerBody.innerHTML = "";
   adminHeader.hidden = true;
@@ -434,6 +454,356 @@ function clearQrCode() {
   qrContent.focus();
 }
 
+function cloneSiteContent(value) {
+  return typeof structuredClone === "function"
+    ? structuredClone(value)
+    : JSON.parse(JSON.stringify(value));
+}
+
+function siteImageSource(value) {
+  const source = String(value ?? "").trim();
+  if (
+    source.startsWith("assets/") ||
+    source.startsWith("/media/") ||
+    source.startsWith("https://") ||
+    source.startsWith("http://")
+  ) {
+    return source;
+  }
+  return "assets/images/breakfast.jpg";
+}
+
+function siteSlug(value) {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60);
+}
+
+function prepareSiteContent(content) {
+  const prepared = cloneSiteContent(content);
+  prepared.version = 1;
+  for (const theme of ["day", "night"]) {
+    const menu = prepared.menus[theme];
+    menu.categoryOrder = Array.isArray(menu.categoryOrder)
+      ? menu.categoryOrder.filter(key => menu.categories[key])
+      : Object.keys(menu.categories);
+    Object.keys(menu.categories).forEach(key => {
+      if (!menu.categoryOrder.includes(key)) menu.categoryOrder.push(key);
+    });
+    menu.categoryOrder.forEach(categoryKey => {
+      menu.categories[categoryKey].items.forEach((product, index) => {
+        product.id ||= `${theme}-${categoryKey}-${siteSlug(product.name) || index + 1}`;
+        product.description ||= "";
+        product.image ||= "assets/images/breakfast.jpg";
+        product.fact ||= "";
+      });
+    });
+  }
+  return prepared;
+}
+
+async function loadSiteEditor({ confirmDiscard = false } = {}) {
+  if (confirmDiscard && siteDirty && !window.confirm("Scartare le modifiche non pubblicate?")) return;
+  if (!siteDefaults) {
+    const defaultsResponse = await fetch("site-defaults.json", { cache: "no-store" });
+    if (!defaultsResponse.ok) throw new Error("Catalogo iniziale non disponibile.");
+    siteDefaults = await defaultsResponse.json();
+  }
+  const current = await api("/v1/site-content");
+  siteDraft = prepareSiteContent(current.content || siteDefaults);
+  siteUpdatedAt = current.updatedAt || "";
+  activeSiteCategory = siteDraft.menus[activeSiteTheme].categoryOrder[0];
+  setSiteDirty(false);
+  renderSiteEditor();
+}
+
+function setSiteDirty(dirty = true) {
+  siteDirty = dirty;
+  const status = document.querySelector(".site-publish-status");
+  status.classList.toggle("is-dirty", dirty);
+  document.querySelector("#site-dirty-label").textContent = dirty
+    ? "Modifiche non pubblicate"
+    : "Nessuna modifica da pubblicare";
+  saveSiteButton.disabled = !dirty;
+}
+
+function renderSiteEditor() {
+  if (!siteDraft) return;
+  renderSiteCopy();
+  renderSiteMenu();
+  const publishLabel = document.querySelector("#site-publish-label");
+  publishLabel.textContent = siteUpdatedAt
+    ? `Pubblicato ${dateTime.format(new Date(siteUpdatedAt))}`
+    : "Catalogo incorporato";
+  refreshIcons();
+}
+
+function renderSiteCopy() {
+  document.querySelectorAll("[data-site-copy-theme]").forEach(panel => {
+    const theme = panel.dataset.siteCopyTheme;
+    const menu = siteDraft.menus[theme];
+    panel.querySelectorAll("[data-site-copy-field]").forEach(input => {
+      input.value = menu[input.dataset.siteCopyField] || "";
+    });
+    const preview = panel.querySelector("[data-site-hero-preview]");
+    preview.src = siteImageSource(menu.heroImage);
+    preview.alt = menu.heroAlt || "";
+  });
+}
+
+function activeSiteMenu() {
+  return siteDraft.menus[activeSiteTheme];
+}
+
+function activeSiteCategoryData() {
+  return activeSiteMenu().categories[activeSiteCategory];
+}
+
+function renderSiteMenu() {
+  if (!siteDraft) return;
+  const menu = activeSiteMenu();
+  if (!menu.categories[activeSiteCategory]) {
+    activeSiteCategory = menu.categoryOrder[0];
+  }
+  document.querySelectorAll("[data-site-menu-theme]").forEach(button => {
+    const active = button.dataset.siteMenuTheme === activeSiteTheme;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  siteCategorySelect.innerHTML = menu.categoryOrder
+    .map(key => `<option value="${escapeHtml(key)}">${escapeHtml(menu.categories[key].label)}</option>`)
+    .join("");
+  siteCategorySelect.value = activeSiteCategory;
+  const category = activeSiteCategoryData();
+  siteCategoryLabel.value = category.label;
+  document.querySelector("#site-products-title").textContent = category.label;
+  document.querySelector("#site-products-count").textContent =
+    `${category.items.length} ${category.items.length === 1 ? "prodotto" : "prodotti"}`;
+  const categoryIndex = menu.categoryOrder.indexOf(activeSiteCategory);
+  document.querySelector("#move-category-up").disabled = categoryIndex <= 0;
+  document.querySelector("#move-category-down").disabled = categoryIndex >= menu.categoryOrder.length - 1;
+  document.querySelector("#delete-site-category").disabled = menu.categoryOrder.length <= 1;
+  renderSiteProducts();
+  refreshIcons();
+}
+
+function renderSiteProducts() {
+  const products = activeSiteCategoryData().items;
+  if (!products.length) {
+    siteProducts.innerHTML = '<div class="site-products-empty">Nessun prodotto in questa categoria</div>';
+    return;
+  }
+  siteProducts.innerHTML = products.map((product, index) => `
+    <article class="site-product-editor" data-site-product="${escapeHtml(product.id)}">
+      <div class="site-product-media">
+        <img
+          class="${product.imageFit === "contain" ? "contain" : ""}"
+          src="${escapeHtml(siteImageSource(product.image))}"
+          alt=""
+        />
+        <button
+          class="icon-button"
+          type="button"
+          data-upload-product="${escapeHtml(product.id)}"
+          aria-label="Carica immagine per ${escapeHtml(product.name)}"
+          title="Carica immagine"
+        ><i data-lucide="upload"></i></button>
+      </div>
+      <div class="site-product-fields">
+        <label>Nome
+          <input type="text" maxlength="140" value="${escapeHtml(product.name)}" data-site-product-field="name" />
+        </label>
+        <label>Prezzo
+          <input type="number" min="0" max="100000" step="0.01" value="${escapeHtml(product.price)}" data-site-product-field="price" />
+        </label>
+        <label class="site-product-description">Descrizione
+          <textarea rows="3" maxlength="2000" data-site-product-field="description">${escapeHtml(product.description)}</textarea>
+        </label>
+        <label class="site-product-description">Contenuto aggiuntivo
+          <textarea rows="2" maxlength="1500" data-site-product-field="fact">${escapeHtml(product.fact || "")}</textarea>
+        </label>
+        <label class="site-product-image">Immagine
+          <span class="site-product-image-row">
+            <input type="text" maxlength="600" value="${escapeHtml(product.image)}" data-site-product-field="image" />
+            <span class="site-fit-toggle">
+              <input type="checkbox" data-site-product-field="imageFit" ${product.imageFit === "contain" ? "checked" : ""} />
+              Mostra immagine intera
+            </span>
+          </span>
+        </label>
+      </div>
+      <div class="site-product-actions">
+        <button class="icon-button" type="button" data-site-product-action="up" ${index === 0 ? "disabled" : ""} aria-label="Sposta ${escapeHtml(product.name)} in alto" title="Sposta in alto">
+          <i data-lucide="arrow-up"></i>
+        </button>
+        <button class="icon-button" type="button" data-site-product-action="down" ${index === products.length - 1 ? "disabled" : ""} aria-label="Sposta ${escapeHtml(product.name)} in basso" title="Sposta in basso">
+          <i data-lucide="arrow-down"></i>
+        </button>
+        <button class="icon-button danger-button" type="button" data-site-product-action="delete" aria-label="Elimina ${escapeHtml(product.name)}" title="Elimina">
+          <i data-lucide="trash-2"></i>
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function switchSiteEditorMode(mode) {
+  document.querySelectorAll("[data-site-editor-mode]").forEach(button => {
+    const active = button.dataset.siteEditorMode === mode;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  document.querySelectorAll("[data-site-editor-panel]").forEach(panel => {
+    panel.hidden = panel.dataset.siteEditorPanel !== mode;
+  });
+}
+
+function setSiteMenuTheme(theme) {
+  activeSiteTheme = theme;
+  activeSiteCategory = activeSiteMenu().categoryOrder[0];
+  renderSiteMenu();
+}
+
+function addSiteProduct() {
+  const category = activeSiteCategoryData();
+  const id = `custom-${crypto.randomUUID()}`;
+  category.items.push({
+    id,
+    name: "Nuovo prodotto",
+    price: 1,
+    description: "",
+    image: activeSiteTheme === "day" ? "assets/images/breakfast.jpg" : "assets/images/negroni.jpg",
+    fact: "",
+  });
+  setSiteDirty();
+  renderSiteMenu();
+  siteProducts.querySelector(`[data-site-product="${CSS.escape(id)}"] input`)?.focus();
+}
+
+function addSiteCategory() {
+  const menu = activeSiteMenu();
+  let suffix = menu.categoryOrder.length + 1;
+  let key = `categoria-${suffix}`;
+  while (menu.categories[key]) {
+    suffix += 1;
+    key = `categoria-${suffix}`;
+  }
+  menu.categories[key] = { label: "Nuova categoria", items: [] };
+  menu.categoryOrder.push(key);
+  activeSiteCategory = key;
+  setSiteDirty();
+  renderSiteMenu();
+  siteCategoryLabel.select();
+}
+
+function moveSiteCategory(direction) {
+  const order = activeSiteMenu().categoryOrder;
+  const index = order.indexOf(activeSiteCategory);
+  const target = index + direction;
+  if (target < 0 || target >= order.length) return;
+  [order[index], order[target]] = [order[target], order[index]];
+  setSiteDirty();
+  renderSiteMenu();
+}
+
+function deleteSiteCategory() {
+  const menu = activeSiteMenu();
+  if (menu.categoryOrder.length <= 1) return;
+  const category = activeSiteCategoryData();
+  if (!window.confirm(`Eliminare la categoria “${category.label}” e tutti i suoi prodotti?`)) return;
+  const index = menu.categoryOrder.indexOf(activeSiteCategory);
+  delete menu.categories[activeSiteCategory];
+  menu.categoryOrder.splice(index, 1);
+  activeSiteCategory = menu.categoryOrder[Math.max(0, index - 1)];
+  setSiteDirty();
+  renderSiteMenu();
+}
+
+function updateSiteProduct(input) {
+  const editor = input.closest("[data-site-product]");
+  const product = activeSiteCategoryData().items.find(entry => entry.id === editor?.dataset.siteProduct);
+  if (!product) return;
+  const field = input.dataset.siteProductField;
+  if (field === "price") {
+    product.price = input.value === "" ? 0 : Number(input.value);
+  } else if (field === "imageFit") {
+    product.imageFit = input.checked ? "contain" : "";
+    editor.querySelector("img").classList.toggle("contain", input.checked);
+  } else {
+    product[field] = input.value;
+  }
+  if (field === "image") editor.querySelector("img").src = siteImageSource(input.value);
+  setSiteDirty();
+}
+
+function handleSiteProductAction(button) {
+  const editor = button.closest("[data-site-product]");
+  const products = activeSiteCategoryData().items;
+  const index = products.findIndex(entry => entry.id === editor?.dataset.siteProduct);
+  if (index < 0) return;
+  const action = button.dataset.siteProductAction;
+  if (action === "delete") {
+    if (!window.confirm(`Eliminare “${products[index].name}”?`)) return;
+    products.splice(index, 1);
+  } else {
+    const target = action === "up" ? index - 1 : index + 1;
+    if (target < 0 || target >= products.length) return;
+    [products[index], products[target]] = [products[target], products[index]];
+  }
+  setSiteDirty();
+  renderSiteMenu();
+}
+
+async function saveSiteContent() {
+  saveSiteButton.disabled = true;
+  try {
+    const result = await api("/v1/site-content", {
+      method: "PUT",
+      body: JSON.stringify(siteDraft),
+    });
+    siteDraft = prepareSiteContent(result.content);
+    siteUpdatedAt = result.updatedAt;
+    setSiteDirty(false);
+    renderSiteEditor();
+    showAdminToast("Modifiche pubblicate sul sito.");
+  } catch (error) {
+    setSiteDirty(true);
+    showAdminToast(error.message, true);
+  }
+}
+
+function requestSiteUpload(target) {
+  pendingSiteUpload = target;
+  siteImageUpload.value = "";
+  siteImageUpload.click();
+}
+
+async function uploadSiteImage(file) {
+  if (!file) return;
+  if (file.size > 8 * 1024 * 1024) {
+    showAdminToast("L'immagine supera 8 MB.", true);
+    return;
+  }
+  const form = new FormData();
+  form.append("file", file);
+  const result = await api("/v1/site-media", { method: "POST", body: form });
+  if (pendingSiteUpload?.type === "hero") {
+    siteDraft.menus[pendingSiteUpload.theme].heroImage = result.url;
+    renderSiteCopy();
+  } else if (pendingSiteUpload?.type === "product") {
+    const { theme, category, id } = pendingSiteUpload;
+    const product = siteDraft.menus[theme].categories[category].items.find(entry => entry.id === id);
+    if (product) product.image = result.url;
+    renderSiteMenu();
+  }
+  setSiteDirty();
+  showAdminToast("Immagine caricata.");
+}
+
 function switchView(name) {
   document.querySelectorAll("[data-admin-view]").forEach(button => {
     const active = button.dataset.adminView === name;
@@ -444,9 +814,10 @@ function switchView(name) {
     panel.hidden = panel.dataset.viewPanel !== name;
   });
   document.querySelector("#export-orders").hidden = name !== "bookings";
-  document.querySelector("#refresh-data").hidden = name === "qr";
+  document.querySelector("#refresh-data").hidden = name === "qr" || name === "site";
   if (name === "accounting") loadAccounting().catch(error => showAdminToast(error.message, true));
   if (name === "qr") qrContent.focus();
+  if (name === "site" && !siteDraft) loadSiteEditor().catch(error => showAdminToast(error.message, true));
 }
 
 function formatDate(value) {
@@ -518,6 +889,82 @@ qrForm.addEventListener("submit", generateQrCode);
 document.querySelector("#clear-qr").addEventListener("click", clearQrCode);
 printQrButton.addEventListener("click", () => window.print());
 document.querySelector(".order-dialog-close").addEventListener("click", () => orderDialog.close());
+
+siteView.addEventListener("input", event => {
+  const copyInput = event.target.closest("[data-site-copy-field]");
+  if (copyInput) {
+    const theme = copyInput.closest("[data-site-copy-theme]").dataset.siteCopyTheme;
+    siteDraft.menus[theme][copyInput.dataset.siteCopyField] = copyInput.value;
+    if (copyInput.dataset.siteCopyField === "heroImage") {
+      document.querySelector(`[data-site-hero-preview="${theme}"]`).src = siteImageSource(copyInput.value);
+    }
+    setSiteDirty();
+    return;
+  }
+  if (event.target === siteCategoryLabel) {
+    activeSiteCategoryData().label = siteCategoryLabel.value;
+    siteCategorySelect.selectedOptions[0].textContent = siteCategoryLabel.value || "Categoria";
+    document.querySelector("#site-products-title").textContent = siteCategoryLabel.value || "Categoria";
+    setSiteDirty();
+    return;
+  }
+  const productInput = event.target.closest("[data-site-product-field]");
+  if (productInput) updateSiteProduct(productInput);
+});
+
+siteView.addEventListener("click", event => {
+  const modeButton = event.target.closest("[data-site-editor-mode]");
+  if (modeButton) {
+    switchSiteEditorMode(modeButton.dataset.siteEditorMode);
+    return;
+  }
+  const themeButton = event.target.closest("[data-site-menu-theme]");
+  if (themeButton) {
+    setSiteMenuTheme(themeButton.dataset.siteMenuTheme);
+    return;
+  }
+  const heroUpload = event.target.closest("[data-upload-hero]");
+  if (heroUpload) {
+    requestSiteUpload({ type: "hero", theme: heroUpload.dataset.uploadHero });
+    return;
+  }
+  const productUpload = event.target.closest("[data-upload-product]");
+  if (productUpload) {
+    requestSiteUpload({
+      type: "product",
+      theme: activeSiteTheme,
+      category: activeSiteCategory,
+      id: productUpload.dataset.uploadProduct,
+    });
+    return;
+  }
+  const productAction = event.target.closest("[data-site-product-action]");
+  if (productAction) handleSiteProductAction(productAction);
+});
+
+siteCategorySelect.addEventListener("change", () => {
+  activeSiteCategory = siteCategorySelect.value;
+  renderSiteMenu();
+});
+document.querySelector("#add-site-product").addEventListener("click", addSiteProduct);
+document.querySelector("#add-site-category").addEventListener("click", addSiteCategory);
+document.querySelector("#delete-site-category").addEventListener("click", deleteSiteCategory);
+document.querySelector("#move-category-up").addEventListener("click", () => moveSiteCategory(-1));
+document.querySelector("#move-category-down").addEventListener("click", () => moveSiteCategory(1));
+document.querySelector("#reload-site-content").addEventListener("click", () => {
+  loadSiteEditor({ confirmDiscard: true }).catch(error => showAdminToast(error.message, true));
+});
+saveSiteButton.addEventListener("click", saveSiteContent);
+siteImageUpload.addEventListener("change", async () => {
+  try {
+    await uploadSiteImage(siteImageUpload.files[0]);
+  } catch (error) {
+    showAdminToast(error.message, true);
+  } finally {
+    pendingSiteUpload = null;
+    siteImageUpload.value = "";
+  }
+});
 
 loginForm.addEventListener("submit", async event => {
   event.preventDefault();

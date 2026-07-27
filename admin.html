@@ -11,11 +11,11 @@
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260727-1" />
     <link rel="preconnect" href="https://unpkg.com" />
     <link rel="stylesheet" href="styles.css?v=20260724-9" />
-    <link rel="stylesheet" href="admin.css?v=20260727-1" />
+    <link rel="stylesheet" href="admin.css?v=20260727-2" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
     <script src="assets/vendor/qrcode-generator.js?v=2.0.4" defer></script>
     <script src="assets/vendor/qrcode-generator-utf8.js?v=2.0.4" defer></script>
-    <script src="admin.js?v=20260727-1" defer></script>
+    <script src="admin.js?v=20260727-2" defer></script>
   </head>
   <body class="admin-body" data-theme="night">
     <main class="admin-login" id="admin-login">
@@ -58,7 +58,7 @@
       </a>
       <div class="admin-header-copy">
         <strong>Dashboard</strong>
-        <span>Prenotazioni, contabilità e QR</span>
+        <span>Prenotazioni, contabilità, QR e sito</span>
       </div>
       <div class="admin-header-actions">
         <button class="icon-button" id="lock-admin" type="button" aria-label="Blocca area admin" title="Blocca area admin">
@@ -99,6 +99,9 @@
         </button>
         <button class="admin-tab" type="button" data-admin-view="qr" aria-pressed="false">
           <i data-lucide="qr-code"></i><span>QR Code</span>
+        </button>
+        <button class="admin-tab" type="button" data-admin-view="site" aria-pressed="false">
+          <i data-lucide="panel-top-open"></i><span>Gestione sito</span>
         </button>
       </nav>
 
@@ -315,6 +318,147 @@
             </div>
           </section>
         </div>
+      </section>
+
+      <section id="site-view" data-view-panel="site" hidden>
+        <div class="site-editor-heading">
+          <div>
+            <p class="eyebrow">Pubblicazione</p>
+            <h2>Gestione sito</h2>
+          </div>
+          <div class="site-editor-actions">
+            <button class="button outline" id="reload-site-content" type="button">
+              <i data-lucide="rotate-ccw"></i><span>Ricarica</span>
+            </button>
+            <a class="button outline" href="index.html" target="_blank" rel="noopener">
+              <i data-lucide="external-link"></i><span>Apri sito</span>
+            </a>
+            <button class="button primary" id="save-site-content" type="button" disabled>
+              <i data-lucide="save"></i><span>Pubblica modifiche</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="site-publish-status" role="status">
+          <span class="site-status-dot" aria-hidden="true"></span>
+          <strong id="site-publish-label">Catalogo incorporato</strong>
+          <span id="site-dirty-label">Nessuna modifica da pubblicare</span>
+        </div>
+
+        <nav class="site-editor-modes" aria-label="Strumenti di gestione sito">
+          <button class="site-editor-mode is-active" type="button" data-site-editor-mode="content" aria-pressed="true">
+            <i data-lucide="text-cursor-input"></i><span>Contenuti</span>
+          </button>
+          <button class="site-editor-mode" type="button" data-site-editor-mode="menu" aria-pressed="false">
+            <i data-lucide="list-tree"></i><span>Menu e prezzi</span>
+          </button>
+        </nav>
+
+        <section class="site-editor-panel" data-site-editor-panel="content">
+          <div class="site-copy-grid">
+            <fieldset class="site-copy-panel" data-site-copy-theme="day">
+              <legend><i data-lucide="sun"></i> Versione giorno</legend>
+              <label>Titolo menu
+                <input type="text" maxlength="100" data-site-copy-field="title" />
+              </label>
+              <label>Introduzione
+                <textarea rows="3" maxlength="500" data-site-copy-field="intro"></textarea>
+              </label>
+              <label>Testo principale
+                <textarea rows="3" maxlength="300" data-site-copy-field="heroCopy"></textarea>
+              </label>
+              <label>Testo pulsante
+                <input type="text" maxlength="80" data-site-copy-field="heroLabel" />
+              </label>
+              <label>Descrizione immagine
+                <input type="text" maxlength="240" data-site-copy-field="heroAlt" />
+              </label>
+              <label>Immagine principale
+                <span class="site-image-control">
+                  <input type="text" maxlength="600" data-site-copy-field="heroImage" />
+                  <button class="icon-button" type="button" data-upload-hero="day" aria-label="Carica immagine giorno" title="Carica immagine">
+                    <i data-lucide="upload"></i>
+                  </button>
+                </span>
+              </label>
+              <img class="site-hero-preview" data-site-hero-preview="day" alt="" />
+            </fieldset>
+
+            <fieldset class="site-copy-panel" data-site-copy-theme="night">
+              <legend><i data-lucide="moon"></i> Versione notte</legend>
+              <label>Titolo menu
+                <input type="text" maxlength="100" data-site-copy-field="title" />
+              </label>
+              <label>Introduzione
+                <textarea rows="3" maxlength="500" data-site-copy-field="intro"></textarea>
+              </label>
+              <label>Testo principale
+                <textarea rows="3" maxlength="300" data-site-copy-field="heroCopy"></textarea>
+              </label>
+              <label>Testo pulsante
+                <input type="text" maxlength="80" data-site-copy-field="heroLabel" />
+              </label>
+              <label>Descrizione immagine
+                <input type="text" maxlength="240" data-site-copy-field="heroAlt" />
+              </label>
+              <label>Immagine principale
+                <span class="site-image-control">
+                  <input type="text" maxlength="600" data-site-copy-field="heroImage" />
+                  <button class="icon-button" type="button" data-upload-hero="night" aria-label="Carica immagine notte" title="Carica immagine">
+                    <i data-lucide="upload"></i>
+                  </button>
+                </span>
+              </label>
+              <img class="site-hero-preview" data-site-hero-preview="night" alt="" />
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="site-editor-panel" data-site-editor-panel="menu" hidden>
+          <div class="site-menu-toolbar">
+            <div class="site-theme-switch" role="group" aria-label="Menu da modificare">
+              <button class="is-active" type="button" data-site-menu-theme="day" aria-pressed="true">
+                <i data-lucide="sun"></i><span>Giorno</span>
+              </button>
+              <button type="button" data-site-menu-theme="night" aria-pressed="false">
+                <i data-lucide="moon"></i><span>Notte</span>
+              </button>
+            </div>
+            <label class="site-category-select">Categoria
+              <select id="site-category"></select>
+            </label>
+            <label class="site-category-name">Nome categoria
+              <input id="site-category-label" type="text" maxlength="80" />
+            </label>
+            <div class="site-category-actions">
+              <button class="icon-button" id="move-category-up" type="button" aria-label="Sposta categoria a sinistra" title="Sposta a sinistra">
+                <i data-lucide="arrow-left"></i>
+              </button>
+              <button class="icon-button" id="move-category-down" type="button" aria-label="Sposta categoria a destra" title="Sposta a destra">
+                <i data-lucide="arrow-right"></i>
+              </button>
+              <button class="icon-button" id="add-site-category" type="button" aria-label="Aggiungi categoria" title="Aggiungi categoria">
+                <i data-lucide="folder-plus"></i>
+              </button>
+              <button class="icon-button danger-button" id="delete-site-category" type="button" aria-label="Elimina categoria" title="Elimina categoria">
+                <i data-lucide="folder-x"></i>
+              </button>
+            </div>
+            <button class="button primary site-add-product" id="add-site-product" type="button">
+              <i data-lucide="plus"></i><span>Aggiungi prodotto</span>
+            </button>
+          </div>
+          <div class="site-products-heading">
+            <div>
+              <p class="eyebrow">Prodotti</p>
+              <h3 id="site-products-title">Categoria</h3>
+            </div>
+            <span id="site-products-count">0 prodotti</span>
+          </div>
+          <div class="site-products" id="site-products"></div>
+        </section>
+
+        <input id="site-image-upload" type="file" accept="image/jpeg,image/png,image/webp" hidden />
       </section>
     </main>
 

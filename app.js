@@ -532,6 +532,8 @@ const allNightDrinkProducts = ["cocktail", ...detailedDrinkCategories]
 const drinkDescriptions = allNightDrinkProducts.map((product) => product.description);
 const drinkFacts = allNightDrinkProducts.map((product) => product.fact);
 const API_BASE = window.PARADISO_API_BASE_URL ?? "";
+const SITE_CONTENT_PATH = `${API_BASE}/v1/site-content`;
+const SITE_CONTENT_CACHE_KEY = "paradiso_site_content_v1";
 const phoneCountries = [
   { code: "it", name: "Italia", prefix: "+39" },
   { code: "ch", name: "Svizzera", prefix: "+41" },
@@ -585,6 +587,8 @@ if (new Set(drinkFacts).size !== drinkFacts.length) {
   throw new Error("Sono presenti chicche drink duplicate.");
 }
 
+applySiteContent(readStorage(SITE_CONTENT_CACHE_KEY, null));
+
 let currentTheme = getInitialTheme();
 let activeCategory = Object.keys(menus[currentTheme].categories)[0];
 let showAll = false;
@@ -627,6 +631,43 @@ function writeStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+function applySiteContent(content) {
+  if (!content?.menus) return;
+  for (const theme of ["day", "night"]) {
+    const sourceMenu = content.menus[theme];
+    if (!sourceMenu?.categories) continue;
+    const orderedCategories = {};
+    const categoryOrder = Array.isArray(sourceMenu.categoryOrder)
+      ? sourceMenu.categoryOrder
+      : Object.keys(sourceMenu.categories);
+    categoryOrder.forEach((categoryKey) => {
+      const category = sourceMenu.categories[categoryKey];
+      if (category?.items) orderedCategories[categoryKey] = category;
+    });
+    if (!Object.keys(orderedCategories).length) continue;
+    menus[theme] = {
+      ...menus[theme],
+      ...sourceMenu,
+      categories: orderedCategories,
+    };
+  }
+}
+
+async function loadSiteContent() {
+  try {
+    const response = await fetch(SITE_CONTENT_PATH, { cache: "no-store" });
+    if (!response.ok) return false;
+    const result = await response.json();
+    if (!result.content) return false;
+    applySiteContent(result.content);
+    writeStorage(SITE_CONTENT_CACHE_KEY, result.content);
+    return true;
+  } catch {
+    // The bundled catalog remains available when the API cannot be reached.
+    return false;
+  }
+}
+
 function getInitialTheme() {
   const stored = localStorage.getItem(THEME_KEY);
   if (stored === "day" || stored === "night") return stored;
@@ -636,6 +677,32 @@ function getInitialTheme() {
 
 function itemId(theme, category, name) {
   return `${theme}:${category}:${name}`.toLowerCase().replace(/[^a-z0-9à-ž]+/gi, "-");
+}
+
+function productId(theme, category, product) {
+  return product.id || itemId(theme, category, product.name);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function safeImageSource(value) {
+  const source = String(value ?? "").trim();
+  if (
+    source.startsWith("assets/") ||
+    source.startsWith("/media/") ||
+    source.startsWith("https://") ||
+    source.startsWith("http://")
+  ) {
+    return source;
+  }
+  return "assets/images/breakfast.jpg";
 }
 
 function normalizeSearchText(value) {
@@ -691,7 +758,7 @@ function renderProductSearch() {
     .flatMap(([categoryKey, category]) =>
       category.items.map((product) => ({
         ...product,
-        id: itemId(currentTheme, categoryKey, product.name),
+        id: productId(currentTheme, categoryKey, product),
         categoryLabel: category.label,
       })),
     )
@@ -726,17 +793,17 @@ function renderProductSearch() {
           type="button"
           role="option"
           aria-selected="false"
-          data-search-preview="${product.id}"
+          data-search-preview="${escapeHtml(product.id)}"
         >
           <img
             class="${product.imageFit === "contain" ? "contain" : ""}"
-            src="${product.image}"
+            src="${escapeHtml(safeImageSource(product.image))}"
             alt=""
             loading="lazy"
           />
           <span class="menu-search-result-copy">
-            <small>${product.categoryLabel}</small>
-            <strong>${product.name}</strong>
+            <small>${escapeHtml(product.categoryLabel)}</small>
+            <strong>${escapeHtml(product.name)}</strong>
           </span>
           <span class="menu-search-result-price">${euro.format(product.price)}</span>
           <i data-lucide="maximize-2"></i>
@@ -772,7 +839,7 @@ function setTheme(theme) {
   document.querySelector("#hero-copy").textContent = menu.heroCopy;
   document.querySelector("#hero-menu-label").textContent = menu.heroLabel;
   const heroImage = document.querySelector("#hero-image");
-  heroImage.src = menu.heroImage;
+  heroImage.src = safeImageSource(menu.heroImage);
   heroImage.alt = menu.heroAlt;
   heroImage.style.setProperty("--hero-position", menu.heroPosition);
   heroImage.style.setProperty("--hero-position-mobile", menu.heroPositionMobile);
@@ -790,9 +857,9 @@ function renderTabs() {
         class="category-tab"
         type="button"
         role="tab"
-        data-category="${key}"
+        data-category="${escapeHtml(key)}"
         aria-selected="${key === activeCategory}"
-      >${category.label}</button>
+      >${escapeHtml(category.label)}</button>
     `);
 
   if (currentTheme === "night") {
@@ -816,30 +883,32 @@ function renderMenu() {
 
   menuGrid.innerHTML = visibleItems
     .map((product) => {
-      const id = itemId(currentTheme, activeCategory, product.name);
+      const id = productId(currentTheme, activeCategory, product);
+      const safeID = escapeHtml(id);
+      const safeName = escapeHtml(product.name);
       return `
         <article class="menu-card">
           <button
             class="menu-card-media"
             type="button"
-            data-preview-item="${id}"
-            aria-label="Ingrandisci ${product.name}"
+            data-preview-item="${safeID}"
+            aria-label="Ingrandisci ${safeName}"
             title="Ingrandisci"
           >
-            <img class="${product.imageFit === "contain" ? "contain" : ""}" src="${product.image}" alt="${product.name}" loading="lazy" />
+            <img class="${product.imageFit === "contain" ? "contain" : ""}" src="${escapeHtml(safeImageSource(product.image))}" alt="${safeName}" loading="lazy" />
             <span class="menu-card-zoom"><i data-lucide="maximize-2"></i></span>
           </button>
           <div class="menu-card-content">
             <div class="menu-card-top">
-              <h3>${product.name}</h3>
+              <h3>${safeName}</h3>
               <span class="menu-price">${euro.format(product.price)}</span>
             </div>
-            <p class="menu-description">${product.description}</p>
+            <p class="menu-description">${escapeHtml(product.description)}</p>
             <button
               class="add-button"
               type="button"
-              data-add-item="${id}"
-              aria-label="Aggiungi ${product.name}"
+              data-add-item="${safeID}"
+              aria-label="Aggiungi ${safeName}"
               title="Aggiungi al carrello"
             ><i data-lucide="plus"></i></button>
           </div>
@@ -860,7 +929,7 @@ function renderMenu() {
 function findProduct(id) {
   for (const [themeKey, menu] of Object.entries(menus)) {
     for (const [categoryKey, category] of Object.entries(menu.categories)) {
-      const product = category.items.find((entry) => itemId(themeKey, categoryKey, entry.name) === id);
+      const product = category.items.find((entry) => productId(themeKey, categoryKey, entry) === id);
       if (product) return { ...product, id, theme: themeKey, category: categoryKey };
     }
   }
@@ -944,21 +1013,21 @@ function renderCart() {
   target.innerHTML = cart
     .map((product) => `
       <div class="cart-line">
-        <img class="${product.imageFit === "contain" ? "contain" : ""}" src="${product.image}" alt="" />
+        <img class="${product.imageFit === "contain" ? "contain" : ""}" src="${escapeHtml(safeImageSource(product.image))}" alt="" />
         <div class="cart-line-copy">
-          <strong>${product.name}</strong>
+          <strong>${escapeHtml(product.name)}</strong>
           <span>${euro.format(product.price * product.quantity)}</span>
           <div class="quantity-control">
-            <button type="button" data-cart-action="decrease" data-id="${product.id}" aria-label="Riduci quantità">
+            <button type="button" data-cart-action="decrease" data-id="${escapeHtml(product.id)}" aria-label="Riduci quantità">
               <i data-lucide="minus"></i>
             </button>
             <b>${product.quantity}</b>
-            <button type="button" data-cart-action="increase" data-id="${product.id}" aria-label="Aumenta quantità">
+            <button type="button" data-cart-action="increase" data-id="${escapeHtml(product.id)}" aria-label="Aumenta quantità">
               <i data-lucide="plus"></i>
             </button>
           </div>
         </div>
-        <button class="cart-remove" type="button" data-cart-action="remove" data-id="${product.id}" aria-label="Rimuovi ${product.name}" title="Rimuovi">
+        <button class="cart-remove" type="button" data-cart-action="remove" data-id="${escapeHtml(product.id)}" aria-label="Rimuovi ${escapeHtml(product.name)}" title="Rimuovi">
           <i data-lucide="trash-2"></i>
         </button>
       </div>
@@ -971,7 +1040,7 @@ function renderOrderPreview() {
   document.querySelector("#preview-total").textContent = euro.format(cartTotal());
   document.querySelector("#preview-empty").hidden = cart.length > 0;
   document.querySelector("#preview-items").innerHTML = cart
-    .map((product) => `<li><span>${product.quantity} × ${product.name}</span><strong>${euro.format(product.price * product.quantity)}</strong></li>`)
+    .map((product) => `<li><span>${product.quantity} × ${escapeHtml(product.name)}</span><strong>${euro.format(product.price * product.quantity)}</strong></li>`)
     .join("");
 }
 
@@ -1326,4 +1395,16 @@ setMinDate();
 renderCart();
 renderOrderPreview();
 setTheme(currentTheme);
+loadSiteContent().then((loaded) => {
+  if (!loaded) return;
+  cart = cart
+    .map((entry) => {
+      const current = findProduct(entry.id);
+      return current ? { ...current, quantity: entry.quantity } : null;
+    })
+    .filter(Boolean);
+  renderCart();
+  renderOrderPreview();
+  setTheme(currentTheme);
+});
 window.addEventListener("load", refreshIcons);

@@ -200,6 +200,22 @@ func TestBookingAndAccountingFlow(t *testing.T) {
 		t.Fatal("login response did not contain a token")
 	}
 
+	siteContent := map[string]any{
+		"version": 1,
+		"menus": map[string]any{
+			"day":   testSiteMenu("Menu del giorno", "day-coffee"),
+			"night": testSiteMenu("Menu della sera", "night-cocktail"),
+		},
+	}
+	savedSiteContent := performJSON(t, service.Handler(), http.MethodPut, "/v1/site-content", siteContent, token)
+	if savedSiteContent["updatedAt"] == nil {
+		t.Fatalf("site content response did not include updatedAt: %#v", savedSiteContent)
+	}
+	publicSiteContent := performJSON(t, service.Handler(), http.MethodGet, "/v1/site-content", nil, "")
+	if publicSiteContent["content"] == nil {
+		t.Fatalf("public site content was not returned: %#v", publicSiteContent)
+	}
+
 	tomorrow := time.Now().AddDate(0, 0, 1).Format("2006-01-02")
 	created := performJSON(t, service.Handler(), http.MethodPost, "/v1/bookings", map[string]any{
 		"customerName": "Mario Rossi", "phone": "+39 333 1234567", "email": "mario@example.com",
@@ -238,6 +254,24 @@ func TestBookingAndAccountingFlow(t *testing.T) {
 	summary := performJSON(t, service.Handler(), http.MethodGet, "/v1/accounting/summary", nil, token)
 	if summary["income"].(float64) != 16 || summary["net"].(float64) != 16 {
 		t.Fatalf("unexpected accounting summary: %#v", summary)
+	}
+}
+
+func testSiteMenu(title, itemID string) map[string]any {
+	return map[string]any{
+		"title": title, "intro": "Introduzione del menu", "heroCopy": "Testo principale",
+		"heroLabel": "Scopri il menu", "heroImage": "assets/images/breakfast.jpg",
+		"heroAlt": "Immagine del locale", "heroPosition": "center", "heroPositionMobile": "center",
+		"categoryOrder": []string{"principale"},
+		"categories": map[string]any{
+			"principale": map[string]any{
+				"label": "Principale",
+				"items": []map[string]any{{
+					"id": itemID, "name": "Prodotto", "price": 5,
+					"description": "Descrizione", "image": "assets/images/breakfast.jpg",
+				}},
+			},
+		},
 	}
 }
 
