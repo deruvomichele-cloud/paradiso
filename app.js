@@ -796,10 +796,9 @@ function renderTabs() {
     `);
 
   if (currentTheme === "night") {
-    const aperitivoIndex = categoryEntries.findIndex(([key]) => key === "aperitivo");
-    tabs.splice(aperitivoIndex + 1, 0, `
+    tabs.unshift(`
       <button
-        class="category-tab"
+        class="category-tab category-tab-offer"
         type="button"
         role="tab"
         data-menu-page="eventi.html"
