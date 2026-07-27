@@ -15,9 +15,14 @@ const galleryDrink = (photo) => `assets/gallery/photos/IMG-20260721-WA${photo}.w
 
 const partyServices = [
   item("Festa bimbi", 8, "Servizio feste per bambini come da listino.", "lunch"),
-  item("Festa maxi", 18, "Formula feste maxi come da listino.", "hero"),
+  item(
+    "Apericena gruppi",
+    18,
+    "Per gruppi di oltre 10 persone, prezzo a persona con una consumazione inclusa. Menu: riso freddo o pasta fredda, focaccia, pizza, affettati e formaggi, nuggets o ali di pollo, patatine fritte e würstel, crocchette di patate in varie opzioni e paninetti salati farciti. In omaggio dal locale: una bottiglia di prosecco oppure un analcolico da 3 litri.",
+    "hero"
+  ),
   item("Tagliere pizza compleanno", 20, "Tagliere pizza per la festa di compleanno.", "lunch"),
-  item("Taglio torta", 1.5, "Servizio di taglio torta.", "breakfast"),
+  item("Taglio torta", 1.5, "Prezzo a persona, con piattini e forchette forniti dal locale.", "breakfast"),
 ];
 
 const menus = {
