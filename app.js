@@ -48,9 +48,6 @@ const menus = {
         items: [
           item("Focaccia Paradiso", 6.5, "Prosciutto crudo, mozzarella e rucola.", "lunch"),
           item("Toast classico", 5, "Prosciutto cotto e formaggio filante.", "lunch"),
-          item("Insalatona", 8, "Verdure fresche, mozzarella e ingredienti di stagione.", "lunch"),
-          item("Piatto del giorno", 10, "La proposta fresca scelta dalla cucina.", "lunch"),
-          item("Pausa pranzo completa", 12, "Piatto del giorno, acqua e caffè.", "lunch"),
         ],
       },
       bibite: {
@@ -292,9 +289,6 @@ const photoReferences = {
     pranzo: [
       "generated:focaccia-paradiso",
       "generated:toast-classico",
-      "generated:insalatona",
-      "generated:piatto-del-giorno-v2",
-      "generated:pausa-pranzo-v2",
     ],
     bibite: ["generated:acqua", "generated:bibite-lattina", "generated:succhi-frutta", "generated:te-freddo"],
     tessere: [138, 154, 132, 183, 154, 123],
