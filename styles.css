@@ -1710,11 +1710,17 @@ textarea:focus {
   padding-bottom: 36px;
 }
 
+.location-heading > div:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 .location-contact-links {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: flex-end;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 18px 28px;
 }
 
@@ -2273,6 +2279,10 @@ body[data-theme="night"] .map-wrap {
     gap: 48px;
   }
 
+  .location-contact-links {
+    flex-wrap: wrap;
+  }
+
   .footer-inner {
     grid-template-columns: 1fr 1fr;
   }
@@ -2412,6 +2422,7 @@ body[data-theme="night"] .map-wrap {
   .location-contact-links {
     align-items: flex-start;
     justify-content: flex-start;
+    width: 100%;
   }
 
   .opening-hours {
