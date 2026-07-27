@@ -36,7 +36,7 @@ const menus = {
         items: [
           item("Espresso", 1.3, "La pausa italiana, intensa e fragrante.", "breakfast"),
           item("Caffè macchiato", 1.5, "Espresso con una nuvola di latte.", "breakfast"),
-          item("Cappuccino", 2, "Espresso, latte caldo e schiuma vellutata.", "breakfast"),
+          item("Cappuccino", 1.5, "Espresso, latte caldo e schiuma vellutata.", "breakfast"),
           item("Cornetto", 1.5, "Sfoglia fragrante, semplice o farcita.", "breakfast"),
           item("Cappuccino e cornetto", 3.5, "La colazione classica del Paradiso.", "breakfast"),
           item("Spremuta d'arancia", 4, "Arance spremute al momento.", "breakfast"),
