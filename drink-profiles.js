@@ -19,11 +19,11 @@ window.nightDrinkProfiles = {
       "La ricetta usa 80% mais, 8% segale e 12% malto d'orzo prima del passaggio nel carbone."
     ),
     "Keglevich Fragola": drinkProfile(
-      "Ingredienti e stile: vodka di cereali aromatizzata alla fragola, dolce e intensamente fruttata.",
+      "Ingredienti e stile: vodka di cereali aromatizzata alla fragola, dolce e intensamente fruttata. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
       "Fredda diventa più compatta e lascia emergere il profumo della fragola senza bisogno di mixer."
     ),
     "Keglevich Pesca": drinkProfile(
-      "Ingredienti e stile: vodka di cereali aromatizzata alla pesca, morbida e profumata.",
+      "Ingredienti e stile: vodka di cereali aromatizzata alla pesca, morbida e profumata. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
       "La pesca dà un finale più rotondo rispetto alla vodka neutra e si abbina bene a soda o tè freddo."
     ),
     "Alkkemist Gin": drinkProfile(
@@ -51,15 +51,15 @@ window.nightDrinkProfiles = {
       "L'oliva Arbequina porta una lieve nota sapida che richiama immediatamente la cucina mediterranea."
     ),
     "Grey Goose": drinkProfile(
-      "Ingredienti e stile: vodka francese da grano tenero invernale e acqua di sorgente filtrata nel calcare.",
+      "Ingredienti e stile: vodka francese da grano tenero invernale e acqua di sorgente filtrata nel calcare. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
       "Viene prodotta tra Piccardia e Cognac: il grano arriva dal nord, l'acqua dalla regione di imbottigliamento."
     ),
     Belvedere: drinkProfile(
-      "Ingredienti e stile: vodka polacca da segale e acqua purificata, senza aromi o zuccheri aggiunti.",
+      "Ingredienti e stile: vodka polacca da segale e acqua purificata, senza aromi o zuccheri aggiunti. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
       "La segale le lascia una trama più cremosa e una lieve speziatura rispetto a molte vodka di grano."
     ),
     "Absolut Vodka": drinkProfile(
-      "Ingredienti e stile: vodka svedese da grano invernale e acqua profonda di Åhus.",
+      "Ingredienti e stile: vodka svedese da grano invernale e acqua profonda di Åhus. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
       "Dal 1879 usa la distillazione continua, ideata per ottenere uno spirito particolarmente uniforme."
     ),
     "Veuve Clicquot Brut": drinkProfile(
