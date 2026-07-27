@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"testing"
 	"time"
@@ -95,6 +96,45 @@ func TestClean(t *testing.T) {
 	}
 	if got := clean("123456", 4); got != "1234" {
 		t.Fatalf("unexpected truncated value %q", got)
+	}
+}
+
+func TestStaticHandlerUsesCanonicalHostAndRealNotFoundResponses(t *testing.T) {
+	webRoot := t.TempDir()
+	for name, body := range map[string]string{
+		"index.html":  "<h1>Lounge Bar Paradiso</h1>",
+		"eventi.html": "<h1>Eventi</h1>",
+		"admin.html":  "<h1>Admin</h1>",
+	} {
+		if err := os.WriteFile(filepath.Join(webRoot, name), []byte(body), 0o600); err != nil {
+			t.Fatalf("write %s: %v", name, err)
+		}
+	}
+
+	handler := (&App{cfg: Config{WebRoot: webRoot}}).staticHandler()
+
+	redirectRequest := httptest.NewRequest(http.MethodGet, "https://www.loungebarparadiso.it/eventi.html?from=google", nil)
+	redirectResponse := httptest.NewRecorder()
+	handler.ServeHTTP(redirectResponse, redirectRequest)
+	if redirectResponse.Code != http.StatusPermanentRedirect {
+		t.Fatalf("expected canonical redirect, got %d", redirectResponse.Code)
+	}
+	if location := redirectResponse.Header().Get("Location"); location != "https://loungebarparadiso.it/eventi.html?from=google" {
+		t.Fatalf("unexpected canonical location %q", location)
+	}
+
+	missingRequest := httptest.NewRequest(http.MethodGet, "https://loungebarparadiso.it/missing-page", nil)
+	missingResponse := httptest.NewRecorder()
+	handler.ServeHTTP(missingResponse, missingRequest)
+	if missingResponse.Code != http.StatusNotFound {
+		t.Fatalf("expected real 404, got %d", missingResponse.Code)
+	}
+
+	adminRequest := httptest.NewRequest(http.MethodGet, "https://loungebarparadiso.it/admin.html", nil)
+	adminResponse := httptest.NewRecorder()
+	handler.ServeHTTP(adminResponse, adminRequest)
+	if robots := adminResponse.Header().Get("X-Robots-Tag"); robots != "noindex, nofollow, noarchive" {
+		t.Fatalf("unexpected admin robots header %q", robots)
 	}
 }
 

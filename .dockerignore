@@ -2,6 +2,8 @@
 .github
 .idea
 android-app
+ios-app
+outputs
 backend/.env
 backend/coverage.out
 *.md

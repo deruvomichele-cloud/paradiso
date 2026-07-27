@@ -231,23 +231,30 @@ func (a *App) staticHandler() http.Handler {
 			writeError(w, http.StatusNotFound, "not_found", "Risorsa API non trovata.")
 			return
 		}
+		host := strings.ToLower(strings.TrimSpace(r.Host))
+		if separator := strings.IndexByte(host, ':'); separator >= 0 {
+			host = host[:separator]
+		}
+		if host == "www.loungebarparadiso.it" || host == "faithful-violet-707.fly.dev" {
+			http.Redirect(w, r, "https://loungebarparadiso.it"+r.URL.RequestURI(), http.StatusPermanentRedirect)
+			return
+		}
 		cleanPath := strings.TrimPrefix(path.Clean("/"+r.URL.Path), "/")
 		if cleanPath == "" || cleanPath == "." {
 			cleanPath = "index.html"
 		}
 		target := filepath.Join(a.cfg.WebRoot, cleanPath)
 		if info, err := os.Stat(target); err != nil || info.IsDir() {
-			target = filepath.Join(a.cfg.WebRoot, "index.html")
-			if _, err := os.Stat(target); err != nil {
-				http.NotFound(w, r)
-				return
-			}
-			r.URL.Path = "/index.html"
+			http.NotFound(w, r)
+			return
 		}
 		if strings.HasPrefix(cleanPath, "assets/") {
 			w.Header().Set("Cache-Control", "public, max-age=604800, immutable")
 		} else {
 			w.Header().Set("Cache-Control", "no-cache")
+		}
+		if cleanPath == "admin.html" {
+			w.Header().Set("X-Robots-Tag", "noindex, nofollow, noarchive")
 		}
 		files.ServeHTTP(w, r)
 	})

@@ -853,6 +853,53 @@ body[data-theme="night"] .menu-card {
   background: var(--surface-2);
 }
 
+.about-section {
+  padding: 96px 0;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(42px, 7vw, 92px);
+}
+
+.about-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.about-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-copy h2 {
+  max-width: 660px;
+  margin: 8px 0 22px;
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1;
+}
+
+.about-copy > p:not(.eyebrow) {
+  max-width: 650px;
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1663,6 +1710,14 @@ textarea:focus {
   padding-bottom: 36px;
 }
 
+.location-contact-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+}
+
 .address-link {
   display: flex;
   align-items: center;
@@ -2354,6 +2409,11 @@ body[data-theme="night"] .map-wrap {
     flex-direction: column;
   }
 
+  .location-contact-links {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
   .opening-hours {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -2465,6 +2525,15 @@ body[data-theme="night"] .map-wrap {
 
   .service-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .about-media {
+    aspect-ratio: 16 / 10;
   }
 
   .service-item {

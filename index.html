@@ -5,59 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Paradiso Lounge Bar a Nova Milanese: colazioni, pranzi, cocktail e prenotazioni online."
+      content="Lounge Bar Paradiso a Nova Milanese: colazioni, pausa pranzo, aperitivi, cocktail, serate ed eventi. Scopri menu, orari e prenota online."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#f5fbff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Lounge Bar Paradiso" />
+    <meta property="og:title" content="Lounge Bar Paradiso a Nova Milanese | Sito ufficiale" />
+    <meta
+      property="og:description"
+      content="Colazioni, pausa pranzo, aperitivi, cocktail, serate ed eventi al Lounge Bar Paradiso di Nova Milanese."
+    />
     <meta property="og:url" content="https://loungebarparadiso.it/" />
-    <title>Paradiso | Lounge Bar Nova Milanese</title>
+    <meta property="og:image" content="https://loungebarparadiso.it/assets/og-lounge-bar-paradiso.jpg" />
+    <meta property="og:image:secure_url" content="https://loungebarparadiso.it/assets/og-lounge-bar-paradiso.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ingresso del Lounge Bar Paradiso a Nova Milanese" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lounge Bar Paradiso a Nova Milanese | Sito ufficiale" />
+    <meta
+      name="twitter:description"
+      content="Colazioni, aperitivi, cocktail, serate ed eventi al Lounge Bar Paradiso di Nova Milanese."
+    />
+    <meta name="twitter:image" content="https://loungebarparadiso.it/assets/og-lounge-bar-paradiso.jpg" />
+    <title>Lounge Bar Paradiso a Nova Milanese | Sito ufficiale</title>
     <link rel="icon" href="assets/favicon.svg?v=20260727-1" type="image/svg+xml" />
     <link rel="alternate icon" href="assets/favicon.ico?v=20260727-1" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260727-1" />
     <link rel="canonical" href="https://loungebarparadiso.it/" />
     <link rel="preconnect" href="https://unpkg.com" />
-    <link rel="stylesheet" href="styles.css?v=20260727-2" />
+    <link rel="stylesheet" href="styles.css?v=20260727-3" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
     <script src="drink-profiles.js?v=20260725-1" defer></script>
-    <script src="app.js?v=20260726-5" defer></script>
+    <script src="app.js?v=20260727-1" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "BarOrPub",
-        "name": "Paradiso Lounge Bar",
-        "url": "https://loungebarparadiso.it/",
-        "telephone": "+39 327 059 7844",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via A. Diaz, 4",
-          "postalCode": "20834",
-          "addressLocality": "Nova Milanese",
-          "addressRegion": "MB",
-          "addressCountry": "IT"
-        },
-        "openingHoursSpecification": [
+        "@graph": [
           {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
-            "opens": "07:00",
-            "closes": "01:30"
+            "@type": "BarOrPub",
+            "@id": "https://loungebarparadiso.it/#business",
+            "name": "Lounge Bar Paradiso",
+            "alternateName": "Paradiso Lounge Bar",
+            "description": "Lounge bar a Nova Milanese aperto dalla colazione alla sera, con pausa pranzo, aperitivi, cocktail, serate ed eventi.",
+            "url": "https://loungebarparadiso.it/",
+            "logo": "https://loungebarparadiso.it/assets/apple-touch-icon.png",
+            "image": [
+              "https://loungebarparadiso.it/assets/og-lounge-bar-paradiso.jpg",
+              "https://loungebarparadiso.it/assets/gallery/photos/IMG-20260721-WA0222.webp"
+            ],
+            "telephone": "+39 327 059 7844",
+            "priceRange": "€€",
+            "acceptsReservations": true,
+            "menu": "https://loungebarparadiso.it/#menu",
+            "servesCuisine": ["Colazione", "Pausa pranzo", "Aperitivo", "Cocktail"],
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via A. Diaz, 4",
+              "postalCode": "20834",
+              "addressLocality": "Nova Milanese",
+              "addressRegion": "Monza e Brianza",
+              "addressCountry": "IT"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 45.5948709,
+              "longitude": 9.1991666
+            },
+            "hasMap": "https://www.google.com/maps/search/?api=1&query=Lounge+Bar+Paradiso%2C+Via+A.+Diaz+4%2C+Nova+Milanese",
+            "sameAs": [
+              "https://www.instagram.com/lounge_bar__paradiso/"
+            ],
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+                "opens": "07:00",
+                "closes": "01:30"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Friday", "Saturday"],
+                "opens": "07:00",
+                "closes": "02:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Sunday",
+                "opens": "08:00",
+                "closes": "12:30"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Sunday",
+                "opens": "17:00",
+                "closes": "01:30"
+              }
+            ],
+            "potentialAction": {
+              "@type": "ReserveAction",
+              "target": "https://loungebarparadiso.it/#prenota",
+              "result": {
+                "@type": "FoodEstablishmentReservation",
+                "name": "Prenotazione tavolo"
+              }
+            }
           },
           {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Friday", "Saturday"],
-            "opens": "07:00",
-            "closes": "02:00"
+            "@type": "WebSite",
+            "@id": "https://loungebarparadiso.it/#website",
+            "url": "https://loungebarparadiso.it/",
+            "name": "Lounge Bar Paradiso",
+            "alternateName": "Paradiso",
+            "inLanguage": "it-IT",
+            "publisher": {
+              "@id": "https://loungebarparadiso.it/#business"
+            }
           },
           {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday",
-            "opens": "08:00",
-            "closes": "12:30"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday",
-            "opens": "17:00",
-            "closes": "01:30"
+            "@type": "WebPage",
+            "@id": "https://loungebarparadiso.it/#webpage",
+            "url": "https://loungebarparadiso.it/",
+            "name": "Lounge Bar Paradiso a Nova Milanese | Sito ufficiale",
+            "description": "Menu, orari, prenotazioni, eventi e informazioni del Lounge Bar Paradiso a Nova Milanese.",
+            "inLanguage": "it-IT",
+            "isPartOf": {
+              "@id": "https://loungebarparadiso.it/#website"
+            },
+            "about": {
+              "@id": "https://loungebarparadiso.it/#business"
+            }
           }
         ]
       }
@@ -127,9 +207,9 @@
         />
         <div class="hero-overlay"></div>
         <div class="hero-content">
-          <p class="eyebrow" id="hero-eyebrow">Lounge bar · Nova Milanese</p>
-          <h1 id="hero-title">Paradiso</h1>
-          <p class="hero-copy" id="hero-copy">Il buongiorno ha il profumo del caffè.</p>
+          <p class="eyebrow" id="hero-eyebrow">Cocktail bar, aperitivo ed eventi · Nova Milanese</p>
+          <h1 id="hero-title">Lounge Bar Paradiso</h1>
+          <p class="hero-copy" id="hero-copy">Colazioni e pausa pranzo nel cuore di Nova Milanese.</p>
           <div class="hero-actions">
             <a class="button primary" href="#menu">
               <span id="hero-menu-label">Scopri il menu</span>
@@ -205,6 +285,43 @@
               <span>Mostra tutto</span>
               <i data-lucide="chevrons-down"></i>
             </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section section" aria-labelledby="about-title">
+        <div class="section-inner about-layout">
+          <div class="about-media">
+            <img
+              src="assets/gallery/photos/IMG-20260721-WA0220.webp"
+              alt="Bancone serale del Lounge Bar Paradiso a Nova Milanese"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="about-copy">
+            <p class="eyebrow">Lounge bar a Nova Milanese</p>
+            <h2 id="about-title">Dal caffè del mattino ai cocktail della sera</h2>
+            <p>
+              Il Lounge Bar Paradiso ti aspetta in Via A. Diaz 4 a Nova Milanese, dalla colazione alla pausa pranzo,
+              fino all'aperitivo e al dopocena.
+            </p>
+            <p>
+              La sera trovi cocktail classici, gin, birre e bottiglie. Il locale ospita anche compleanni, feste per
+              bambini, serate a tema e occasioni private.
+            </p>
+            <div class="about-actions">
+              <a class="button primary" href="eventi.html">Scopri gli eventi</a>
+              <a
+                class="button outline"
+                href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+A.+Diaz%2C+4%2C+20834+Nova+Milanese+MB"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Indicazioni
+                <i data-lucide="map-pin"></i>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -356,17 +473,23 @@
         <div class="section-inner location-heading">
           <div>
             <p class="eyebrow">Dove siamo</p>
-            <h2 id="location-title">Ci vediamo al Paradiso</h2>
+            <h2 id="location-title">Ci vediamo al Lounge Bar Paradiso</h2>
           </div>
-          <a
-            class="address-link"
-            href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+A.+Diaz%2C+4%2C+20834+Nova+Milanese+MB"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <i data-lucide="map-pin"></i>
-            <span>Via A. Diaz, 4<br />20834 Nova Milanese MB</span>
-          </a>
+          <div class="location-contact-links">
+            <a
+              class="address-link"
+              href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+A.+Diaz%2C+4%2C+20834+Nova+Milanese+MB"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i data-lucide="map-pin"></i>
+              <span>Via A. Diaz, 4<br />20834 Nova Milanese MB</span>
+            </a>
+            <a class="address-link" href="tel:+393270597844">
+              <i data-lucide="phone"></i>
+              <span>+39 327 059 7844</span>
+            </a>
+          </div>
         </div>
         <div class="section-inner opening-hours" aria-labelledby="opening-hours-title">
           <div class="opening-hours-title">
@@ -410,7 +533,7 @@
             <i class="brand-symbol brand-symbol-day" data-lucide="cloud"></i>
             <i class="brand-symbol brand-symbol-night" data-lucide="moon"></i>
           </span>
-          <div><strong>Paradiso</strong><span>Lounge Bar · Nova Milanese</span></div>
+          <div><strong>Lounge Bar Paradiso</strong><span>Via A. Diaz 4 · Nova Milanese</span></div>
         </div>
         <div class="footer-links">
           <a href="galleria.html"><i data-lucide="images"></i> Galleria</a>
