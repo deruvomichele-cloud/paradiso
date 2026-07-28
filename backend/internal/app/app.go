@@ -295,7 +295,10 @@ func needsBundledCatalogUpgrade(content SiteContent) bool {
 	if !ok || len(caffetteria.Items) == 0 {
 		return false
 	}
-	return caffetteria.Items[0].Image == "assets/gallery/photos/IMG-20260721-WA0026.webp"
+	if caffetteria.Items[0].Image == "assets/gallery/photos/IMG-20260721-WA0026.webp" {
+		return true
+	}
+	return len(caffetteria.Items) > 2 && caffetteria.Items[2].Image == "assets/gallery/photos/IMG-20260721-WA0063.webp"
 }
 
 func (a *App) configureMessaging(ctx context.Context) error {

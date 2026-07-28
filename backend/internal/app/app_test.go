@@ -125,7 +125,21 @@ func TestNeedsBundledCatalogUpgrade(t *testing.T) {
 		t.Fatal("expected the prior catalog image mapping to be upgraded")
 	}
 	stored.Menus["day"] = SiteMenu{Categories: map[string]SiteCategory{
-		"caffetteria": {Items: []SiteItem{{Image: "assets/gallery/photos/IMG-20260721-WA0194.webp"}}},
+		"caffetteria": {Items: []SiteItem{
+			{Image: "assets/gallery/photos/IMG-20260721-WA0194.webp"},
+			{},
+			{Image: "assets/gallery/photos/IMG-20260721-WA0063.webp"},
+		}},
+	}}
+	if !needsBundledCatalogUpgrade(stored) {
+		t.Fatal("expected the current catalog image mapping to be upgraded")
+	}
+	stored.Menus["day"] = SiteMenu{Categories: map[string]SiteCategory{
+		"caffetteria": {Items: []SiteItem{
+			{Image: "assets/gallery/photos/IMG-20260721-WA0194.webp"},
+			{},
+			{Image: "assets/images/generated/menu-caffetteria-espresso-20260728.webp"},
+		}},
 	}}
 	if needsBundledCatalogUpgrade(stored) {
 		t.Fatal("current gallery mapping must not be upgraded again")

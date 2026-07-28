@@ -32,7 +32,7 @@
               "name": "Espresso",
               "price": 1.2,
               "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0063.webp",
+              "image": "assets/images/generated/menu-caffetteria-espresso-20260728.webp",
               "id": "day-caffetteria-espresso"
             },
             {
@@ -144,7 +144,7 @@
               "name": "Ginseng grande",
               "price": 1.8,
               "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0109.webp",
+              "image": "assets/images/generated/menu-caffetteria-ginseng-grande-20260728.webp",
               "id": "day-caffetteria-ginseng-grande"
             },
             {
@@ -221,7 +221,7 @@
               "name": "Orzo grande",
               "price": 1.8,
               "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0179.webp",
+              "image": "assets/images/generated/menu-caffetteria-orzo-grande-20260728.webp",
               "id": "day-caffetteria-orzo-grande"
             },
             {
@@ -282,63 +282,63 @@
               "name": "Biscotti grandi",
               "price": 2,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0040.webp",
+              "image": "assets/images/generated/menu-pasticceria-biscotti-grandi-20260728.webp",
               "id": "day-pasticceria-biscotti-grandi"
             },
             {
               "name": "Biscotti mimosa",
               "price": 4.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0041.webp",
+              "image": "assets/images/generated/menu-pasticceria-biscotti-mimosa-20260728.webp",
               "id": "day-pasticceria-biscotti-mimosa"
             },
             {
               "name": "Biscotti piccoli",
               "price": 1,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0053.webp",
+              "image": "assets/images/generated/menu-pasticceria-biscotti-piccoli-20260728.webp",
               "id": "day-pasticceria-biscotti-piccoli"
             },
             {
               "name": "Biscotti senza glutine",
               "price": 2,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0054.webp",
+              "image": "assets/images/generated/menu-pasticceria-biscotti-glutine-20260728.webp",
               "id": "day-pasticceria-biscotti-senza-glutine"
             },
             {
               "name": "Brioche ai cereali",
               "price": 1.3,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0055.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-cereali-20260728.webp",
               "id": "day-pasticceria-brioche-ai-cereali"
             },
             {
               "name": "Brioche vegana",
               "price": 1.3,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0051.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-vegana-20260728.webp",
               "id": "day-pasticceria-brioche-vegana"
             },
             {
               "name": "Brioche vuota",
               "price": 1.2,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0078.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-vuota-20260728.webp",
               "id": "day-pasticceria-brioche-vuota"
             },
             {
               "name": "Brioche Dubai",
               "price": 2,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0079.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-dubai-20260728.webp",
               "id": "day-pasticceria-brioche-dubai"
             },
             {
               "name": "Brioche Kinder",
               "price": 2.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0045.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-kinder-20260728.webp",
               "id": "day-pasticceria-brioche-kinder"
             },
             {
@@ -560,77 +560,77 @@
               "name": "Brioche salata",
               "price": 3,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0019.webp",
+              "image": "assets/images/generated/menu-sfizi-brioche-salata-20260728.webp",
               "id": "day-sfizi-salati-brioche-salata"
             },
             {
               "name": "Fagottino patatine e wurstel",
               "price": 2.5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0028.webp",
+              "image": "assets/images/generated/menu-sfizi-fagottino-wurstel-20260728.webp",
               "id": "day-sfizi-salati-fagottino-patatine-e-wurstel"
             },
             {
               "name": "Focaccia",
               "price": 5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/focaccia-paradiso.webp",
+              "image": "assets/images/generated/menu-sfizi-focaccia-20260728.webp",
               "id": "day-sfizi-salati-focaccia"
             },
             {
               "name": "Focaccia e pizzette",
               "price": 1.5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0031.webp",
+              "image": "assets/images/generated/menu-sfizi-focaccia-pizzette-20260728.webp",
               "id": "day-sfizi-salati-focaccia-e-pizzette"
             },
             {
               "name": "Maxi panzerotto",
               "price": 3.5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0088.webp",
+              "image": "assets/images/generated/menu-sfizi-panzerotto-20260728.webp",
               "id": "day-sfizi-salati-maxi-panzerotto"
             },
             {
               "name": "Mini pizzette",
               "price": 0.8,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/pizza-compleanno.webp",
+              "image": "assets/images/generated/menu-sfizi-mini-pizzette-20260728.webp",
               "id": "day-sfizi-salati-mini-pizzette"
             },
             {
               "name": "Panino classico",
               "price": 5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0136.webp",
+              "image": "assets/images/generated/menu-sfizi-panino-classico-20260728.webp",
               "id": "day-sfizi-salati-panino-classico"
             },
             {
               "name": "Panino con cotoletta",
               "price": 6.5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/lunch.jpg",
+              "image": "assets/images/generated/menu-sfizi-panino-cotoletta-20260728.webp",
               "id": "day-sfizi-salati-panino-con-cotoletta"
             },
             {
               "name": "Piadina",
               "price": 6,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/tagliere-v4.webp",
+              "image": "assets/images/generated/menu-sfizi-piadina-20260728.webp",
               "id": "day-sfizi-salati-piadina"
             },
             {
               "name": "Toast classico",
               "price": 5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/toast-classico.webp",
+              "image": "assets/images/generated/menu-sfizi-toast-20260728.webp",
               "id": "day-sfizi-salati-toast-classico"
             },
             {
               "name": "Trancio",
               "price": 5,
               "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-03.webp",
+              "image": "assets/images/generated/menu-sfizi-trancio-20260728.webp",
               "id": "day-sfizi-salati-trancio"
             }
           ]
