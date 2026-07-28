@@ -435,7 +435,7 @@ private fun SmsGatewayDialog(
                     },
                 )
                 Text(
-                    "Imposta 3914371297 come SIM predefinita per gli SMS nelle impostazioni Android.",
+                    "Imposta 3932498699 come SIM predefinita per gli SMS nelle impostazioni Android.",
                     color = Gold,
                     fontWeight = FontWeight.Bold,
                 )
