@@ -162,6 +162,9 @@ func New(ctx context.Context, cfg Config, logger *slog.Logger) (*App, error) {
 		a.Close()
 		return nil, err
 	}
+	if err := a.upgradeLegacySiteContent(ctx); err != nil {
+		a.log.Warn("site content upgrade skipped", "error", err)
+	}
 	if err := a.configureMessaging(ctx); err != nil {
 		a.log.Warn("push notifications disabled", "error", err)
 	}
@@ -216,6 +219,68 @@ func (a *App) seedAdmin(ctx context.Context) error {
 		a.log.Info("admin credentials synchronized", "email", a.cfg.AdminEmail)
 	}
 	return nil
+}
+
+func (a *App) upgradeLegacySiteContent(ctx context.Context) error {
+	if a.cfg.WebRoot == "" {
+		return nil
+	}
+
+	var payload string
+	err := a.db.QueryRowContext(ctx, `SELECT content FROM site_content WHERE id = 1`).Scan(&payload)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil
+	}
+	if err != nil {
+		return fmt.Errorf("read stored site content: %w", err)
+	}
+
+	var stored SiteContent
+	if err := json.Unmarshal([]byte(payload), &stored); err != nil {
+		return fmt.Errorf("decode stored site content: %w", err)
+	}
+	if !isLegacySiteContent(stored) {
+		return nil
+	}
+
+	defaults, err := os.ReadFile(filepath.Join(a.cfg.WebRoot, "site-defaults.json"))
+	if err != nil {
+		return fmt.Errorf("read bundled site defaults: %w", err)
+	}
+	var replacement SiteContent
+	if err := json.Unmarshal(defaults, &replacement); err != nil {
+		return fmt.Errorf("decode bundled site defaults: %w", err)
+	}
+	if err := normalizeSiteContent(&replacement); err != nil {
+		return fmt.Errorf("validate bundled site defaults: %w", err)
+	}
+	encoded, err := json.Marshal(replacement)
+	if err != nil {
+		return fmt.Errorf("encode upgraded site content: %w", err)
+	}
+	if _, err := a.db.ExecContext(ctx, `
+		UPDATE site_content
+		SET content = $1, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now')
+		WHERE id = 1
+	`, string(encoded)); err != nil {
+		return fmt.Errorf("write upgraded site content: %w", err)
+	}
+	a.log.Info("upgraded legacy site content to bundled catalog")
+	return nil
+}
+
+func isLegacySiteContent(content SiteContent) bool {
+	day, ok := content.Menus["day"]
+	if !ok || len(day.Categories) != 5 {
+		return false
+	}
+	for _, key := range []string{"bibite", "colazione", "pranzo", "servizi", "tessere"} {
+		if _, ok := day.Categories[key]; !ok {
+			return false
+		}
+	}
+	_, hasCurrentCatalog := day.Categories["caffetteria"]
+	return !hasCurrentCatalog
 }
 
 func (a *App) configureMessaging(ctx context.Context) error {

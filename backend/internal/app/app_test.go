@@ -99,6 +99,22 @@ func TestClean(t *testing.T) {
 	}
 }
 
+func TestIsLegacySiteContent(t *testing.T) {
+	legacyCategories := map[string]SiteCategory{
+		"bibite": {}, "colazione": {}, "pranzo": {}, "servizi": {}, "tessere": {},
+	}
+	legacy := SiteContent{Menus: map[string]SiteMenu{"day": {Categories: legacyCategories}}}
+	if !isLegacySiteContent(legacy) {
+		t.Fatal("expected the previous five-category day menu to be recognized")
+	}
+	legacy.Menus["day"] = SiteMenu{Categories: map[string]SiteCategory{
+		"bibite": {}, "colazione": {}, "pranzo": {}, "servizi": {}, "tessere": {}, "caffetteria": {},
+	}}
+	if isLegacySiteContent(legacy) {
+		t.Fatal("a catalog containing the new caffetteria category must not be migrated")
+	}
+}
+
 func TestStaticHandlerUsesCanonicalHostAndRealNotFoundResponses(t *testing.T) {
 	webRoot := t.TempDir()
 	for name, body := range map[string]string{
