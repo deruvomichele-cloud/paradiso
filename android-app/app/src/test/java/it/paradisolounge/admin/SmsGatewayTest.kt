@@ -11,6 +11,7 @@ class SmsGatewayTest {
         assertEquals("+393331234567", normalizeSmsDestination("+39 333 123 4567"))
         assertEquals("+393331234567", normalizeSmsDestination("3331234567"))
         assertEquals("+393331234567", normalizeSmsDestination("0039 333 123 4567"))
+        assertEquals("+393932498699", normalizeSmsDestination("3932498699"))
         assertNull(normalizeSmsDestination("123"))
     }
 

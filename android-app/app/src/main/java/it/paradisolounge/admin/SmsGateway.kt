@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.telephony.SmsManager
+import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -16,6 +17,8 @@ import java.util.Locale
 private const val SMS_PREFERENCES = "paradiso_sms_gateway"
 private const val SMS_ENABLED = "enabled"
 private const val SMS_CONFIGURED = "configured"
+private const val SMS_SENDER_NUMBER = "sender_number"
+private const val DEFAULT_SMS_SENDER_NUMBER = "3932498699"
 private const val SENT_BOOKING_IDS = "sent_booking_ids"
 private const val PENDING_BOOKING_IDS = "pending_booking_ids"
 private const val MAX_SAVED_BOOKING_IDS = 100
@@ -31,6 +34,7 @@ enum class SmsGatewayResult {
     PERMISSION_MISSING,
     NO_TELEPHONY,
     INVALID_DESTINATION,
+    SENDER_SIM_NOT_FOUND,
     FAILED,
 }
 
@@ -48,6 +52,17 @@ object SmsGateway {
             .apply()
     }
 
+    fun senderNumber(context: Context): String =
+        preferences(context).getString(SMS_SENDER_NUMBER, DEFAULT_SMS_SENDER_NUMBER)
+            .orEmpty()
+
+    fun setSenderNumber(context: Context, value: String): Boolean {
+        val sender = value.trim()
+        if (normalizeSmsDestination(sender) == null) return false
+        preferences(context).edit().putString(SMS_SENDER_NUMBER, sender).apply()
+        return true
+    }
+
     @Synchronized
     fun sendBookingConfirmation(
         context: Context,
@@ -59,7 +74,7 @@ object SmsGateway {
         guests: Int,
     ): SmsGatewayResult {
         if (!isEnabled(context)) return SmsGatewayResult.DISABLED
-        if (context.checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (!hasSmsPermissions(context)) {
             return SmsGatewayResult.PERMISSION_MISSING
         }
         if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
@@ -72,13 +87,8 @@ object SmsGateway {
         val destination = normalizeSmsDestination(phone) ?: return SmsGatewayResult.INVALID_DESTINATION
         val message = bookingConfirmationSms(code, reservationDate, reservationTime, guests)
         return runCatching {
-            val subscriptionId = SubscriptionManager.getDefaultSmsSubscriptionId()
-            @Suppress("DEPRECATION")
-            val manager = if (subscriptionId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
-                SmsManager.getSmsManagerForSubscriptionId(subscriptionId)
-            } else {
-                SmsManager.getDefault()
-            }
+            val manager = smsManagerForConfiguredSender(context)
+                ?: return SmsGatewayResult.SENDER_SIM_NOT_FOUND
             rememberPending(context, bookingId)
             manager.sendTextMessage(
                 destination,
@@ -96,6 +106,25 @@ object SmsGateway {
 
     private fun preferences(context: Context) =
         context.getSharedPreferences(SMS_PREFERENCES, Context.MODE_PRIVATE)
+
+    private fun hasSmsPermissions(context: Context): Boolean = listOf(
+        Manifest.permission.SEND_SMS,
+        Manifest.permission.READ_PHONE_NUMBERS,
+        Manifest.permission.READ_PHONE_STATE,
+    ).all { permission ->
+        context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun smsManagerForConfiguredSender(context: Context): SmsManager? {
+        val configuredNumber = normalizeSmsDestination(senderNumber(context)) ?: return null
+        val subscriptions = context.getSystemService(SubscriptionManager::class.java)
+            ?.activeSubscriptionInfoList
+            .orEmpty()
+        val senderSubscription = subscriptions.firstOrNull { subscription ->
+            normalizeSmsDestination(subscription.phoneNumber()) == configuredNumber
+        } ?: return null
+        return SmsManager.getSmsManagerForSubscriptionId(senderSubscription.subscriptionId)
+    }
 
     private fun wasAlreadySent(context: Context, bookingId: String): Boolean {
         if (bookingId.isBlank()) return false
@@ -153,6 +182,9 @@ object SmsGateway {
         )
     }
 }
+
+@Suppress("DEPRECATION")
+private fun SubscriptionInfo.phoneNumber(): String = number.orEmpty()
 
 class SmsStatusReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

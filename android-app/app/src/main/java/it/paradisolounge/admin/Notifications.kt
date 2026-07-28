@@ -97,6 +97,7 @@ class ParadisoMessagingService : FirebaseMessagingService() {
         val notificationBody = when (smsResult) {
             SmsGatewayResult.QUEUED -> "$body · SMS di conferma inviato"
             SmsGatewayResult.PERMISSION_MISSING -> "$body · SMS non inviato: autorizzazione mancante"
+            SmsGatewayResult.SENDER_SIM_NOT_FOUND -> "$body · SMS non inviato: SIM mittente non trovata"
             SmsGatewayResult.NO_TELEPHONY,
             SmsGatewayResult.INVALID_DESTINATION,
             SmsGatewayResult.FAILED,
@@ -158,8 +159,9 @@ internal object BookingGatewaySync {
             val queued = outcomes.count { it == SmsGatewayResult.QUEUED }
             val failed = outcomes.count {
                 it == SmsGatewayResult.FAILED ||
-                    it == SmsGatewayResult.PERMISSION_MISSING ||
-                    it == SmsGatewayResult.NO_TELEPHONY ||
+                it == SmsGatewayResult.PERMISSION_MISSING ||
+                it == SmsGatewayResult.SENDER_SIM_NOT_FOUND ||
+                it == SmsGatewayResult.NO_TELEPHONY ||
                     it == SmsGatewayResult.INVALID_DESTINATION
             }
             val details = buildList {

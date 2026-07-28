@@ -114,6 +114,11 @@ private val Green = Color(0xFF61D49B)
 private val Red = Color(0xFFFF8E8E)
 private val euro = NumberFormat.getCurrencyInstance(Locale.ITALY)
 private val italianDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+private val smsGatewayPermissions = arrayOf(
+    Manifest.permission.SEND_SMS,
+    Manifest.permission.READ_PHONE_NUMBERS,
+    Manifest.permission.READ_PHONE_STATE,
+)
 
 class MainActivity : ComponentActivity() {
     private var notificationTarget by mutableStateOf<BookingTarget?>(null)
@@ -211,9 +216,13 @@ private fun ParadisoApp(
     val notificationPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) {}
-    val smsPermission = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { granted ->
+    val smsPermissions = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { permissions ->
+        val granted = smsGatewayPermissions.all { permission ->
+            permissions[permission] == true ||
+                context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+        }
         SmsGateway.setEnabled(context, granted)
         smsGatewayEnabled = granted
         if (granted) BookingGatewayService.start(context)
@@ -389,19 +398,26 @@ private fun ParadisoApp(
         SmsGatewayDialog(
             enabled = smsGatewayEnabled,
             permissionDenied = smsPermissionDenied,
+            senderNumber = SmsGateway.senderNumber(context),
             onDismiss = {
                 showSmsGatewayDialog = false
                 smsPermissionDenied = false
             },
+            onSaveSender = { senderNumber ->
+                SmsGateway.setSenderNumber(context, senderNumber)
+            },
             onEnable = {
                 smsPermissionDenied = false
-                if (context.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                val permissionsGranted = smsGatewayPermissions.all { permission ->
+                    context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+                }
+                if (permissionsGranted) {
                     SmsGateway.setEnabled(context, true)
                     smsGatewayEnabled = true
                     BookingGatewayService.start(context)
                     showSmsGatewayDialog = false
                 } else {
-                    smsPermission.launch(Manifest.permission.SEND_SMS)
+                    smsPermissions.launch(smsGatewayPermissions)
                 }
             },
             onDisable = {
@@ -418,10 +434,14 @@ private fun ParadisoApp(
 private fun SmsGatewayDialog(
     enabled: Boolean,
     permissionDenied: Boolean,
+    senderNumber: String,
     onDismiss: () -> Unit,
+    onSaveSender: (String) -> Boolean,
     onEnable: () -> Unit,
     onDisable: () -> Unit,
 ) {
+    var senderDraft by remember(senderNumber) { mutableStateOf(senderNumber) }
+    var senderError by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("SMS automatici") },
@@ -434,19 +454,32 @@ private fun SmsGatewayDialog(
                         "Questo telefono invierà le conferme ai clienti usando la propria SIM."
                     },
                 )
-                Text(
-                    "Imposta 3932498699 come SIM predefinita per gli SMS nelle impostazioni Android.",
-                    color = Gold,
-                    fontWeight = FontWeight.Bold,
+                OutlinedTextField(
+                    value = senderDraft,
+                    onValueChange = {
+                        senderDraft = it
+                        senderError = false
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Numero mittente") },
+                    supportingText = {
+                        Text("L'app userà la SIM del telefono che corrisponde a questo numero.")
+                    },
+                    isError = senderError,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 )
+                if (senderError) {
+                    Text("Inserisci un numero mobile valido.", color = Red, fontWeight = FontWeight.Bold)
+                }
                 Text(
-                    "Quando è attivo resta una notifica fissa. Gli SMS consumano il credito o i messaggi inclusi nel piano della SIM.",
+                    "Quando è attivo resta una notifica fissa. Gli SMS consumano il credito o i messaggi inclusi nel piano della SIM scelta.",
                     color = TextMuted,
                     fontSize = 13.sp,
                 )
                 if (permissionDenied) {
                     Text(
-                        "Autorizzazione SMS negata. Concedila per attivare l'invio automatico.",
+                        "Autorizzazione SMS o lettura SIM negata. Concedila per attivare l'invio automatico.",
                         color = Red,
                         fontWeight = FontWeight.Bold,
                     )
@@ -454,13 +487,21 @@ private fun SmsGatewayDialog(
             }
         },
         confirmButton = {
-            Button(onClick = if (enabled) onDisable else onEnable) {
-                Text(if (enabled) "Disattiva" else "Attiva SMS")
+            if (enabled) {
+                Button(onClick = {
+                    if (onSaveSender(senderDraft)) onDismiss() else senderError = true
+                }) { Text("Salva numero") }
+            } else {
+                Button(onClick = {
+                    if (onSaveSender(senderDraft)) onEnable() else senderError = true
+                }) { Text("Salva e attiva SMS") }
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Chiudi")
+            if (enabled) {
+                TextButton(onClick = onDisable) { Text("Disattiva") }
+            } else {
+                TextButton(onClick = onDismiss) { Text("Chiudi") }
             }
         },
     )
