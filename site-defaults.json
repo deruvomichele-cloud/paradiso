@@ -11,627 +11,76 @@
       "heroPosition": "center 53%",
       "heroPositionMobile": "58% center",
       "categories": {
-        "caffetteria": {
-          "label": "Caffetteria",
+        "colazione": {
+          "label": "Colazione",
           "items": [
-            {
-              "name": "Caffè freddo",
-              "price": 4.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-caffè-freddo"
-            },
-            {
-              "name": "Caffè fuori sera",
-              "price": 2,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-caffè-fuori-sera"
-            },
             {
               "name": "Espresso",
               "price": 1.2,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-espresso"
+              "description": "La pausa italiana, intensa e fragrante.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
+              "id": "day-colazione-espresso"
             },
             {
               "name": "Caffè macchiato",
               "price": 1.3,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-caffè-macchiato"
-            },
-            {
-              "name": "Caffè doppio",
-              "price": 2.4,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-caffè-doppio"
-            },
-            {
-              "name": "Caffè Americano",
-              "price": 1.8,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-caffè-americano"
-            },
-            {
-              "name": "Caffè corretto",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
+              "description": "Espresso con una nuvola di latte.",
               "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-caffè-corretto"
-            },
-            {
-              "name": "Caffè decaffeinato",
-              "price": 1.3,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-caffè-decaffeinato"
-            },
-            {
-              "name": "Caffè shakerato",
-              "price": 3.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-caffè-shakerato"
-            },
-            {
-              "name": "Caffè shakerato con Baileys",
-              "price": 4,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-caffè-shakerato-con-baileys"
+              "id": "day-colazione-caffè-macchiato"
             },
             {
               "name": "Cappuccino",
               "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-cappuccino"
-            },
-            {
-              "name": "Cappuccino al ginseng o orzo",
-              "price": 2,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-cappuccino-al-ginseng-o-orzo"
-            },
-            {
-              "name": "Cappuccino scuro",
-              "price": 2,
-              "description": "Preparazione al banco, come da listino.",
+              "description": "Espresso, latte caldo e schiuma vellutata.",
               "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-cappuccino-scuro"
+              "id": "day-colazione-cappuccino"
             },
-            {
-              "name": "Cappuccino alla soia",
-              "price": 1.8,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-cappuccino-alla-soia"
-            },
-            {
-              "name": "Cioccolata calda",
-              "price": 3,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-cioccolata-calda"
-            },
-            {
-              "name": "Cioccolata con panna",
-              "price": 3.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-cioccolata-con-panna"
-            },
-            {
-              "name": "Crema caffè",
-              "price": 3.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-crema-caffè"
-            },
-            {
-              "name": "Crema caffè con panna e Nutella",
-              "price": 5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-crema-caffè-con-panna-e-nutella"
-            },
-            {
-              "name": "Ginseng grande",
-              "price": 1.8,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-ginseng-grande"
-            },
-            {
-              "name": "Ginseng piccolo",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-ginseng-piccolo"
-            },
-            {
-              "name": "Latte bianco",
-              "price": 1.3,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-latte-bianco"
-            },
-            {
-              "name": "Latte e menta",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-latte-e-menta"
-            },
-            {
-              "name": "Latte macchiato",
-              "price": 1.6,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-latte-macchiato"
-            },
-            {
-              "name": "Latte macchiato alla soia",
-              "price": 1.8,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-latte-macchiato-alla-soia"
-            },
-            {
-              "name": "Limonata",
-              "price": 2,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-limonata"
-            },
-            {
-              "name": "Macchiatone",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-macchiatone"
-            },
-            {
-              "name": "Marocchino",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-marocchino"
-            },
-            {
-              "name": "Marocchino grande",
-              "price": 3,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-marocchino-grande"
-            },
-            {
-              "name": "Marocchino alla Nutella",
-              "price": 2,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-marocchino-alla-nutella"
-            },
-            {
-              "name": "Orzo grande",
-              "price": 1.8,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
-              "id": "day-caffetteria-orzo-grande"
-            },
-            {
-              "name": "Orzo piccolo",
-              "price": 1.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0138.webp",
-              "id": "day-caffetteria-orzo-piccolo"
-            },
-            {
-              "name": "Spremuta d'arancia",
-              "price": 4,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0154.webp",
-              "id": "day-caffetteria-spremuta-d-arancia"
-            },
-            {
-              "name": "Spremuta al melograno",
-              "price": 5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0219.webp",
-              "id": "day-caffetteria-spremuta-al-melograno"
-            },
-            {
-              "name": "Tè caldo",
-              "price": 2.5,
-              "description": "Preparazione al banco, come da listino.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
-              "id": "day-caffetteria-tè-caldo"
-            }
-          ]
-        },
-        "pasticceria": {
-          "label": "Pasticceria",
-          "items": [
             {
               "name": "Cornetto",
               "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
+              "description": "Sfoglia fragrante, semplice o farcita.",
               "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-cornetto"
+              "id": "day-colazione-cornetto"
             },
             {
               "name": "Cornetto con la frutta",
               "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
+              "description": "Sfoglia fragrante con ripieno alla frutta.",
               "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-cornetto-con-la-frutta"
+              "id": "day-colazione-cornetto-con-la-frutta"
             },
             {
               "name": "Cappuccino e cornetto",
               "price": 3.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-cappuccino-e-cornetto"
+              "description": "La colazione classica del Paradiso.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0132.webp",
+              "id": "day-colazione-cappuccino-e-cornetto"
             },
             {
-              "name": "Biscotti grandi",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-biscotti-grandi"
-            },
-            {
-              "name": "Biscotti mimosa",
-              "price": 4.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-biscotti-mimosa"
-            },
-            {
-              "name": "Biscotti piccoli",
-              "price": 1,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-biscotti-piccoli"
-            },
-            {
-              "name": "Biscotti senza glutine",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-biscotti-senza-glutine"
-            },
-            {
-              "name": "Brioche ai cereali",
-              "price": 1.3,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-brioche-ai-cereali"
-            },
-            {
-              "name": "Brioche vegana",
-              "price": 1.3,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-brioche-vegana"
-            },
-            {
-              "name": "Brioche vuota",
-              "price": 1.2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-brioche-vuota"
-            },
-            {
-              "name": "Brioche Dubai",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-brioche-dubai"
-            },
-            {
-              "name": "Brioche Kinder",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-brioche-kinder"
-            },
-            {
-              "name": "Brioche alla mela",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-brioche-alla-mela"
-            },
-            {
-              "name": "Brioche all'albicocca",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-brioche-all-albicocca"
-            },
-            {
-              "name": "Brioche al cioccolato bianco",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-brioche-al-cioccolato-bianco"
-            },
-            {
-              "name": "Brioche alla crema",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-brioche-alla-crema"
-            },
-            {
-              "name": "Brioche alla fragola",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-brioche-alla-fragola"
-            },
-            {
-              "name": "Brioche ai frutti di bosco",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-brioche-ai-frutti-di-bosco"
-            },
-            {
-              "name": "Brioche mignon",
-              "price": 0.8,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-brioche-mignon"
-            },
-            {
-              "name": "Brioche mignon farcita",
-              "price": 1,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-brioche-mignon-farcita"
-            },
-            {
-              "name": "Brioche alla nocciola",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-brioche-alla-nocciola"
-            },
-            {
-              "name": "Brioche alla Nutella",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-brioche-alla-nutella"
-            },
-            {
-              "name": "Brioche al pistacchio",
-              "price": 1.8,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-brioche-al-pistacchio"
-            },
-            {
-              "name": "Cannoli siciliani",
-              "price": 3,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-cannoli-siciliani"
-            },
-            {
-              "name": "Cannoncini",
-              "price": 1,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-cannoncini"
-            },
-            {
-              "name": "Ciambella",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-ciambella"
-            },
-            {
-              "name": "Ciambella torta",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-ciambella-torta"
-            },
-            {
-              "name": "Ciambelline",
-              "price": 1,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-ciambelline"
-            },
-            {
-              "name": "Dolce senza glutine",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-dolce-senza-glutine"
-            },
-            {
-              "name": "Frappè piccolo",
-              "price": 5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-frappè-piccolo"
-            },
-            {
-              "name": "Frappè grande",
-              "price": 6.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-frappè-grande"
-            },
-            {
-              "name": "Girella",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-girella"
-            },
-            {
-              "name": "Girella all'uva",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-girella-all-uva"
-            },
-            {
-              "name": "Macarons",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-macarons"
-            },
-            {
-              "name": "Mini Sacher",
-              "price": 1.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-mini-sacher"
-            },
-            {
-              "name": "Muffin",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-muffin"
-            },
-            {
-              "name": "Muffin grande",
-              "price": 2.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-muffin-grande"
-            },
-            {
-              "name": "Pancake con Nutella",
-              "price": 3,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-pancake-con-nutella"
-            },
-            {
-              "name": "Pancake Nutella e fragole",
-              "price": 3.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/generated/menu-pasticceria-20260728.png",
-              "id": "day-pasticceria-pancake-nutella-e-fragole"
-            },
-            {
-              "name": "Sacher grande",
-              "price": 4.5,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
-              "id": "day-pasticceria-sacher-grande"
-            },
-            {
-              "name": "Sfogliatelle",
-              "price": 1,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
-              "id": "day-pasticceria-sfogliatelle"
-            },
-            {
-              "name": "Treccia",
-              "price": 2,
-              "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/paradiso-special-20260727-02.webp",
-              "id": "day-pasticceria-treccia"
+              "name": "Spremuta d'arancia",
+              "price": 4,
+              "description": "Arance spremute al momento.",
+              "image": "assets/gallery/photos/IMG-20260721-WA0037.webp",
+              "id": "day-colazione-spremuta-d-arancia"
             }
           ]
         },
-        "sfizi-salati": {
-          "label": "Sfizi salati",
+        "pranzo": {
+          "label": "Pranzo",
           "items": [
             {
-              "name": "Brioche salata",
-              "price": 3,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/focaccia-paradiso.webp",
-              "id": "day-sfizi-salati-brioche-salata"
-            },
-            {
-              "name": "Fagottino patatine e wurstel",
-              "price": 2.5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/toast-classico.webp",
-              "id": "day-sfizi-salati-fagottino-patatine-e-wurstel"
-            },
-            {
-              "name": "Focaccia",
-              "price": 5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/lunch.jpg",
-              "id": "day-sfizi-salati-focaccia"
-            },
-            {
-              "name": "Focaccia e pizzette",
-              "price": 1.5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/focaccia-paradiso.webp",
-              "id": "day-sfizi-salati-focaccia-e-pizzette"
-            },
-            {
-              "name": "Maxi panzerotto",
-              "price": 3.5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/toast-classico.webp",
-              "id": "day-sfizi-salati-maxi-panzerotto"
-            },
-            {
-              "name": "Mini pizzette",
-              "price": 0.8,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/lunch.jpg",
-              "id": "day-sfizi-salati-mini-pizzette"
-            },
-            {
-              "name": "Panino classico",
-              "price": 5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/focaccia-paradiso.webp",
-              "id": "day-sfizi-salati-panino-classico"
-            },
-            {
-              "name": "Panino con cotoletta",
+              "name": "Focaccia Paradiso",
               "price": 6.5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/toast-classico.webp",
-              "id": "day-sfizi-salati-panino-con-cotoletta"
-            },
-            {
-              "name": "Piadina",
-              "price": 6,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/lunch.jpg",
-              "id": "day-sfizi-salati-piadina"
+              "description": "Prosciutto crudo, mozzarella e rucola.",
+              "image": "assets/images/generated/focaccia-paradiso.webp",
+              "id": "day-pranzo-focaccia-paradiso"
             },
             {
               "name": "Toast classico",
               "price": 5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
-              "image": "assets/images/generated/focaccia-paradiso.webp",
-              "id": "day-sfizi-salati-toast-classico"
-            },
-            {
-              "name": "Trancio",
-              "price": 5,
-              "description": "Preparato o scaldato al momento, secondo disponibilità.",
+              "description": "Prosciutto cotto e formaggio filante.",
               "image": "assets/images/generated/toast-classico.webp",
-              "id": "day-sfizi-salati-trancio"
+              "id": "day-pranzo-toast-classico"
             }
           ]
         },
@@ -665,116 +114,6 @@
               "description": "Limone o pesca.",
               "image": "assets/images/generated/te-freddo.webp",
               "id": "day-bibite-tè-freddo"
-            }
-          ]
-        },
-        "gelati": {
-          "label": "Gelati",
-          "items": [
-            {
-              "name": "Coppa Rica Amarena",
-              "price": 2.5,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-coppa-rica-amarena"
-            },
-            {
-              "name": "Cornetto Amarena",
-              "price": 2.7,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cornetto-amarena"
-            },
-            {
-              "name": "Cornetto Classico",
-              "price": 2.5,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cornetto-classico"
-            },
-            {
-              "name": "Cornetto mini",
-              "price": 2,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cornetto-mini"
-            },
-            {
-              "name": "Cornetto XXL",
-              "price": 2.7,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cornetto-xxl"
-            },
-            {
-              "name": "Cremino",
-              "price": 1.8,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cremino"
-            },
-            {
-              "name": "Cucciolone Bikini senza glutine e senza lattosio",
-              "price": 2.3,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cucciolone-bikini-senza-glutine-e-senza-lattosio"
-            },
-            {
-              "name": "Cucciolone Maxi",
-              "price": 2.3,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-cucciolone-maxi"
-            },
-            {
-              "name": "Frigo Chuches",
-              "price": 2.2,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-frigo-chuches"
-            },
-            {
-              "name": "Ghiacciolo",
-              "price": 1,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-ghiacciolo"
-            },
-            {
-              "name": "Magnum Almond",
-              "price": 2.6,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-magnum-almond"
-            },
-            {
-              "name": "Magnum Bianco",
-              "price": 2.6,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-magnum-bianco"
-            },
-            {
-              "name": "Magnum Classico",
-              "price": 2.6,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-magnum-classico"
-            },
-            {
-              "name": "Magnum Michelangelo",
-              "price": 2.8,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-magnum-michelangelo"
-            },
-            {
-              "name": "Treasure Baule",
-              "price": 1.7,
-              "description": "Gelato confezionato, servito ben freddo.",
-              "image": "assets/images/generated/menu-gelati-20260728.png",
-              "id": "day-gelati-treasure-baule"
             }
           ]
         },
@@ -860,11 +199,9 @@
         }
       },
       "categoryOrder": [
-        "caffetteria",
-        "pasticceria",
-        "sfizi-salati",
+        "colazione",
+        "pranzo",
         "bibite",
-        "gelati",
         "tessere",
         "servizi"
       ]
@@ -1264,11 +601,12 @@
               "id": "night-bottiglie-amuerte-coca-gin"
             },
             {
-              "name": "Hendrick's Grand Cabaret con tonica",
-              "price": 100,
-              "description": "Bottiglia con tonica inclusa.",
+              "name": "Hendrick's Grand Cabaret",
+              "price": 160,
+              "description": "Ingredienti e stile: gin Hendrick's con frutta a nocciolo, erbe dolci, tonica, ghiaccio e cetriolo.",
               "image": "assets/images/bottles-studio/hendricks-cabaret.png",
-              "id": "night-bottiglie-hendrick-s-grand-cabaret-con-tonica"
+              "fact": "Grand Cabaret prende ispirazione dai punch alla frutta serviti nelle feste parigine di inizio Novecento.",
+              "id": "night-bottiglie-hendrick-s-grand-cabaret"
             },
             {
               "name": "Nordés con toniche",
@@ -1303,11 +641,12 @@
               "id": "night-bottiglie-grey-goose"
             },
             {
-              "name": "Belvedere con 4 bibite",
-              "price": 100,
-              "description": "Vodka premium con quattro bibite incluse.",
+              "name": "Belvedere",
+              "price": 150,
+              "description": "Ingredienti e stile: vodka polacca da segale e acqua purificata, senza aromi o zuccheri aggiunti. Bottiglia servita con 5 lattine di Red Bull oppure lemon in omaggio.",
               "image": "assets/images/bottles-studio/belvedere.png",
-              "id": "night-bottiglie-belvedere-con-4-bibite"
+              "fact": "La segale le lascia una trama più cremosa e una lieve speziatura rispetto a molte vodka di grano.",
+              "id": "night-bottiglie-belvedere"
             },
             {
               "name": "Absolut Vodka",
@@ -1318,18 +657,20 @@
               "id": "night-bottiglie-absolut-vodka"
             },
             {
-              "name": "Veuve Clicquot",
-              "price": 130,
-              "description": "Champagne in bottiglia.",
+              "name": "Veuve Clicquot Brut",
+              "price": 160,
+              "description": "Ingredienti e stile: Champagne brut da Pinot Noir, Chardonnay e Meunier, con forte impronta del Pinot Noir.",
               "image": "assets/images/bottles-studio/veuve-brut.png",
-              "id": "night-bottiglie-veuve-clicquot"
+              "fact": "La celebre etichetta gialla identifica una cuvée costruita anche con vini di riserva della maison.",
+              "id": "night-bottiglie-veuve-clicquot-brut"
             },
             {
-              "name": "Bellavista",
-              "price": 70,
-              "description": "Franciacorta in bottiglia.",
+              "name": "Bellavista Alma Gran Cuvée",
+              "price": 100,
+              "description": "Ingredienti e stile: Franciacorta brut da Chardonnay, Pinot Nero e una piccola parte di Pinot Bianco.",
               "image": "assets/images/bottles-studio/bellavista.png",
-              "id": "night-bottiglie-bellavista"
+              "fact": "La presa di spuma avviene in bottiglia secondo il metodo Franciacorta, con lungo riposo sui lieviti.",
+              "id": "night-bottiglie-bellavista-alma-gran-cuvée"
             },
             {
               "name": "Berlucchi Cuvée Imperiale",
@@ -1340,39 +681,44 @@
               "id": "night-bottiglie-berlucchi-cuvée-imperiale"
             },
             {
-              "name": "Prosecco",
-              "price": 20,
-              "description": "Prosecco in bottiglia.",
+              "name": "Valdo Prosecco",
+              "price": 50,
+              "description": "Ingredienti e stile: Prosecco Extra Dry da uva Glera, floreale, fruttato e leggermente morbido.",
               "image": "assets/images/bottles-studio/valdo.png",
-              "id": "night-bottiglie-prosecco"
+              "fact": "Extra Dry è più morbido di Brut: il nome può trarre in inganno, ma indica un residuo zuccherino maggiore.",
+              "id": "night-bottiglie-valdo-prosecco"
             },
             {
-              "name": "Moët Rosé",
-              "price": 180,
-              "description": "Champagne rosé in bottiglia.",
+              "name": "Moët N.I.R Rosé",
+              "price": 220,
+              "description": "Ingredienti e stile: Champagne rosé demi-sec da Pinot Noir, Meunier e Chardonnay.",
               "image": "assets/images/bottles-studio/moet-nir.png",
-              "id": "night-bottiglie-moët-rosé"
+              "fact": "N.I.R significa Nectar Impérial Rosé: la bottiglia luminosa è stata pensata per il servizio serale.",
+              "id": "night-bottiglie-moët-n-i-r-rosé"
             },
             {
-              "name": "Veuve",
-              "price": 100,
-              "description": "Champagne in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-veuve"
-            },
-            {
-              "name": "Moët Bianco",
+              "name": "Veuve Clicquot Rosé",
               "price": 180,
-              "description": "Champagne demi-sec in bottiglia.",
-              "image": "assets/images/bottles-studio/moet-ice.png",
-              "id": "night-bottiglie-moët-bianco"
+              "description": "Ingredienti e stile: Champagne rosé da Pinot Noir, Chardonnay, Meunier e vino rosso della Champagne.",
+              "image": "assets/images/bottles-studio/veuve-rose.png",
+              "fact": "Nel 1818 Madame Clicquot creò il primo rosé d'assemblaggio conosciuto aggiungendo vino rosso alla cuvée.",
+              "id": "night-bottiglie-veuve-clicquot-rosé"
             },
             {
-              "name": "Moët",
-              "price": 150,
-              "description": "Champagne brut in bottiglia.",
+              "name": "Moët Ice Impérial",
+              "price": 180,
+              "description": "Ingredienti e stile: Champagne demi-sec da Pinot Noir, Meunier e Chardonnay, creato per essere servito con ghiaccio.",
+              "image": "assets/images/bottles-studio/moet-ice.png",
+              "fact": "È uno dei rari Champagne progettati espressamente per conservare equilibrio e profumo sopra cubi di ghiaccio.",
+              "id": "night-bottiglie-moët-ice-impérial"
+            },
+            {
+              "name": "Moët Impérial Brut",
+              "price": 140,
+              "description": "Ingredienti e stile: Champagne brut da Pinot Noir, Meunier e Chardonnay, fresco e cremoso.",
               "image": "assets/images/bottles-studio/moet-brut.png",
-              "id": "night-bottiglie-moët"
+              "fact": "La cuvée unisce numerosi cru e vini di riserva per mantenere costante lo stile della maison.",
+              "id": "night-bottiglie-moët-impérial-brut"
             },
             {
               "name": "Lanson White Label",
@@ -1421,139 +767,6 @@
               "image": "assets/images/bottles-studio/dom-perignon-2013.png",
               "fact": "L'annata 2013 maturò lentamente: la vendemmia tardiva ha dato una cuvée più verticale della 2012.",
               "id": "night-bottiglie-dom-pérignon-2013"
-            },
-            {
-              "name": "Amarone",
-              "price": 40,
-              "description": "Vino rosso in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-amarone"
-            },
-            {
-              "name": "Astoria",
-              "price": 40,
-              "description": "Spumante in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-astoria"
-            },
-            {
-              "name": "Bottiglia vino della casa",
-              "price": 25,
-              "description": "Bottiglia secondo disponibilità.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-bottiglia-vino-della-casa"
-            },
-            {
-              "name": "Calice",
-              "price": 5,
-              "description": "Calice di vino della casa.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-calice"
-            },
-            {
-              "name": "Calice Gewürztraminer",
-              "price": 6,
-              "description": "Calice di Gewürztraminer.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-calice-gewürztraminer"
-            },
-            {
-              "name": "Champagne",
-              "price": 150,
-              "description": "Champagne in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-champagne"
-            },
-            {
-              "name": "D'Armanville Rosé",
-              "price": 80,
-              "description": "Champagne rosé in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-d-armanville-rosé"
-            },
-            {
-              "name": "Don Julio",
-              "price": 550,
-              "description": "Tequila premium in bottiglia.",
-              "image": "assets/images/bottles-studio/clase-azul.png",
-              "id": "night-bottiglie-don-julio"
-            },
-            {
-              "name": "Dom Pérignon 2015",
-              "price": 300,
-              "description": "Champagne in bottiglia.",
-              "image": "assets/images/bottles-studio/dom-perignon-2012.png",
-              "id": "night-bottiglie-dom-pérignon-2015"
-            },
-            {
-              "name": "Gewürztraminer",
-              "price": 30,
-              "description": "Vino bianco aromatico in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-gewürztraminer"
-            },
-            {
-              "name": "Gin base e bibite",
-              "price": 50,
-              "description": "Gin base con bibite incluse.",
-              "image": "assets/images/gin.jpg",
-              "id": "night-bottiglie-gin-base-e-bibite"
-            },
-            {
-              "name": "H. Blin Champagne",
-              "price": 80,
-              "description": "Champagne in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-h-blin-champagne"
-            },
-            {
-              "name": "H. Blin Rosé",
-              "price": 80,
-              "description": "Champagne rosé in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-h-blin-rosé"
-            },
-            {
-              "name": "Lugana",
-              "price": 40,
-              "description": "Vino bianco in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-lugana"
-            },
-            {
-              "name": "Offerta 2 calici",
-              "price": 7,
-              "description": "Due calici di vino in offerta.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-offerta-2-calici"
-            },
-            {
-              "name": "Prosecco Millesimato",
-              "price": 30,
-              "description": "Prosecco millesimato in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-prosecco-millesimato"
-            },
-            {
-              "name": "Ribolla",
-              "price": 30,
-              "description": "Vino bianco in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-ribolla"
-            },
-            {
-              "name": "Rosé",
-              "price": 35,
-              "description": "Vino rosé in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-rosé"
-            },
-            {
-              "name": "Vino bianco",
-              "price": 35,
-              "description": "Vino bianco in bottiglia.",
-              "image": "assets/images/generated/menu-vini-20260728.png",
-              "id": "night-bottiglie-vino-bianco"
             }
           ]
         },
@@ -1596,7 +809,7 @@
               "name": "Base Mr. Higgins",
               "price": 6,
               "description": "Ingredienti: Mr. Higgins gin, acqua tonica, ghiaccio e guarnizione scelta in base alla bottiglia disponibile.",
-              "image": "assets/images/night-drinks/gin/mr-higgins.webp",
+              "image": "assets/gallery/photos/IMG-20260721-WA0217.webp",
               "fact": "La guarnizione viene decisa al banco dopo l'assaggio, così non copre le botaniche specifiche dell'etichetta.",
               "id": "night-gin-base-mr-higgins"
             },
