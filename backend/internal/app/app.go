@@ -298,7 +298,11 @@ func needsBundledCatalogUpgrade(content SiteContent) bool {
 	if caffetteria.Items[0].Image == "assets/gallery/photos/IMG-20260721-WA0026.webp" {
 		return true
 	}
-	return len(caffetteria.Items) > 2 && caffetteria.Items[2].Image == "assets/gallery/photos/IMG-20260721-WA0063.webp"
+	if len(caffetteria.Items) > 2 && caffetteria.Items[2].Image == "assets/gallery/photos/IMG-20260721-WA0063.webp" {
+		return true
+	}
+	pasticceria, ok := day.Categories["pasticceria"]
+	return ok && len(pasticceria.Items) > 12 && pasticceria.Items[12].Image == "assets/gallery/photos/IMG-20260721-WA0048.webp"
 }
 
 func (a *App) configureMessaging(ctx context.Context) error {

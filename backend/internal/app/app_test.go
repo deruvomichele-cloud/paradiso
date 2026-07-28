@@ -140,6 +140,24 @@ func TestNeedsBundledCatalogUpgrade(t *testing.T) {
 			{},
 			{Image: "assets/images/generated/menu-caffetteria-espresso-20260728.webp"},
 		}},
+		"pasticceria": {Items: []SiteItem{
+			{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+			{Image: "assets/gallery/photos/IMG-20260721-WA0048.webp"},
+		}},
+	}}
+	if !needsBundledCatalogUpgrade(stored) {
+		t.Fatal("expected the previous pastry image mapping to be upgraded")
+	}
+	stored.Menus["day"] = SiteMenu{Categories: map[string]SiteCategory{
+		"caffetteria": {Items: []SiteItem{
+			{Image: "assets/gallery/photos/IMG-20260721-WA0194.webp"},
+			{},
+			{Image: "assets/images/generated/menu-caffetteria-espresso-20260728.webp"},
+		}},
+		"pasticceria": {Items: []SiteItem{
+			{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+			{Image: "assets/images/generated/menu-pasticceria-brioche-mela-20260729.jpg"},
+		}},
 	}}
 	if needsBundledCatalogUpgrade(stored) {
 		t.Fatal("current gallery mapping must not be upgraded again")

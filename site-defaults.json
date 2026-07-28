@@ -261,21 +261,21 @@
               "name": "Cornetto",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0050.webp",
+              "image": "assets/images/generated/menu-pasticceria-cornetto-20260729.jpg",
               "id": "day-pasticceria-cornetto"
             },
             {
               "name": "Cornetto con la frutta",
               "price": 2.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0172.webp",
+              "image": "assets/images/generated/menu-pasticceria-cornetto-frutta-20260729.jpg",
               "id": "day-pasticceria-cornetto-con-la-frutta"
             },
             {
               "name": "Cappuccino e cornetto",
               "price": 3.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/images/breakfast.jpg",
+              "image": "assets/images/generated/menu-pasticceria-cappuccino-cornetto-20260729.jpg",
               "id": "day-pasticceria-cappuccino-e-cornetto"
             },
             {
@@ -345,77 +345,77 @@
               "name": "Brioche alla mela",
               "price": 2.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0048.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-mela-20260729.jpg",
               "id": "day-pasticceria-brioche-alla-mela"
             },
             {
               "name": "Brioche all'albicocca",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0036.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-albicocca-20260729.jpg",
               "id": "day-pasticceria-brioche-all-albicocca"
             },
             {
               "name": "Brioche al cioccolato bianco",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0038.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-cioccolato-bianco-20260729.jpg",
               "id": "day-pasticceria-brioche-al-cioccolato-bianco"
             },
             {
               "name": "Brioche alla crema",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0039.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-crema-20260729.jpg",
               "id": "day-pasticceria-brioche-alla-crema"
             },
             {
               "name": "Brioche alla fragola",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0083.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-fragola-20260729.jpg",
               "id": "day-pasticceria-brioche-alla-fragola"
             },
             {
               "name": "Brioche ai frutti di bosco",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0084.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-frutti-bosco-20260729.jpg",
               "id": "day-pasticceria-brioche-ai-frutti-di-bosco"
             },
             {
               "name": "Brioche mignon",
               "price": 0.8,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0068.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-mignon-20260729.jpg",
               "id": "day-pasticceria-brioche-mignon"
             },
             {
               "name": "Brioche mignon farcita",
               "price": 1,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0106.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-mignon-farcita-20260729.jpg",
               "id": "day-pasticceria-brioche-mignon-farcita"
             },
             {
               "name": "Brioche alla nocciola",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0124.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-nocciola-20260729.jpg",
               "id": "day-pasticceria-brioche-alla-nocciola"
             },
             {
               "name": "Brioche alla Nutella",
               "price": 1.5,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0126.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-nutella-20260729.jpg",
               "id": "day-pasticceria-brioche-alla-nutella"
             },
             {
               "name": "Brioche al pistacchio",
               "price": 1.8,
               "description": "Dolce da banco, secondo disponibilità.",
-              "image": "assets/gallery/photos/IMG-20260721-WA0129.webp",
+              "image": "assets/images/generated/menu-pasticceria-brioche-pistacchio-20260729.jpg",
               "id": "day-pasticceria-brioche-al-pistacchio"
             },
             {
