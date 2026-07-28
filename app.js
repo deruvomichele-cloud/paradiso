@@ -4,6 +4,7 @@ const THEME_KEY = "paradiso_theme";
 
 const image = (name) => `assets/images/${name}.jpg`;
 const item = (name, price, description, photo) => ({ name, price, description, image: image(photo) });
+const customItem = (name, price, description, image) => ({ name, price, description, image });
 const cocktail = (name, price, description, photo = "negroni") => item(name, price, description, photo);
 const bottle = (name, price, description, photo) => ({
   name,
@@ -25,6 +26,59 @@ const partyServices = [
   item("Taglio torta", 1.5, "Prezzo a persona, con piattini e forchette forniti dal locale.", "breakfast"),
 ];
 
+const coffeeProducts = [
+  ["Caffè freddo", 4.5], ["Caffè fuori sera", 2], ["Espresso", 1.2],
+  ["Caffè macchiato", 1.3], ["Caffè doppio", 2.4], ["Caffè Americano", 1.8],
+  ["Caffè corretto", 1.5], ["Caffè decaffeinato", 1.3], ["Caffè shakerato", 3.5],
+  ["Caffè shakerato con Baileys", 4], ["Cappuccino", 1.5],
+  ["Cappuccino al ginseng o orzo", 2], ["Cappuccino scuro", 2],
+  ["Cappuccino alla soia", 1.8], ["Cioccolata calda", 3],
+  ["Cioccolata con panna", 3.5], ["Crema caffè", 3.5],
+  ["Crema caffè con panna e Nutella", 5], ["Ginseng grande", 1.8],
+  ["Ginseng piccolo", 1.5], ["Latte bianco", 1.3], ["Latte e menta", 1.5],
+  ["Latte macchiato", 1.6], ["Latte macchiato alla soia", 1.8],
+  ["Limonata", 2], ["Macchiatone", 1.5], ["Marocchino", 1.5],
+  ["Marocchino grande", 3], ["Marocchino alla Nutella", 2],
+  ["Orzo grande", 1.8], ["Orzo piccolo", 1.5], ["Spremuta d'arancia", 4],
+  ["Spremuta al melograno", 5], ["Tè caldo", 2.5],
+];
+
+const pastryProducts = [
+  ["Cornetto", 1.5], ["Cornetto con la frutta", 2.5], ["Cappuccino e cornetto", 3.5],
+  ["Biscotti grandi", 2], ["Biscotti mimosa", 4.5], ["Biscotti piccoli", 1],
+  ["Biscotti senza glutine", 2], ["Brioche ai cereali", 1.3],
+  ["Brioche vegana", 1.3], ["Brioche vuota", 1.2], ["Brioche Dubai", 2],
+  ["Brioche Kinder", 2.5], ["Brioche alla mela", 2.5],
+  ["Brioche all'albicocca", 1.5], ["Brioche al cioccolato bianco", 1.5],
+  ["Brioche alla crema", 1.5], ["Brioche alla fragola", 1.5],
+  ["Brioche ai frutti di bosco", 1.5], ["Brioche mignon", 0.8],
+  ["Brioche mignon farcita", 1], ["Brioche alla nocciola", 1.5],
+  ["Brioche alla Nutella", 1.5], ["Brioche al pistacchio", 1.8],
+  ["Cannoli siciliani", 3], ["Cannoncini", 1], ["Ciambella", 2],
+  ["Ciambella torta", 2], ["Ciambelline", 1], ["Dolce senza glutine", 2.5],
+  ["Frappè piccolo", 5], ["Frappè grande", 6.5], ["Girella", 2.5],
+  ["Girella all'uva", 2], ["Macarons", 1.5], ["Mini Sacher", 1.5],
+  ["Muffin", 2.5], ["Muffin grande", 2.5], ["Pancake con Nutella", 3],
+  ["Pancake Nutella e fragole", 3.5], ["Sacher grande", 4.5],
+  ["Sfogliatelle", 1], ["Treccia", 2],
+];
+
+const savoryProducts = [
+  ["Brioche salata", 3], ["Fagottino patatine e wurstel", 2.5], ["Focaccia", 5],
+  ["Focaccia e pizzette", 1.5], ["Maxi panzerotto", 3.5], ["Mini pizzette", 0.8],
+  ["Panino classico", 5], ["Panino con cotoletta", 6.5], ["Piadina", 6],
+  ["Toast classico", 5], ["Trancio", 5],
+];
+
+const gelatoProducts = [
+  ["Coppa Rica Amarena", 2.5], ["Cornetto Amarena", 2.7], ["Cornetto Classico", 2.5],
+  ["Cornetto mini", 2], ["Cornetto XXL", 2.7], ["Cremino", 1.8],
+  ["Cucciolone Bikini senza glutine e senza lattosio", 2.3], ["Cucciolone Maxi", 2.3],
+  ["Frigo Chuches", 2.2], ["Ghiacciolo", 1], ["Magnum Almond", 2.6],
+  ["Magnum Bianco", 2.6], ["Magnum Classico", 2.6], ["Magnum Michelangelo", 2.8],
+  ["Treasure Baule", 1.7],
+];
+
 const menus = {
   day: {
     title: "Menu del giorno",
@@ -36,24 +90,23 @@ const menus = {
     heroPosition: "center 53%",
     heroPositionMobile: "58% center",
     categories: {
-      colazione: {
-        label: "Colazione",
-        items: [
-          item("Espresso", 1.2, "La pausa italiana, intensa e fragrante.", "breakfast"),
-          item("Caffè macchiato", 1.3, "Espresso con una nuvola di latte.", "breakfast"),
-          item("Cappuccino", 1.5, "Espresso, latte caldo e schiuma vellutata.", "breakfast"),
-          item("Cornetto", 1.5, "Sfoglia fragrante, semplice o farcita.", "breakfast"),
-          item("Cornetto con la frutta", 2.5, "Sfoglia fragrante con ripieno alla frutta.", "breakfast"),
-          item("Cappuccino e cornetto", 3.5, "La colazione classica del Paradiso.", "breakfast"),
-          item("Spremuta d'arancia", 4, "Arance spremute al momento.", "breakfast"),
-        ],
+      caffetteria: {
+        label: "Caffetteria",
+        items: coffeeProducts.map(([name, price]) =>
+          item(name, price, "Preparazione al banco, come da listino.", "breakfast")
+        ),
       },
-      pranzo: {
-        label: "Pranzo",
-        items: [
-          item("Focaccia Paradiso", 6.5, "Prosciutto crudo, mozzarella e rucola.", "lunch"),
-          item("Toast classico", 5, "Prosciutto cotto e formaggio filante.", "lunch"),
-        ],
+      pasticceria: {
+        label: "Pasticceria",
+        items: pastryProducts.map(([name, price]) =>
+          item(name, price, "Dolce da banco, secondo disponibilità.", "breakfast")
+        ),
+      },
+      "sfizi-salati": {
+        label: "Sfizi salati",
+        items: savoryProducts.map(([name, price]) =>
+          item(name, price, "Preparato o scaldato al momento, secondo disponibilità.", "lunch")
+        ),
       },
       bibite: {
         label: "Bibite",
@@ -63,6 +116,12 @@ const menus = {
           item("Succo di frutta", 3, "Diversi gusti disponibili.", "breakfast"),
           item("Tè freddo", 3, "Limone o pesca.", "breakfast"),
         ],
+      },
+      gelati: {
+        label: "Gelati",
+        items: gelatoProducts.map(([name, price]) =>
+          item(name, price, "Gelato confezionato, servito ben freddo.", "breakfast")
+        ),
       },
       tessere: {
         label: "Tessere",
@@ -146,27 +205,46 @@ const menus = {
           bottle("Keglevich Pesca", 100, "Vodka aromatizzata in bottiglia.", "keglevich-pesca"),
           bottle("Alkkemist Gin", 180, "Gin premium in bottiglia.", "alkkemist"),
           bottle("Amuerte Coca Gin", 180, "Gin premium in bottiglia.", "amuerte"),
-          bottle("Hendrick's Grand Cabaret", 160, "Gin premium in bottiglia.", "hendricks-cabaret"),
+          bottle("Hendrick's Grand Cabaret con tonica", 100, "Bottiglia con tonica inclusa.", "hendricks-cabaret"),
           bottle("Nordés con toniche", 150, "Bottiglia di gin con toniche incluse.", "nordes-bottle"),
           bottle("Bombay Sapphire con toniche", 120, "Bottiglia di gin con toniche incluse.", "bombay-bottle"),
           bottle("Gin Mare con toniche", 140, "Bottiglia di gin con toniche incluse.", "gin-mare-bottle"),
           bottle("Grey Goose", 150, "Vodka premium in bottiglia.", "grey-goose"),
-          bottle("Belvedere", 150, "Vodka premium in bottiglia.", "belvedere"),
+          bottle("Belvedere con 4 bibite", 100, "Vodka premium con quattro bibite incluse.", "belvedere"),
           bottle("Absolut Vodka", 120, "Vodka in bottiglia.", "absolut"),
-          bottle("Veuve Clicquot Brut", 160, "Champagne brut in bottiglia.", "veuve-brut"),
-          bottle("Bellavista Alma Gran Cuvée", 100, "Franciacorta brut in bottiglia.", "bellavista"),
+          bottle("Veuve Clicquot", 130, "Champagne in bottiglia.", "veuve-brut"),
+          bottle("Bellavista", 70, "Franciacorta in bottiglia.", "bellavista"),
           bottle("Berlucchi Cuvée Imperiale", 70, "Franciacorta brut in bottiglia.", "berlucchi"),
-          bottle("Valdo Prosecco", 50, "Prosecco extra dry in bottiglia.", "valdo"),
-          bottle("Moët N.I.R Rosé", 220, "Champagne rosé in bottiglia.", "moet-nir"),
-          bottle("Veuve Clicquot Rosé", 180, "Champagne rosé in bottiglia.", "veuve-rose"),
-          bottle("Moët Ice Impérial", 180, "Champagne demi-sec in bottiglia.", "moet-ice"),
-          bottle("Moët Impérial Brut", 140, "Champagne brut in bottiglia.", "moet-brut"),
+          bottle("Prosecco", 20, "Prosecco in bottiglia.", "valdo"),
+          bottle("Moët Rosé", 180, "Champagne rosé in bottiglia.", "moet-nir"),
+          customItem("Veuve", 100, "Champagne in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          bottle("Moët Bianco", 180, "Champagne demi-sec in bottiglia.", "moet-ice"),
+          bottle("Moët", 150, "Champagne brut in bottiglia.", "moet-brut"),
           bottle("Lanson White Label", 120, "Champagne in bottiglia.", "lanson"),
           bottle("Monte Rossa Blanc de Blancs", 100, "Franciacorta in bottiglia.", "monterossa-blanc"),
           bottle("Dom Pérignon 2012", 500, "Prezzo promozionale indicato nel listino.", "dom-perignon-2012"),
           bottle("Cristal Louis Roederer", 450, "Prezzo promozionale indicato nel listino.", "cristal"),
           bottle("Krug Grande Cuvée", 450, "Prezzo promozionale indicato nel listino.", "krug"),
           bottle("Dom Pérignon 2013", 400, "Prezzo promozionale indicato nel listino.", "dom-perignon-2013"),
+          customItem("Amarone", 40, "Vino rosso in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Astoria", 40, "Spumante in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Bottiglia vino della casa", 25, "Bottiglia secondo disponibilità.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Calice", 5, "Calice di vino della casa.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Calice Gewürztraminer", 6, "Calice di Gewürztraminer.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Champagne", 150, "Champagne in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("D'Armanville Rosé", 80, "Champagne rosé in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          bottle("Don Julio", 550, "Tequila premium in bottiglia.", "clase-azul"),
+          bottle("Dom Pérignon 2015", 300, "Champagne in bottiglia.", "dom-perignon-2012"),
+          customItem("Gewürztraminer", 30, "Vino bianco aromatico in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Gin base e bibite", 50, "Gin base con bibite incluse.", "assets/images/gin.jpg"),
+          customItem("H. Blin Champagne", 80, "Champagne in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("H. Blin Rosé", 80, "Champagne rosé in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Lugana", 40, "Vino bianco in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Offerta 2 calici", 7, "Due calici di vino in offerta.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Prosecco Millesimato", 30, "Prosecco millesimato in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Ribolla", 30, "Vino bianco in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Rosé", 35, "Vino rosé in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
+          customItem("Vino bianco", 35, "Vino bianco in bottiglia.", "assets/images/generated/menu-vini-20260728.png"),
         ],
       },
       gin: {
@@ -290,12 +368,20 @@ const generatedPhoto = (name) => `assets/images/generated/${name}.webp`;
 
 const photoReferences = {
   day: {
-    colazione: [138, 154, 219, 172, "assets/gallery/photos/paradiso-special-20260727-02.webp", 132, 37],
-    pranzo: [
+    caffetteria: [138, 154, 219, 37, 132],
+    pasticceria: [
+      172,
+      "assets/gallery/photos/paradiso-special-20260727-02.webp",
+      "assets/images/generated/menu-pasticceria-20260728.png",
+      "assets/images/breakfast.jpg",
+    ],
+    "sfizi-salati": [
       "generated:focaccia-paradiso",
       "generated:toast-classico",
+      "assets/images/lunch.jpg",
     ],
     bibite: ["generated:acqua", "generated:bibite-lattina", "generated:succhi-frutta", "generated:te-freddo"],
+    gelati: ["assets/images/generated/menu-gelati-20260728.png"],
     tessere: [138, 154, 132, 183, 154, 123],
     servizi: [200, 119, "generated:pizza-compleanno", 69],
   },
@@ -315,7 +401,7 @@ const photoReferences = {
       "assets/images/night-drinks/cocktails/jager-energy.webp",
     ],
     gin: [
-      216, 201, 215, 201, 217, 171, 162, 201, 157,
+      216, 201, 215, 201, "assets/images/night-drinks/gin/mr-higgins.webp", 171, 162, 201, 157,
       "assets/images/night-drinks/gin/engine-v2.webp",
       201, 171,
       "assets/images/night-drinks/gin/hendricks-v2.webp",
@@ -519,11 +605,8 @@ const detailedDrinkCategories = ["bottiglie", "gin", "aperitivo", "birre", "whis
 detailedDrinkCategories.forEach((categoryKey) => {
   menus.night.categories[categoryKey].items.forEach((product) => {
     const profile = nightDrinkProfiles?.[categoryKey]?.[product.name];
-    if (!profile?.description || !profile?.fact) {
-      throw new Error(`Profilo drink mancante: ${categoryKey}/${product.name}`);
-    }
-    product.description = profile.description;
-    product.fact = profile.fact;
+    if (profile?.description) product.description = profile.description;
+    if (profile?.fact) product.fact = profile.fact;
   });
 });
 
