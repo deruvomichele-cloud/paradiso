@@ -239,7 +239,7 @@ func (a *App) upgradeLegacySiteContent(ctx context.Context) error {
 	if err := json.Unmarshal([]byte(payload), &stored); err != nil {
 		return fmt.Errorf("decode stored site content: %w", err)
 	}
-	if !isLegacySiteContent(stored) {
+	if !needsBundledCatalogUpgrade(stored) {
 		return nil
 	}
 
@@ -281,6 +281,21 @@ func isLegacySiteContent(content SiteContent) bool {
 	}
 	_, hasCurrentCatalog := day.Categories["caffetteria"]
 	return !hasCurrentCatalog
+}
+
+func needsBundledCatalogUpgrade(content SiteContent) bool {
+	if isLegacySiteContent(content) {
+		return true
+	}
+	day, ok := content.Menus["day"]
+	if !ok {
+		return false
+	}
+	caffetteria, ok := day.Categories["caffetteria"]
+	if !ok || len(caffetteria.Items) == 0 {
+		return false
+	}
+	return caffetteria.Items[0].Image == "assets/gallery/photos/IMG-20260721-WA0138.webp"
 }
 
 func (a *App) configureMessaging(ctx context.Context) error {
