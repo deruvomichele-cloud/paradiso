@@ -118,14 +118,14 @@ func TestIsLegacySiteContent(t *testing.T) {
 func TestNeedsBundledCatalogUpgrade(t *testing.T) {
 	stored := SiteContent{Menus: map[string]SiteMenu{
 		"day": {Categories: map[string]SiteCategory{
-			"caffetteria": {Items: []SiteItem{{Image: "assets/gallery/photos/IMG-20260721-WA0138.webp"}}},
+			"caffetteria": {Items: []SiteItem{{Image: "assets/gallery/photos/IMG-20260721-WA0026.webp"}}},
 		}},
 	}}
 	if !needsBundledCatalogUpgrade(stored) {
 		t.Fatal("expected the prior catalog image mapping to be upgraded")
 	}
 	stored.Menus["day"] = SiteMenu{Categories: map[string]SiteCategory{
-		"caffetteria": {Items: []SiteItem{{Image: "assets/gallery/photos/IMG-20260721-WA0026.webp"}}},
+		"caffetteria": {Items: []SiteItem{{Image: "assets/gallery/photos/IMG-20260721-WA0194.webp"}}},
 	}}
 	if needsBundledCatalogUpgrade(stored) {
 		t.Fatal("current gallery mapping must not be upgraded again")
