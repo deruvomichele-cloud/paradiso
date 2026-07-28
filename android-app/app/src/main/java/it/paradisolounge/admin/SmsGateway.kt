@@ -107,8 +107,10 @@ object SmsGateway {
     private fun preferences(context: Context) =
         context.getSharedPreferences(SMS_PREFERENCES, Context.MODE_PRIVATE)
 
-    private fun hasSmsPermissions(context: Context): Boolean = listOf(
-        Manifest.permission.SEND_SMS,
+    private fun hasSmsPermissions(context: Context): Boolean =
+        context.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
+
+    private fun hasSimLookupPermissions(context: Context): Boolean = listOf(
         Manifest.permission.READ_PHONE_NUMBERS,
         Manifest.permission.READ_PHONE_STATE,
     ).all { permission ->
@@ -117,13 +119,30 @@ object SmsGateway {
 
     private fun smsManagerForConfiguredSender(context: Context): SmsManager? {
         val configuredNumber = normalizeSmsDestination(senderNumber(context)) ?: return null
-        val subscriptions = context.getSystemService(SubscriptionManager::class.java)
-            ?.activeSubscriptionInfoList
-            .orEmpty()
+        val subscriptions = if (hasSimLookupPermissions(context)) {
+            context.getSystemService(SubscriptionManager::class.java)
+                ?.activeSubscriptionInfoList
+                .orEmpty()
+        } else {
+            emptyList()
+        }
         val senderSubscription = subscriptions.firstOrNull { subscription ->
             normalizeSmsDestination(subscription.phoneNumber()) == configuredNumber
-        } ?: return null
-        return SmsManager.getSmsManagerForSubscriptionId(senderSubscription.subscriptionId)
+        }
+        if (senderSubscription != null) {
+            return SmsManager.getSmsManagerForSubscriptionId(senderSubscription.subscriptionId)
+        }
+        if (subscriptions.size == 1) {
+            return SmsManager.getSmsManagerForSubscriptionId(subscriptions.single().subscriptionId)
+        }
+        if (subscriptions.size > 1) return null
+
+        val defaultSubscriptionId = SubscriptionManager.getDefaultSmsSubscriptionId()
+        return if (defaultSubscriptionId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+            SmsManager.getSmsManagerForSubscriptionId(defaultSubscriptionId)
+        } else {
+            SmsManager.getDefault()
+        }
     }
 
     private fun wasAlreadySent(context: Context, bookingId: String): Boolean {

@@ -219,10 +219,8 @@ private fun ParadisoApp(
     val smsPermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissions ->
-        val granted = smsGatewayPermissions.all { permission ->
-            permissions[permission] == true ||
-                context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-        }
+        val granted = permissions[Manifest.permission.SEND_SMS] == true ||
+            context.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
         SmsGateway.setEnabled(context, granted)
         smsGatewayEnabled = granted
         if (granted) BookingGatewayService.start(context)
@@ -477,9 +475,14 @@ private fun SmsGatewayDialog(
                     color = TextMuted,
                     fontSize = 13.sp,
                 )
+                Text(
+                    "Consenti l'accesso alle SIM per scegliere automaticamente il numero corretto sui telefoni dual-SIM.",
+                    color = TextMuted,
+                    fontSize = 13.sp,
+                )
                 if (permissionDenied) {
                     Text(
-                        "Autorizzazione SMS o lettura SIM negata. Concedila per attivare l'invio automatico.",
+                        "Autorizzazione SMS negata. Concedila per attivare l'invio automatico.",
                         color = Red,
                         fontWeight = FontWeight.Bold,
                     )
@@ -489,7 +492,7 @@ private fun SmsGatewayDialog(
         confirmButton = {
             if (enabled) {
                 Button(onClick = {
-                    if (onSaveSender(senderDraft)) onDismiss() else senderError = true
+                    if (onSaveSender(senderDraft)) onEnable() else senderError = true
                 }) { Text("Salva numero") }
             } else {
                 Button(onClick = {
